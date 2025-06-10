@@ -3,192 +3,537 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SSLR Games - Crafting Worlds</title>
-    
-    <!-- Tailwind CSS for modern styling -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Google Fonts - Inter for a clean, professional look -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    
-    <!-- Favicon -->
-    <link rel="icon" href="icon.png" type="image/png">
-    
-    <!-- Custom Stylesheet (we will create this next) -->
-    <link rel="stylesheet" href="style.css">
+    <title>SSLR Games - Immersive Gaming Experiences</title>
+    <meta name="description" content="SSLR Games is a Bangladesh-based game development company creating captivating and innovative gaming experiences. Explore our projects, join our community, and discover the future of gaming.">
+    <meta name="keywords" content="SSLR Games, game development, Bangladesh, Duarshona, Rangpur, indie games, gaming studio, immersive games, PC games, mobile games, console games">
+    <meta name="author" content="SSLR Games">
 
-    <style>
-        /* Ensuring the Inter font is used */
-        body {
-            font-family: 'Inter', sans-serif;
-        }
-        /* Style for the 3D canvas background */
-        #bg-canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            background-color: #0a0a0a; /* Fallback background */
-        }
-    </style>
-</head>
-<body class="bg-black text-white overflow-x-hidden">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.sslrgames.com/"> <meta property="og:title" content="SSLR Games - Immersive Gaming Experiences">
+    <meta property="og:description" content="SSLR Games is a Bangladesh-based game development company creating captivating and innovative gaming experiences. Explore our projects, join our community, and discover the future of gaming.">
+    <meta property="og:image" content="https://www.sslrgames.com/assets/images/og-image.jpg"> <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://www.sslrgames.com/"> <meta property="twitter:title" content="SSLR Games - Immersive Gaming Experiences">
+    <meta property="twitter:description" content="SSLR Games is a Bangladesh-based game development company creating captivating and innovative gaming experiences. Explore our projects, join our community, and discover the future of gaming.">
+    <meta property="twitter:image" content="https://www.sslrgames.com/assets/images/twitter-image.jpg"> <link rel="canonical" href="https://www.sslrgames.com/"> <link rel="icon" type="image/png" href="icon.png"> <link rel="stylesheet" href="style.css">
 
-    <!-- Canvas for 3D Background Effect -->
-    <canvas id="bg-canvas"></canvas>
+    <link rel="preload" href="assets/videos/hero-bg-video.mp4" as="video" type="video/mp4" crossorigin>
+    <link rel="preload" href="assets/images/hero-image-overlay.webp" as="image" type="image/webp" crossorigin>
+    <link rel="preload" href="assets/fonts/gaming-font-bold.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="assets/fonts/gaming-font-regular.woff2" as="font" type="font/woff2" crossorigin>
 
-    <!-- Header -->
-    <header class="fixed top-0 left-0 w-full z-50 transition-all duration-300">
-        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <a href="#" class="flex items-center space-x-3">
-                <img src="logo.png" alt="SSLR Games Logo" class="h-12 w-auto" onerror="this.onerror=null;this.src='https://placehold.co/150x50/000000/FFFFFF?text=SSLR+Games';">
+    </head>
+<body>
+
+    <div id="global-effect-container" aria-hidden="true"></div>
+
+    <header class="main-header">
+        <div class="container header-content">
+            <a href="#" class="logo-link" aria-label="SSLR Games Home">
+                <img src="logo.png" alt="SSLR Games Logo" class="main-logo">
             </a>
-            <div class="hidden md:flex items-center space-x-8">
-                <a href="#about" class="hover:text-cyan-400 transition-colors duration-300">About</a>
-                <a href="#games" class="hover:text-cyan-400 transition-colors duration-300">Games</a>
-                <a href="#community" class="hover:text-cyan-400 transition-colors duration-300">Community</a>
-                <a href="#contact" class="bg-cyan-500 hover:bg-cyan-600 text-black font-bold py-2 px-6 rounded-full transition-all duration-300 shadow-lg shadow-cyan-500/20">
-                    Contact Us
+            <nav class="main-nav" aria-label="Main Navigation">
+                <ul class="nav-list">
+                    <li><a href="#hero" class="nav-item active" data-scroll-to="hero">Home</a></li>
+                    <li><a href="#about" class="nav-item" data-scroll-to="about">About Us</a></li>
+                    <li><a href="#games" class="nav-item" data-scroll-to="games">Our Games</a></li>
+                    <li><a href="#careers" class="nav-item" data-scroll-to="careers">Careers</a></li>
+                    <li><a href="#news" class="nav-item" data-scroll-to="news">News & Blog</a></li>
+                    <li><a href="#contact" class="nav-item" data-scroll-to="contact">Contact</a></li>
+                </ul>
+            </nav>
+            <button class="nav-toggle" aria-controls="main-nav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="sr-only">Menu</span>
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </button>
+        </div>
+    </header>
+
+    <section id="hero" class="hero-section">
+        <div class="video-background-wrapper">
+            <video autoplay muted loop playsinline class="hero-video" poster="assets/images/hero-video-poster.webp">
+                <source src="assets/videos/hero-bg-video.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <div class="video-overlay" aria-hidden="true"></div>
+            <div id="hero-3d-scene" class="hero-3d-scene" aria-hidden="true"></div>
+        </div>
+
+        <div class="hero-content container">
+            <div class="hero-text-block">
+                <h1 class="hero-title animate-in-typewriter" data-splitting>SSLR Games: Crafting Worlds, Building Legacies.</h1>
+                <p class="hero-subtitle animate-in-fade-up">From the heart of Bangladesh, we ignite imagination and deliver unparalleled gaming adventures.</p>
+                <div class="hero-actions animate-in-fade-up-delay">
+                    <a href="#games" class="btn btn-primary btn-hero-explore">Explore Our Games <span class="arrow">→</span></a>
+                    <a href="#careers" class="btn btn-secondary btn-hero-join">Join Our Team</a>
+                </div>
+            </div>
+            <div class="featured-game-card animate-in-slide-left">
+                <img src="assets/images/featured-game-thumbnail.webp" alt="Featured Game Title" class="featured-game-thumb">
+                <div class="card-info">
+                    <h3 class="card-title">Featured Game: Celestial Echoes</h3>
+                    <p class="card-description">Unravel ancient mysteries in a breathtaking sci-fi epic. Available now!</p>
+                    <a href="#" class="btn btn-tertiary btn-view-game">View Game Details</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="about-section common-section">
+        <div class="container section-header">
+            <h2 class="section-title animate-on-scroll">About SSLR Games</h2>
+            <p class="section-subtitle animate-on-scroll">Our Journey, Our Vision, Our Passion.</p>
+        </div>
+        <div class="container about-content">
+            <div class="about-intro animate-on-scroll">
+                <p>SSLR Games, rooted in Duarshona, Rangpur, Bangladesh, is more than just a game studio – we are storytellers, innovators, and dreamers dedicated to pushing the boundaries of interactive entertainment. Founded on a passion for creating truly immersive experiences, we strive to bring unique narratives and engaging gameplay to players worldwide.</p>
+                <p>Our team comprises diverse talents, united by a common goal: to craft games that resonate deeply, challenge minds, and provide endless hours of joy and discovery.</p>
+            </div>
+
+            <div class="values-grid">
+                <div class="value-item animate-on-scroll" data-delay="100">
+                    <i class="icon icon-creativity"></i>
+                    <h3>Innovation</h3>
+                    <p>Constantly exploring new technologies and unconventional ideas.</p>
+                </div>
+                <div class="value-item animate-on-scroll" data-delay="200">
+                    <i class="icon icon-quality"></i>
+                    <h3>Quality</h3>
+                    <p>Uncompromising dedication to polish and player satisfaction.</p>
+                </div>
+                <div class="value-item animate-on-scroll" data-delay="300">
+                    <i class="icon icon-community"></i>
+                    <h3>Community</h3>
+                    <p>Fostering a vibrant and inclusive space for players and creators.</p>
+                </div>
+                <div class="value-item animate-on-scroll" data-delay="400">
+                    <i class="icon icon-passion"></i>
+                    <h3>Passion</h3>
+                    <p>Driven by an unwavering love for games and storytelling.</p>
+                </div>
+            </div>
+
+            <div class="our-story animate-on-scroll">
+                <h3>Our Story So Far...</h3>
+                <div class="story-timeline">
+                    <div class="timeline-event" data-year="2020">
+                        <h4>Inception & Vision</h4>
+                        <p>SSLR Games is founded with a clear vision: to put Bangladesh on the global game development map.</p>
+                    </div>
+                    <div class="timeline-event" data-year="2022">
+                        <h4>First Major Project</h4>
+                        <p>Development begins on our ambitious flagship title, "Project Chimera".</p>
+                    </div>
+                    <div class="timeline-event" data-year="2024">
+                        <h4>Community Growth</h4>
+                        <p>Our online presence expands, building a dedicated following and active community.</p>
+                    </div>
+                    <div class="timeline-event" data-year="2025">
+                        <h4>Global Recognition</h4>
+                        <p>Participated in international gaming conventions, gaining valuable partnerships.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="about-visual-parallax" aria-hidden="true"></div>
+        </div>
+    </section>
+
+    <section id="games" class="games-section common-section">
+        <div class="container section-header">
+            <h2 class="section-title animate-on-scroll">Our Universe of Games</h2>
+            <p class="section-subtitle animate-on-scroll">Dive into the worlds we've created and prepare for your next adventure.</p>
+        </div>
+        <div class="container games-content">
+            <div class="game-filters animate-on-scroll">
+                <button class="filter-btn active" data-filter="all">All Games</button>
+                <button class="filter-btn" data-filter="action">Action</button>
+                <button class="filter-btn" data-filter="rpg">RPG</button>
+                <button class="filter-btn" data-filter="strategy">Strategy</button>
+                <button class="filter-btn" data-filter="adventure">Adventure</button>
+                <button class="filter-btn" data-filter="mobile">Mobile</button>
+                <button class="filter-btn" data-filter="pc">PC</button>
+                </div>
+
+            <div class="game-grid">
+                <article class="game-card animate-on-scroll" data-category="action adventure pc">
+                    <img src="assets/images/game-thumb-celestial-echoes.webp" alt="Celestial Echoes Thumbnail" class="game-thumbnail">
+                    <div class="game-info">
+                        <h3 class="game-title">Celestial Echoes</h3>
+                        <p class="game-genre">Sci-Fi Action RPG</p>
+                        <p class="game-status">Released (2024)</p>
+                        <div class="game-platforms">
+                            <span class="platform-icon pc">PC</span>
+                            <span class="platform-icon console">PS5</span>
+                            <span class="platform-icon console">Xbox</span>
+                        </div>
+                        <a href="#" class="btn btn-outline btn-view-game-details" data-game-id="celestial-echoes">Learn More</a>
+                    </div>
+                </article>
+
+                <article class="game-card animate-on-scroll" data-category="strategy pc">
+                    <img src="assets/images/game-thumb-tactical-frontier.webp" alt="Tactical Frontier Thumbnail" class="game-thumbnail">
+                    <div class="game-info">
+                        <h3 class="game-title">Tactical Frontier</h3>
+                        <p class="game-genre">Real-Time Strategy</p>
+                        <p class="game-status">In Development</p>
+                        <div class="game-platforms">
+                            <span class="platform-icon pc">PC</span>
+                        </div>
+                        <a href="#" class="btn btn-outline btn-view-game-details" data-game-id="tactical-frontier">View Progress</a>
+                    </div>
+                </article>
+
+                <article class="game-card animate-on-scroll" data-category="adventure mobile">
+                    <img src="assets/images/game-thumb-enchanted-isle.webp" alt="Enchanted Isle Thumbnail" class="game-thumbnail">
+                    <div class="game-info">
+                        <h3 class="game-title">Enchanted Isle</h3>
+                        <p class="game-genre">Puzzle Adventure</p>
+                        <p class="game-status">Released (2023)</p>
+                        <div class="game-platforms">
+                            <span class="platform-icon mobile">iOS</span>
+                            <span class="platform-icon mobile">Android</span>
+                        </div>
+                        <a href="#" class="btn btn-outline btn-view-game-details" data-game-id="enchanted-isle">Get on Mobile</a>
+                    </div>
+                </article>
+
+                <article class="game-card animate-on-scroll" data-category="rpg pc">
+                    <img src="assets/images/game-thumb-shadows-of-xylon.webp" alt="Shadows of Xylon Thumbnail" class="game-thumbnail">
+                    <div class="game-info">
+                        <h3 class="game-title">Shadows of Xylon</h3>
+                        <p class="game-genre">Dark Fantasy RPG</p>
+                        <p class="game-status">Pre-Alpha</p>
+                        <div class="game-platforms">
+                            <span class="platform-icon pc">PC</span>
+                        </div>
+                        <a href="#" class="btn btn-outline btn-view-game-details" data-game-id="shadows-of-xylon">Follow Development</a>
+                    </div>
+                </article>
+
+                <div class="game-card coming-soon animate-on-scroll">
+                    <div class="coming-soon-overlay">
+                        <h3>More Adventures Coming Soon!</h3>
+                        <p>Stay tuned for exciting new titles from SSLR Games.</p>
+                        <a href="#news" class="btn btn-primary">Get Updates</a>
+                    </div>
+                </div>
+            </div>
+            <div class="view-all-games-action animate-on-scroll">
+                <a href="/games" class="btn btn-primary btn-view-all">See All Games & Projects</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="careers" class="careers-section common-section">
+        <div class="container section-header">
+            <h2 class="section-title animate-on-scroll">Join the SSLR Games Family</h2>
+            <p class="section-subtitle animate-on-scroll">Be part of a passionate team shaping the future of gaming.</p>
+        </div>
+        <div class="container careers-content">
+            <div class="careers-intro animate-on-scroll">
+                <p>At SSLR Games, we believe that great games are built by great people. We foster a collaborative, creative, and supportive environment where talent thrives. If you're passionate about games and eager to make an impact, we'd love to hear from you.</p>
+            </div>
+
+            <div class="job-listings">
+                <h3>Current Openings</h3>
+                <div class="job-list">
+                    <article class="job-card animate-on-scroll">
+                        <div class="job-header">
+                            <h4 class="job-title">Senior Game Developer (Unity/C#)</h4>
+                            <span class="job-location">Duarshona, Rangpur</span>
+                        </div>
+                        <p class="job-description">We're looking for an experienced Unity developer with a strong grasp of C# and game architecture.</p>
+                        <div class="job-meta">
+                            <span class="job-type">Full-time</span>
+                            <span class="job-department">Engineering</span>
+                        </div>
+                        <a href="#" class="btn btn-outline btn-apply" data-job-id="senior-dev">Apply Now</a>
+                    </article>
+
+                    <article class="job-card animate-on-scroll">
+                        <div class="job-header">
+                            <h4 class="job-title">3D Character Artist</h4>
+                            <span class="job-location">Duarshona, Rangpur</span>
+                        </div>
+                        <p class="job-description">Passionate 3D artist with expertise in character modeling, texturing, and rigging for games.</p>
+                        <div class="job-meta">
+                            <span class="job-type">Full-time</span>
+                            <span class="job-department">Art</span>
+                        </div>
+                        <a href="#" class="btn btn-outline btn-apply" data-job-id="3d-artist">Apply Now</a>
+                    </article>
+
+                    <article class="job-card animate-on-scroll">
+                        <div class="job-header">
+                            <h4 class="job-title">Game Designer (Narrative Focus)</h4>
+                            <span class="job-location">Duarshona, Rangpur</span>
+                        </div>
+                        <p class="job-description">A creative game designer with a knack for compelling storytelling and system design.</p>
+                        <div class="job-meta">
+                            <span class="job-type">Full-time</span>
+                            <span class="job-department">Design</span>
+                        </div>
+                        <a href="#" class="btn btn-outline btn-apply" data-job-id="game-designer">Apply Now</a>
+                    </article>
+
+                    <div class="no-jobs-message animate-on-scroll" style="display: none;">
+                        <p>No current openings. Please check back soon or send us an <a href="mailto:bdha20095@gmail.com" class="email-link">email</a> with your resume for future consideration.</p>
+                    </div>
+                </div>
+                <div class="career-cta animate-on-scroll">
+                    <p>Don't see a role that fits? We're always looking for exceptional talent!</p>
+                    <a href="mailto:bdha20095@gmail.com" class="btn btn-primary">Send Us Your Resume</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="news" class="news-section common-section">
+        <div class="container section-header">
+            <h2 class="section-title animate-on-scroll">Latest News & Updates</h2>
+            <p class="section-subtitle animate-on-scroll">Stay informed about our progress, game releases, and studio happenings.</p>
+        </div>
+        <div class="container news-content">
+            <div class="news-grid">
+                <article class="news-card animate-on-scroll">
+                    <img src="assets/images/news-thumb-gdc.webp" alt="SSLR Games at GDC 2025" class="news-thumbnail">
+                    <div class="news-info">
+                        <span class="news-category">Event</span>
+                        <h3 class="news-title">SSLR Games Takes Center Stage at GDC 2025!</h3>
+                        <p class="news-excerpt">We had an incredible time showcasing 'Celestial Echoes' and connecting with industry leaders at the Game Developers Conference...</p>
+                        <time datetime="2025-06-05" class="news-date">June 5, 2025</time>
+                        <a href="#" class="btn btn-link">Read More →</a>
+                    </div>
+                </article>
+
+                <article class="news-card animate-on-scroll">
+                    <img src="assets/images/news-thumb-game-update.webp" alt="Celestial Echoes Major Update" class="news-thumbnail">
+                    <div class="news-info">
+                        <span class="news-category">Game Update</span>
+                        <h3 class="news-title">'Celestial Echoes' Receives Major Content Expansion!</h3>
+                        <p class="news-excerpt">Prepare for new missions, characters, and a revamped combat system in our latest update...</p>
+                        <time datetime="2025-05-28" class="news-date">May 28, 2025</time>
+                        <a href="#" class="btn btn-link">Read More →</a>
+                    </div>
+                </article>
+
+                <article class="news-card animate-on-scroll">
+                    <img src="assets/images/news-thumb-dev-blog.webp" alt="Dev Blog on AI" class="news-thumbnail">
+                    <div class="news-info">
+                        <span class="news-category">Dev Blog</span>
+                        <h3 class="news-title">Dev Blog: Crafting Intelligent AI for Tactical Frontier</h3>
+                        <p class="news-excerpt">Our lead AI programmer shares insights into the challenges and triumphs of creating dynamic AI opponents...</p>
+                        <time datetime="2025-05-20" class="news-date">May 20, 2025</time>
+                        <a href="#" class="btn btn-link">Read More →</a>
+                    </div>
+                </article>
+                </div>
+            <div class="news-archive-cta animate-on-scroll">
+                <a href="/news-archive" class="btn btn-primary">View All News & Blog Posts</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-section common-section">
+        <div class="container cta-content">
+            <h2 class="cta-title animate-on-scroll">Join the SSLR Games Community!</h2>
+            <p class="cta-subtitle animate-on-scroll">Connect with fellow gamers, get exclusive updates, and shape the future of our games.</p>
+            <div class="cta-actions animate-on-scroll">
+                <a href="https://t.me/sslrgames" target="_blank" rel="noopener noreferrer" class="btn btn-cta telegram">
+                    <i class="fab fa-telegram-plane"></i> Join Telegram
+                </a>
+                <a href="https://x.com/sslrgames" target="_blank" rel="noopener noreferrer" class="btn btn-cta x-twitter">
+                    <i class="fab fa-x-twitter"></i> Follow us on X
+                </a>
+                <a href="https://discord.gg/sslrgamescommunity" target="_blank" rel="noopener noreferrer" class="btn btn-cta discord">
+                    <i class="fab fa-discord"></i> Join Discord
                 </a>
             </div>
-            <!-- Mobile Menu Button -->
-            <button id="mobile-menu-button" class="md:hidden text-white focus:outline-none">
-                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
-            </button>
-        </nav>
-    </header>
-    
-    <!-- Mobile Menu (hidden by default) -->
-    <div id="mobile-menu" class="hidden md:hidden fixed top-0 left-0 w-full h-full bg-black/90 z-40">
-        <div class="flex flex-col items-center justify-center h-full space-y-8">
-            <a href="#about" class="text-2xl hover:text-cyan-400 transition-colors duration-300">About</a>
-            <a href="#games" class="text-2xl hover:text-cyan-400 transition-colors duration-300">Games</a>
-            <a href="#community" class="text-2xl hover:text-cyan-400 transition-colors duration-300">Community</a>
-            <a href="#contact" class="text-2xl bg-cyan-500 hover:bg-cyan-600 text-black font-bold py-3 px-8 rounded-full transition-all duration-300">Contact Us</a>
+            <div class="newsletter-signup animate-on-scroll">
+                <h4>Stay Updated</h4>
+                <p>Subscribe to our newsletter for direct news and exclusive content.</p>
+                <form class="newsletter-form">
+                    <input type="email" placeholder="Enter your email address" aria-label="Email for newsletter subscription" required>
+                    <button type="submit" class="btn btn-primary">Subscribe</button>
+                </form>
+            </div>
+        </div>
+        <div class="cta-background-pattern" aria-hidden="true"></div>
+    </section>
+
+    <section id="contact" class="contact-section common-section">
+        <div class="container section-header">
+            <h2 class="section-title animate-on-scroll">Get in Touch</h2>
+            <p class="section-subtitle animate-on-scroll">We'd love to hear from you.</p>
+        </div>
+        <div class="container contact-content">
+            <div class="contact-info animate-on-scroll">
+                <h3>General Inquiries & Business Partnerships</h3>
+                <p>For general inquiries or business-related discussions:</p>
+                <a href="mailto:bdha20095@gmail.com" class="contact-email email-obfuscated" data-email-part1="bdha20095" data-email-part2="gmail.com">
+                    <i class="fas fa-envelope"></i> Reveal Email
+                </a>
+                <p class="location-text">
+                    <i class="fas fa-map-marker-alt"></i> Location: Duarshona, Rangpur, Bangladesh
+                </p>
+                <p class="disclaimer">
+                    Please note: This email is for business inquiries only. For game support, please visit our dedicated support page.
+                </p>
+            </div>
+
+            <div class="contact-form-wrapper animate-on-scroll">
+                <h3>Send Us a Message</h3>
+                <form class="contact-form">
+                    <div class="form-group">
+                        <label for="name">Your Name:</label>
+                        <input type="text" id="name" name="name" required aria-label="Your Name">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Your Email:</label>
+                        <input type="email" id="email" name="email" required aria-label="Your Email Address">
+                    </div>
+                    <div class="form-group">
+                        <label for="subject">Subject:</label>
+                        <input type="text" id="subject" name="subject" required aria-label="Subject of your message">
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Your Message:</label>
+                        <textarea id="message" name="message" rows="6" required aria-label="Your Message"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-submit">Send Message</button>
+                    <div class="form-status-message" aria-live="polite"></div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer class="main-footer">
+        <div class="container footer-grid">
+            <div class="footer-brand">
+                <img src="logo.png" alt="SSLR Games Logo" class="footer-logo">
+                <p class="footer-slogan">Crafting Immersive Worlds.</p>
+                <div class="social-links">
+                    <a href="https://x.com/sslrgames" target="_blank" rel="noopener noreferrer" aria-label="Follow SSLR Games on X (formerly Twitter)"><i class="fab fa-x-twitter"></i></a>
+                    <a href="https://t.me/sslrgames" target="_blank" rel="noopener noreferrer" aria-label="Join SSLR Games on Telegram"><i class="fab fa-telegram-plane"></i></a>
+                    <a href="https://discord.gg/sslrgamescommunity" target="_blank" rel="noopener noreferrer" aria-label="Join SSLR Games Discord"><i class="fab fa-discord"></i></a>
+                </div>
+            </div>
+
+            <nav class="footer-nav" aria-label="Footer Navigation">
+                <div class="nav-column">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="#careers">Careers</a></li>
+                        <li><a href="#news">Newsroom</a></li>
+                        <li><a href="#contact">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div class="nav-column">
+                    <h4>Our Games</h4>
+                    <ul>
+                        <li><a href="#games">All Games</a></li>
+                        <li><a href="#">PC Games</a></li>
+                        <li><a href="#">Mobile Games</a></li>
+                        <li><a href="#">Upcoming Projects</a></li>
+                    </ul>
+                </div>
+                <div class="nav-column">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="#">Support</a></li>
+                        <li><a href="#">Community Guidelines</a></li>
+                        <li><a href="#">Press Kit</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </nav>
+
+            <div class="footer-contact-address">
+                <h4>Headquarters</h4>
+                <address>
+                    SSLR Games HQ<br>
+                    Duarshona, Rangpur<br>
+                    Bangladesh
+                </address>
+                <p>Email: <span class="email-obfuscated" data-email-part1="bdha20095" data-email-part2="gmail.com">Reveal Email</span></p>
+                <div class="map-placeholder" aria-hidden="true">
+                    </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; <span id="current-year"></span> SSLR Games. All rights reserved.</p>
+            <p class="acknowledgement">Made with passion in Bangladesh.</p>
+        </div>
+    </footer>
+
+    <div id="game-details-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="game-modal-title" aria-hidden="true">
+        <div class="modal-content">
+            <button class="close-button" aria-label="Close game details modal">&times;</button>
+            <h2 id="game-modal-title">Game Title Placeholder</h2>
+            <div class="modal-body">
+                <p>Loading game details...</p>
+                <div class="game-media">
+                    <img src="" alt="Game Screenshot" class="modal-game-img">
+                    <video controls src="" class="modal-game-video"></video>
+                </div>
+                <p class="modal-game-description"></p>
+                <div class="modal-game-features">
+                    <h3>Key Features</h3>
+                    <ul></ul>
+                </div>
+                <div class="modal-game-platforms">
+                    <h3>Available On</h3>
+                    <ul></ul>
+                </div>
+                <a href="#" class="btn btn-primary modal-buy-link" target="_blank" rel="noopener noreferrer">Buy Now / Download</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="job-apply-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="job-modal-title" aria-hidden="true">
+        <div class="modal-content">
+            <button class="close-button" aria-label="Close job application modal">&times;</button>
+            <h2 id="job-modal-title">Apply for: Job Title Placeholder</h2>
+            <div class="modal-body">
+                <form class="job-application-form">
+                    <div class="form-group">
+                        <label for="applicant-name">Full Name:</label>
+                        <input type="text" id="applicant-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="applicant-email">Email:</label>
+                        <input type="email" id="applicant-email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="applicant-phone">Phone (Optional):</label>
+                        <input type="tel" id="applicant-phone">
+                    </div>
+                    <div class="form-group">
+                        <label for="applicant-linkedin">LinkedIn Profile (Optional):</label>
+                        <input type="url" id="applicant-linkedin">
+                    </div>
+                    <div class="form-group">
+                        <label for="applicant-resume">Upload Resume (PDF, DOCX):</label>
+                        <input type="file" id="applicant-resume" accept=".pdf,.doc,.docx" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="applicant-cover-letter">Cover Letter (Optional):</label>
+                        <textarea id="applicant-cover-letter" rows="5"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit Application</button>
+                    <div class="form-status-message" aria-live="polite"></div>
+                </form>
+            </div>
         </div>
     </div>
 
 
-    <!-- Main Content -->
-    <main class="relative z-10">
-
-        <!-- Hero Section -->
-        <section id="hero" class="h-screen flex items-center justify-center text-center">
-            <div class="container mx-auto px-6">
-                <h1 class="text-5xl md:text-7xl lg:text-8xl font-extrabold uppercase tracking-wider mb-4 leading-tight">
-                    <span class="bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-purple-500">SSLR Games</span>
-                </h1>
-                <p class="text-xl md:text-2xl lg:text-3xl font-light text-gray-300">
-                    Engineering New Realities
-                </p>
-            </div>
-        </section>
-
-        <!-- About Us Section -->
-        <section id="about" class="py-20 md:py-32 bg-black/50 backdrop-blur-sm">
-            <div class="container mx-auto px-6 text-center">
-                <h2 class="text-4xl md:text-5xl font-bold mb-8">Forged in Bangladesh</h2>
-                <p class="max-w-3xl mx-auto text-lg text-gray-400 mb-6">
-                    We are SSLR Games, an independent game development studio with a passion for creating immersive and unforgettable experiences. Our journey began with a simple dream: to put our corner of the world on the global gaming map.
-                </p>
-                <p class="text-cyan-400 font-semibold">
-                    <svg class="w-6 h-6 inline-block mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
-                    Duarshona, Rangpur, Bangladesh
-                </p>
-            </div>
-        </section>
-
-        <!-- Games Section -->
-        <section id="games" class="py-20 md:py-32">
-             <div class="container mx-auto px-6">
-                <h2 class="text-4xl md:text-5xl font-bold text-center mb-16">Our Worlds</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <!-- Game Card 1 (Placeholder) -->
-                    <div class="bg-gray-900/50 backdrop-blur-sm rounded-2xl overflow-hidden transform hover:scale-105 transition-transform duration-300 shadow-lg">
-                        <img src="https://placehold.co/600x400/1a202c/ffffff?text=Project+Titan" alt="Game 1 Screenshot" class="w-full h-56 object-cover">
-                        <div class="p-6">
-                            <h3 class="text-2xl font-bold mb-2">Project: Titan</h3>
-                            <p class="text-gray-400 mb-4">An untold story of cosmic horror and survival. Coming soon.</p>
-                            <span class="inline-block bg-purple-600 text-white text-xs font-semibold px-3 py-1 rounded-full">In Development</span>
-                        </div>
-                    </div>
-                    <!-- Game Card 2 (Placeholder) -->
-                    <div class="bg-gray-900/50 backdrop-blur-sm rounded-2xl overflow-hidden transform hover:scale-105 transition-transform duration-300 shadow-lg">
-                        <img src="https://placehold.co/600x400/1a202c/ffffff?text=Echoes" alt="Game 2 Screenshot" class="w-full h-56 object-cover">
-                        <div class="p-6">
-                            <h3 class="text-2xl font-bold mb-2">Echoes</h3>
-                            <p class="text-gray-400 mb-4">A narrative-driven puzzle adventure through shattered memories.</p>
-                             <span class="inline-block bg-cyan-600 text-white text-xs font-semibold px-3 py-1 rounded-full">Concept Phase</span>
-                        </div>
-                    </div>
-                    <!-- Game Card 3 (Coming Soon) -->
-                    <div class="bg-gray-900/50 backdrop-blur-sm rounded-2xl overflow-hidden transform hover:scale-105 transition-transform duration-300 shadow-lg flex items-center justify-center h-full min-h-[300px]">
-                        <div class="text-center p-6">
-                             <h3 class="text-2xl font-bold text-gray-400">More to Come</h3>
-                             <p class="text-gray-500">The forge is always burning.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Community Section -->
-        <section id="community" class="py-20 md:py-32 bg-black/50 backdrop-blur-sm">
-            <div class="container mx-auto px-6 text-center">
-                <h2 class="text-4xl md:text-5xl font-bold mb-8">Join Our Community</h2>
-                <p class="max-w-2xl mx-auto text-lg text-gray-400 mb-12">
-                    Follow our development journey, get behind-the-scenes looks, and be the first to know about our upcoming projects.
-                </p>
-                <div class="flex justify-center items-center space-x-6">
-                    <!-- X (Twitter) -->
-                    <a href="https://x.com/sslrgames" target="_blank" rel="noopener noreferrer" class="group">
-                        <div class="p-4 bg-gray-800 rounded-full transition-all duration-300 group-hover:bg-white">
-                            <svg class="w-8 h-8 text-white transition-all duration-300 group-hover:text-black" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>X</title><path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/></svg>
-                        </div>
-                        <span class="mt-2 text-sm text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300">@sslrgames</span>
-                    </a>
-                    <!-- Telegram -->
-                    <a href="https://t.me/sslrgames" target="_blank" rel="noopener noreferrer" class="group">
-                        <div class="p-4 bg-gray-800 rounded-full transition-all duration-300 group-hover:bg-cyan-500">
-                             <svg class="w-8 h-8 text-white" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Telegram</title><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zM12 21.6a9.6 9.6 0 1 1 0-19.2 9.6 9.6 0 0 1 0 19.2zm4.8-12.24l-1.92 9.12c-.24.96-.72 1.2-1.56.72l-3-2.28-1.44 1.32c-.12.12-.24.24-.48.24l.24-3.12 5.52-5.04c.24-.24-.00-.36-.36-.12L7.92 13.8 5.04 12.96c-.96-.24-.96-.96.24-1.44l10.56-4.08c.72-.24 1.44.12 1.2 1.08z"/></svg>
-                        </div>
-                         <span class="mt-2 text-sm text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300">@sslrgames</span>
-                    </a>
-                </div>
-            </div>
-        </section>
-        
-        <!-- Contact Section -->
-        <section id="contact" class="py-20 md:py-32">
-             <div class="container mx-auto px-6 text-center">
-                 <h2 class="text-4xl md:text-5xl font-bold mb-8">Get In Touch</h2>
-                 <p class="max-w-2xl mx-auto text-lg text-gray-400 mb-12">
-                    Have a question, a business inquiry, or just want to say hello? We'd love to hear from you.
-                 </p>
-                 <button id="reveal-email" class="bg-gradient-to-r from-cyan-500 to-purple-600 hover:from-cyan-400 hover:to-purple-500 text-white font-bold py-4 px-10 rounded-full transition-all duration-300 text-lg shadow-lg shadow-cyan-500/30">
-                    Reveal Email
-                 </button>
-                 <p id="email-display" class="mt-8 text-2xl text-cyan-300 font-mono" style="display: none;"></p>
-            </div>
-        </section>
-    </main>
-
-    <!-- Footer -->
-    <footer class="bg-black/80 py-8">
-        <div class="container mx-auto px-6 text-center text-gray-500">
-            <p>&copy; <span id="year"></span> SSLR Games. All Rights Reserved.</p>
-            <p class="text-sm mt-1">A Bangladeshi Game Development Studio.</p>
-        </div>
-    </footer>
-
-    <!-- Three.js for 3D effects -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-
-    <!-- Custom JavaScript (we will create this last) -->
     <script src="script.js"></script>
 </body>
 </html>
