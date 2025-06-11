@@ -1,423 +1,1281 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SSLR Games - Immersive Gaming Experiences</title>
-    <meta name="description" content="SSLR Games is a Bangladesh-based game development company creating captivating and innovative gaming experiences.">
-    <meta name="keywords" content="SSLR Games, game development, Bangladesh, Duarshona, Rangpur, indie games, gaming studio, immersive games, PC games, mobile games, console games">
-    <meta name="author" content="SSLR Games">
-
-    <!-- Open Graph / Twitter Card -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://www.sslrgames.com/">
-    <meta property="og:title" content="SSLR Games - Immersive Gaming Experiences">
-    <meta property="og:description" content="SSLR Games is a Bangladesh-based game development company creating captivating and innovative gaming experiences. Explore our projects, join our community, and discover the future of gaming.">
-    <meta property="og:image" content="https://www.sslrgames.com/assets/images/og-image.jpg">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:url" content="https://www.sslrgames.com/">
-    <meta name="twitter:title" content="SSLR Games - Immersive Gaming Experiences">
-    <meta name="twitter:description" content="SSLR Games is a Bangladesh-based game development company creating captivating and innovative gaming experiences. Explore our projects, join our community, and discover the future of gaming.">
-    <meta name="twitter:image" content="https://www.sslrgames.com/assets/images/twitter-image.jpg">
-
-    <link rel="icon" type="image/png" href="assets/images/icon.png">
-    <link rel="stylesheet" href="styles.css">
-    <script src="script.js" defer></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SSLR Games - Immersive Gaming Experiences</title>
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="icon.png">
+  <!-- External CSS -->
+  <link rel="stylesheet" href="styles.css">
+  <!-- External JavaScript -->
+  <script src="script.js" defer></script>
 </head>
 <body>
-    <!-- Skip link for accessibility -->
-    <a href="#main-content" class="skip-link">Skip to content</a>
+  <!-- Skip link for accessibility -->
+  <a href="#main-content" class="skip-link">Skip to content</a>
 
-    <header class="main-header">
-        <div class="container header-content">
-            <a href="#hero" class="logo-link" aria-label="SSLR Games Home">
-                <img src="assets/images/logo.png" alt="SSLR Games Logo" class="main-logo">
-            </a>
-            <button class="nav-toggle" aria-controls="main-nav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="sr-only">Menu</span>
-                <div class="hamburger">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </div>
-            </button>
-            <nav id="main-nav" class="main-nav" aria-label="Main Navigation">
-                <ul class="nav-list">
-                    <li><a href="#hero" class="nav-item active">Home</a></li>
-                    <li><a href="#about" class="nav-item">About Us</a></li>
-                    <li><a href="#games" class="nav-item">Our Games</a></li>
-                    <li><a href="#careers" class="nav-item">Careers</a></li>
-                    <li><a href="#news" class="nav-item">News & Blog</a></li>
-                    <li><a href="#contact" class="nav-item">Contact</a></li>
-                </ul>
-            </nav>
+  <!-- Header Section Start -->
+  <header class="main-header">
+    <div class="container header-content">
+      <a href="#hero" class="logo-link" aria-label="SSLR Games Home">
+        <img src="logo.png" alt="SSLR Games Logo" class="main-logo">
+      </a>
+      <button class="nav-toggle" aria-controls="main-nav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="sr-only">Menu</span>
+        <div class="hamburger">
+          <span></span>
+          <span></span>
+          <span></span>
         </div>
-    </header>
+      </button>
+      <nav id="main-nav" class="main-nav" aria-label="Main Navigation">
+        <ul class="nav-list">
+          <li><a href="#hero" class="nav-item active">Home</a></li>
+          <li><a href="#about" class="nav-item">About Us</a></li>
+          <li><a href="#universe" class="nav-item">Our Universe</a></li>
+          <li><a href="#games" class="nav-item">Games</a></li>
+          <li><a href="#team" class="nav-item">Team</a></li>
+          <li><a href="#careers" class="nav-item">Careers</a></li>
+          <li><a href="#news" class="nav-item">News & Blog</a></li>
+          <li><a href="#faq" class="nav-item">FAQ</a></li>
+          <li><a href="#contact" class="nav-item">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <!-- Header Section End -->
 
-    <main id="main-content">
-        <section id="hero" class="hero-section">
-            <div class="video-background-wrapper">
-                <video autoplay muted loop playsinline class="hero-video" poster="assets/images/hero-video-poster.webp">
-                    <source src="assets/videos/hero-bg-video.mp4" type="video/mp4">
-                    আপনার ব্রাউজার ভিডিও সমর্থন করে না।
-                </video>
-                <div class="video-overlay" aria-hidden="true"></div>
-                <div id="hero-3d-scene" class="hero-3d-scene" aria-hidden="true"></div>
-            </div>
-            <div class="hero-content container">
-                <div class="hero-text-block">
-                    <h1 class="hero-title">SSLR Games: Crafting Worlds, Building Legacies.</h1>
-                    <p class="hero-subtitle">From the heart of Bangladesh, we ignite imagination and deliver unparalleled gaming adventures.</p>
-                    <div class="hero-actions">
-                        <a href="#games" class="btn btn-primary btn-hero-explore">Explore Our Games <span aria-hidden="true">→</span></a>
-                        <a href="#careers" class="btn btn-secondary btn-hero-join">Join Our Team</a>
-                    </div>
-                </div>
-                <div class="featured-game-card">
-                    <img src="assets/images/featured-game-thumbnail.webp" alt="Featured Game: Celestial Echoes" class="featured-game-thumb">
-                    <div class="card-info">
-                        <h3 class="card-title">Featured Game: Celestial Echoes</h3>
-                        <p class="card-description">Unravel ancient mysteries in a breathtaking sci-fi epic. Available now!</p>
-                        <a href="#" class="btn btn-tertiary btn-view-game">View Game Details</a>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="about" class="about-section common-section">
-            <div class="container section-header">
-                <h2 class="section-title">About SSLR Games</h2>
-                <p class="section-subtitle">Our Journey, Our Vision, Our Passion.</p>
-            </div>
-            <div class="container about-content">
-                <div class="about-intro">
-                    <p>SSLR Games, rooted in Duarshona, Rangpur, Bangladesh, is more than just a game studio – we are storytellers, innovators, and dreamers dedicated to pushing the boundaries of interactive entertainment. Founded on a passion for creating truly immersive experiences, we strive to bring unique narratives and engaging gameplay to players worldwide.</p>
-                    <p>Our team comprises diverse talents, united by a common goal: to craft games that resonate deeply, challenge minds, and provide endless hours of joy and discovery.</p>
-                </div>
-                <div class="values-grid">
-                    <div class="value-item">
-                        <i class="icon icon-creativity" aria-hidden="true"></i>
-                        <h3>Innovation</h3>
-                        <p>Constantly exploring new technologies and unconventional ideas.</p>
-                    </div>
-                    <div class="value-item">
-                        <i class="icon icon-quality" aria-hidden="true"></i>
-                        <h3>Quality</h3>
-                        <p>Uncompromising dedication to polish and player satisfaction.</p>
-                    </div>
-                    <div class="value-item">
-                        <i class="icon icon-community" aria-hidden="true"></i>
-                        <h3>Community</h3>
-                        <p>Fostering a vibrant and inclusive space for players and creators.</p>
-                    </div>
-                    <div class="value-item">
-                        <i class="icon icon-passion" aria-hidden="true"></i>
-                        <h3>Passion</h3>
-                        <p>Driven by an unwavering love for games and storytelling.</p>
-                    </div>
-                </div>
-                <div class="our-story">
-                    <h3>Our Story So Far...</h3>
-                    <ul class="story-timeline">
-                        <li class="timeline-event">
-                            <time datetime="2020">2020</time>
-                            <h4>Inception & Vision</h4>
-                            <p>SSLR Games is founded with a clear vision: to put Bangladesh on the global game development map.</p>
-                        </li>
-                        <li class="timeline-event">
-                            <time datetime="2022">2022</time>
-                            <h4>First Major Project</h4>
-                            <p>Development begins on our ambitious flagship title, "Project Chimera".</p>
-                        </li>
-                        <li class="timeline-event">
-                            <time datetime="2024">2024</time>
-                            <h4>Community Growth</h4>
-                            <p>Our online presence expands, building a dedicated following and active community.</p>
-                        </li>
-                        <li class="timeline-event">
-                            <time datetime="2025">2025</time>
-                            <h4>Global Recognition</h4>
-                            <p>Participated in international gaming conventions, gaining valuable partnerships.</p>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-
-        <section id="games" class="games-section common-section">
-            <div class="container section-header">
-                <h2 class="section-title">Our Universe of Games</h2>
-                <p class="section-subtitle">Dive into the worlds we've created and prepare for your next adventure.</p>
-            </div>
-            <div class="container games-content">
-                <div class="game-filters">
-                    <button class="filter-btn active" data-filter="all">All Games</button>
-                    <button class="filter-btn" data-filter="action">Action</button>
-                    <button class="filter-btn" data-filter="rpg">RPG</button>
-                    <button class="filter-btn" data-filter="strategy">Strategy</button>
-                    <button class="filter-btn" data-filter="adventure">Adventure</button>
-                    <button class="filter-btn" data-filter="mobile">Mobile</button>
-                    <button class="filter-btn" data-filter="pc">PC</button>
-                </div>
-                <ul class="game-grid">
-                    <li class="game-card" data-categories="action adventure pc">
-                        <img src="assets/images/game-thumb-celestial-echoes.webp" alt="Celestial Echoes Thumbnail" class="game-thumbnail">
-                        <div class="game-info">
-                            <h3 class="game-title">Celestial Echoes</h3>
-                            <p class="game-genre">Sci-Fi Action RPG</p>
-                            <p class="game-status">Released (2024)</p>
-                            <div class="game-platforms">
-                                <span class="platform-icon pc">PC</span>
-                                <span class="platform-icon console">PS5</span>
-                                <span class="platform-icon console">Xbox</span>
-                            </div>
-                            <a href="#" class="btn btn-outline btn-view-game-details" data-game-id="celestial-echoes">Learn More</a>
-                        </div>
-                    </li>
-                    <li class="game-card" data-categories="strategy pc">
-                        <img src="assets/images/game-thumb-tactical-frontier.webp" alt="Tactical Frontier Thumbnail" class="game-thumbnail">
-                        <div class="game-info">
-                            <h3 class="game-title">Tactical Frontier</h3>
-                            <p class="game-genre">Real-Time Strategy</p>
-                            <p class="game-status">In Development</p>
-                            <div class="game-platforms">
-                                <span class="platform-icon pc">PC</span>
-                            </div>
-                            <a href="#" class="btn btn-outline btn-view-game-details" data-game-id="tactical-frontier">View Progress</a>
-                        </div>
-                    </li>
-                    <li class="game-card" data-categories="adventure mobile">
-                        <img src="assets/images/game-thumb-enchanted-isle.webp" alt="Enchanted Isle Thumbnail" class="game-thumbnail">
-                        <div class="game-info">
-                            <h3 class="game-title">Enchanted Isle</h3>
-                            <p class="game-genre">Puzzle Adventure</p>
-                            <p class="game-status">Released (2023)</p>
-                            <div class="game-platforms">
-                                <span class="platform-icon mobile">iOS</span>
-                                <span class="platform-icon mobile">Android</span>
-                            </div>
-                            <a href="#" class="btn btn-outline btn-view-game-details" data-game-id="enchanted-isle">Get on Mobile</a>
-                        </div>
-                    </li>
-                    <li class="game-card" data-categories="rpg pc">
-                        <img src="assets/images/game-thumb-shadows-of-xylon.webp" alt="Shadows of Xylon Thumbnail" class="game-thumbnail">
-                        <div class="game-info">
-                            <h3 class="game-title">Shadows of Xylon</h3>
-                            <p class="game-genre">Dark Fantasy RPG</p>
-                            <p class="game-status">Pre-Alpha</p>
-                            <div class="game-platforms">
-                                <span class="platform-icon pc">PC</span>
-                            </div>
-                            <a href="#" class="btn btn-outline btn-view-game-details" data-game-id="shadows-of-xylon">Follow Development</a>
-                        </div>
-                    </li>
-                </ul>
-                <div class="coming-soon-card">
-                    <h3>More Adventures Coming Soon!</h3>
-                    <p>Stay tuned for exciting new titles from SSLR Games.</p>
-                    <a href="#news" class="btn btn-primary">Get Updates</a>
-                </div>
-            </div>
-        </section>
-
-        <section id="careers" class="careers-section common-section">
-            <div class="container section-header">
-                <h2 class="section-title">Join the SSLR Games Family</h2>
-                <p class="section-subtitle">Be part of a passionate team shaping the future of gaming.</p>
-            </div>
-            <div class="container careers-content">
-                <p>At SSLR Games, we believe great games are built by great people. We foster a collaborative, creative, and supportive environment where talent thrives. If you're passionate about games and eager to make an impact, we'd love to hear from you.</p>
-                <div class="job-listings">
-                    <h3>Current Openings</h3>
-                    <ul class="job-list">
-                        <li class="job-card">
-                            <h4 class="job-title">Senior Game Developer (Unity/C#)</h4>
-                            <span class="job-location">Duarshona, Rangpur</span>
-                            <p>Experienced Unity developer with a strong grasp of C# and game architecture.</p>
-                            <div><span class="job-type">Full-time</span> | <span class="job-department">Engineering</span></div>
-                            <a href="#" class="btn btn-outline btn-apply" data-job-id="senior-dev">Apply Now</a>
-                        </li>
-                        <li class="job-card">
-                            <h4 class="job-title">3D Character Artist</h4>
-                            <span class="job-location">Duarshona, Rangpur</span>
-                            <p>Passionate 3D artist with expertise in character modeling, texturing, and rigging for games.</p>
-                            <div><span class="job-type">Full-time</span> | <span class="job-department">Art</span></div>
-                            <a href="#" class="btn btn-outline btn-apply" data-job-id="3d-artist">Apply Now</a>
-                        </li>
-                        <li class="job-card">
-                            <h4 class="job-title">Game Designer (Narrative Focus)</h4>
-                            <span class="job-location">Duarshona, Rangpur</span>
-                            <p>Creative game designer with a knack for compelling storytelling and system design.</p>
-                            <div><span class="job-type">Full-time</span> | <span class="job-department">Design</span></div>
-                            <a href="#" class="btn btn-outline btn-apply" data-job-id="game-designer">Apply Now</a>
-                        </li>
-                    </ul>
-                    <p>Don't see a role that fits? We're always looking for exceptional talent! <a href="mailto:bdha20095@gmail.com">Send Us Your Resume</a></p>
-                </div>
-            </div>
-        </section>
-
-        <section id="news" class="news-section common-section">
-            <div class="container section-header">
-                <h2 class="section-title">Latest News & Updates</h2>
-                <p class="section-subtitle">Stay informed about our progress, game releases, and studio happenings.</p>
-            </div>
-            <div class="container news-content">
-                <ul class="news-grid">
-                    <li class="news-card">
-                        <img src="assets/images/news-thumb-gdc.webp" alt="SSLR Games at GDC 2025" class="news-thumbnail">
-                        <div class="news-info">
-                            <span class="news-category">Event</span>
-                            <h3 class="news-title">SSLR Games Takes Center Stage at GDC 2025!</h3>
-                            <p class="news-excerpt">We had an incredible time showcasing 'Celestial Echoes' and connecting with industry leaders at the Game Developers Conference...</p>
-                            <time datetime="2025-06-05" class="news-date">June 5, 2025</time>
-                            <a href="#" class="btn btn-link">Read More →</a>
-                        </div>
-                    </li>
-                    <li class="news-card">
-                        <img src="assets/images/news-thumb-game-update.webp" alt="Celestial Echoes Major Update" class="news-thumbnail">
-                        <div class="news-info">
-                            <span class="news-category">Game Update</span>
-                            <h3 class="news-title">'Celestial Echoes' Receives Major Content Expansion!</h3>
-                            <p class="news-excerpt">Prepare for new missions, characters, and a revamped combat system in our latest update...</p>
-                            <time datetime="2025-05-28" class="news-date">May 28, 2025</time>
-                            <a href="#" class="btn btn-link">Read More →</a>
-                        </div>
-                    </li>
-                    <li class="news-card">
-                        <img src="assets/images/news-thumb-dev-blog.webp" alt="Dev Blog on AI" class="news-thumbnail">
-                        <div class="news-info">
-                            <span class="news-category">Dev Blog</span>
-                            <h3 class="news-title">Dev Blog: Crafting Intelligent AI for Tactical Frontier</h3>
-                            <p class="news-excerpt">Our lead AI programmer shares insights into the challenges and triumphs of creating dynamic AI opponents...</p>
-                            <time datetime="2025-05-20" class="news-date">May 20, 2025</time>
-                            <a href="#" class="btn btn-link">Read More →</a>
-                        </div>
-                    </li>
-                </ul>
-                <a href="/news-archive" class="btn btn-primary">View All News & Blog Posts</a>
-            </div>
-        </section>
-
-        <section class="cta-section common-section">
-            <div class="container cta-content">
-                <h2 class="cta-title">Join the SSLR Games Community!</h2>
-                <p class="cta-subtitle">Connect with fellow gamers, get exclusive updates, and shape the future of our games.</p>
-                <div class="cta-actions">
-                    <a href="https://t.me/sslrgames" target="_blank" rel="noopener noreferrer" class="btn btn-cta telegram" aria-label="Join Telegram">
-                        Telegram
-                    </a>
-                    <a href="https://x.com/sslrgames" target="_blank" rel="noopener noreferrer" class="btn btn-cta x-twitter" aria-label="Follow us on X">
-                        X
-                    </a>
-                    <a href="https://discord.gg/sslrgamescommunity" target="_blank" rel="noopener noreferrer" class="btn btn-cta discord" aria-label="Join Discord">
-                        Discord
-                    </a>
-                </div>
-                <form class="newsletter-form" aria-label="Newsletter signup">
-                    <label for="newsletter-email" class="sr-only">Enter your email address</label>
-                    <input type="email" id="newsletter-email" name="newsletter-email" placeholder="Enter your email address" required>
-                    <button type="submit" class="btn btn-primary">Subscribe</button>
-                </form>
-            </div>
-        </section>
-
-        <section id="contact" class="contact-section common-section">
-            <div class="container section-header">
-                <h2 class="section-title">Get in Touch</h2>
-                <p class="section-subtitle">We'd love to hear from you.</p>
-            </div>
-            <div class="container contact-content">
-                <div class="contact-info">
-                    <h3>General Inquiries & Business Partnerships</h3>
-                    <p>For general inquiries or business-related discussions:</p>
-                    <a href="#" class="contact-email email-obfuscated" data-email-part1="bdha20095" data-email-part2="gmail.com">Reveal Email</a>
-                    <p class="location-text">Duarshona, Rangpur, Bangladesh</p>
-                    <p class="disclaimer">Please note: This email is for business inquiries only. For game support, please visit our dedicated support page.</p>
-                </div>
-                <div class="contact-form-wrapper">
-                    <h3>Send Us a Message</h3>
-                    <form class="contact-form">
-                        <div class="form-group">
-                            <label for="name">Your Name:</label>
-                            <input type="text" id="name" name="name" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Your Email:</label>
-                            <input type="email" id="email" name="email" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="subject">Subject:</label>
-                            <input type="text" id="subject" name="subject" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="message">Your Message:</label>
-                            <textarea id="message" name="message" rows="6" required></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-primary btn-submit">Send Message</button>
-                        <div class="form-status-message" aria-live="polite"></div>
-                    </form>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <footer class="main-footer">
-        <div class="container footer-grid">
-            <div class="footer-brand">
-                <img src="assets/images/logo.png" alt="SSLR Games Logo" class="footer-logo">
-                <p class="footer-slogan">Crafting Immersive Worlds.</p>
-                <div class="social-links">
-                    <a href="https://x.com/sslrgames" aria-label="Follow SSLR Games on X"><i class="fab fa-x-twitter" aria-hidden="true"></i></a>
-                    <a href="https://t.me/sslrgames" aria-label="Join SSLR Games on Telegram"><i class="fab fa-telegram-plane" aria-hidden="true"></i></a>
-                    <a href="https://discord.gg/sslrgamescommunity" aria-label="Join SSLR Games Discord"><i class="fab fa-discord" aria-hidden="true"></i></a>
-                </div>
-            </div>
-            <nav class="footer-nav" aria-label="Footer Navigation">
-                <div class="nav-column">
-                    <h4>Company</h4>
-                    <ul>
-                        <li><a href="#about">About Us</a></li>
-                        <li><a href="#careers">Careers</a></li>
-                        <li><a href="#news">Newsroom</a></li>
-                        <li><a href="#contact">Contact Us</a></li>
-                    </ul>
-                </div>
-                <div class="nav-column">
-                    <h4>Our Games</h4>
-                    <ul>
-                        <li><a href="#games">All Games</a></li>
-                        <li><a href="#">PC Games</a></li>
-                        <li><a href="#">Mobile Games</a></li>
-                        <li><a href="#">Upcoming Projects</a></li>
-                    </ul>
-                </div>
-                <div class="nav-column">
-                    <h4>Resources</h4>
-                    <ul>
-                        <li><a href="#">Support</a></li>
-                        <li><a href="#">Community Guidelines</a></li>
-                        <li><a href="#">Press Kit</a></li>
-                        <li><a href="#">Privacy Policy</a></li>
-                        <li><a href="#">Terms of Service</a></li>
-                    </ul>
-                </div>
-            </nav>
-            <div class="footer-contact-address">
-                <h4>Headquarters</h4>
-                <address>
-                    SSLR Games HQ<br>
-                    Duarshona, Rangpur<br>
-                    Bangladesh
-                </address>
-                <p>Email: <span class="email-obfuscated" data-email-part1="bdha20095" data-email-part2="gmail.com">Reveal Email</span></p>
-                <div class="map-placeholder" aria-hidden="true"></div>
-            </div>
+  <!-- Main Content Start -->
+  <main id="main-content">
+    <!-- Hero Section Start -->
+    <section id="hero" class="hero-section common-section">
+      <div class="container">
+        <div class="hero-content">
+          <h1 class="hero-title">SSLR Games: Crafting Worlds, Building Legacies</h1>
+          <p class="hero-subtitle">From the heart of Bangladesh, we ignite imagination and deliver unparalleled gaming adventures.</p>
+          <div class="hero-actions">
+            <a href="#games" class="btn btn-primary btn-hero-explore">Explore Our Games</a>
+            <a href="#careers" class="btn btn-secondary btn-hero-join">Join Our Team</a>
+          </div>
         </div>
-        <div class="footer-bottom">
-            <p>&copy; <span id="current-year"></span> SSLR Games. All rights reserved.</p>
-            <p class="acknowledgement">Made with passion in Bangladesh.</p>
+      </div>
+    </section>
+    <!-- Hero Section End -->
+
+    <!-- About Section Start -->
+    <section id="about" class="about-section common-section">
+      <div class="container section-header">
+        <h2 class="section-title">About SSLR Games</h2>
+        <p class="section-subtitle">Our Journey, Vision, and Passion</p>
+      </div>
+      <div class="container about-content">
+        <div class="about-intro">
+          <p>SSLR Games, rooted in Duarshona, Rangpur, Bangladesh, is more than just a game studio – we are storytellers, innovators, and dreamers dedicated to pushing the boundaries of interactive entertainment.</p>
+          <p>Founded on a passion for creating truly immersive experiences, we strive to bring unique narratives and engaging gameplay to players worldwide.</p>
         </div>
-    </footer>
+        <div class="values-grid">
+          <div class="value-item">
+            <i class="icon icon-creativity" aria-hidden="true"></i>
+            <h3>Innovation</h3>
+            <p>Constantly exploring new technologies and unconventional ideas.</p>
+          </div>
+          <div class="value-item">
+            <i class="icon icon-quality" aria-hidden="true"></i>
+            <h3>Quality</h3>
+            <p>Uncompromising dedication to polish and player satisfaction.</p>
+          </div>
+          <div class="value-item">
+            <i class="icon icon-community" aria-hidden="true"></i>
+            <h3>Community</h3>
+            <p>Fostering a vibrant and inclusive space for players and creators.</p>
+          </div>
+          <div class="value-item">
+            <i class="icon icon-passion" aria-hidden="true"></i>
+            <h3>Passion</h3>
+            <p>Driven by an unwavering love for games and storytelling.</p>
+          </div>
+        </div>
+        <div class="our-story">
+          <h3>Our Story So Far...</h3>
+          <ul class="story-timeline">
+            <li class="timeline-event">
+              <time datetime="2020">2020</time>
+              <h4>Inception & Vision</h4>
+              <p>SSLR Games is founded with a clear vision: to put Bangladesh on the global game development map.</p>
+            </li>
+            <li class="timeline-event">
+              <time datetime="2022">2022</time>
+              <h4>First Major Project</h4>
+              <p>Development begins on our ambitious flagship title, "Project Chimera".</p>
+            </li>
+            <li class="timeline-event">
+              <time datetime="2023">2023</time>
+              <h4>Prototype Milestones</h4>
+              <p>Early prototypes tested internally; key feedback collected to shape gameplay mechanics.</p>
+            </li>
+            <li class="timeline-event">
+              <time datetime="2024">2024</time>
+              <h4>Community Growth</h4>
+              <p>Our online presence expands, building a dedicated following and active community.</p>
+            </li>
+            <li class="timeline-event">
+              <time datetime="2025">2025</time>
+              <h4>Global Recognition</h4>
+              <p>Participated in international gaming conventions, gaining valuable partnerships.</p>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    <!-- About Section End -->
+
+    <!-- Universe Section Start -->
+    <section id="universe" class="universe-section common-section">
+      <div class="container section-header">
+        <h2 class="section-title">Our Universe</h2>
+        <p class="section-subtitle">Dive into the worlds we've created and the lore behind them.</p>
+      </div>
+      <div class="container universe-content">
+        <!-- Universe description paragraphs -->
+        <article class="universe-article">
+          <h3>Celestial Echoes Universe</h3>
+          <p>The Celestial Echoes universe is set in a distant future where ancient cosmic forces shape the fate of civilizations. Explore vast star systems, mysterious ruins, and unravel the echoes of an age-old prophecy.</p>
+          <p>Players embark on journeys across planets, each with unique ecosystems, cultures, and challenges, forging alliances and discovering cosmic secrets.</p>
+        </article>
+        <article class="universe-article">
+          <h3>Tactical Frontier Universe</h3>
+          <p>The Tactical Frontier universe is a realm of strategic warfare and evolving frontiers. Command armies, manage resources, and outthink opponents in dynamic battlefields.</p>
+          <p>Deep lore explores political intrigue, alliances, betrayals, and the clash of ideologies shaping the frontier societies.</p>
+        </article>
+        <article class="universe-article">
+          <h3>Enchanted Isle Universe</h3>
+          <p>Enchanted Isle invites players to a magical island filled with puzzles, hidden secrets, and mythical creatures. Solve riddles, restore ancient guardians, and uncover the island's hidden history.</p>
+        </article>
+        <article class="universe-article">
+          <h3>Shadows of Xylon Universe</h3>
+          <p>Set in a dark fantasy realm, Shadows of Xylon explores the struggle between light and darkness. Venture into cursed lands, face mythical beasts, and confront the shadows that threaten to consume the world.</p>
+        </article>
+      </div>
+    </section>
+    <!-- Universe Section End -->
+
+    <!-- Games Section Start -->
+    <section id="games" class="games-section common-section">
+      <div class="container section-header">
+        <h2 class="section-title">Our Games</h2>
+        <p class="section-subtitle">Browse all our titles and projects.</p>
+      </div>
+      <div class="container games-content">
+        <div class="game-filters">
+          <button class="filter-btn active" data-filter="all">All</button>
+          <button class="filter-btn" data-filter="action">Action</button>
+          <button class="filter-btn" data-filter="rpg">RPG</button>
+          <button class="filter-btn" data-filter="strategy">Strategy</button>
+          <button class="filter-btn" data-filter="adventure">Adventure</button>
+          <button class="filter-btn" data-filter="puzzle">Puzzle</button>
+          <button class="filter-btn" data-filter="mobile">Mobile</button>
+          <button class="filter-btn" data-filter="pc">PC</button>
+        </div>
+        <ul class="game-grid">
+          <!-- Generating 50 placeholder game cards using logo.png as thumbnail -->
+          <!-- Game Card 1 -->
+          <li class="game-card" data-categories="action rpg pc">
+            <img src="logo.png" alt="Game 1 Thumbnail" class="game-thumbnail">
+            <div class="game-info">
+              <h3 class="game-title">Adventure Quest 1</h3>
+              <p class="game-genre">Action RPG</p>
+              <p class="game-status">Released (2021)</p>
+              <div class="game-platforms">
+                <span class="platform-icon">PC</span>
+                <span class="platform-icon">Mobile</span>
+              </div>
+              <a href="#" class="btn btn-outline btn-view-game-details" data-game-id="adventure-quest-1">Learn More</a>
+            </div>
+          </li>
+          <!-- Game Card 2 -->
+          <li class="game-card" data-categories="strategy pc">
+            <img src="logo.png" alt="Game 2 Thumbnail" class="game-thumbnail">
+            <div class="game-info">
+              <h3 class="game-title">Tactical Command 2</h3>
+              <p class="game-genre">Real-Time Strategy</p>
+              <p class="game-status">In Development</p>
+              <div class="game-platforms">
+                <span class="platform-icon">PC</span>
+              </div>
+              <a href="#" class="btn btn-outline btn-view-game-details" data-game-id="tactical-command-2">View Progress</a>
+            </div>
+          </li>
+          <!-- Game Card 3 -->
+          <li class="game-card" data-categories="adventure puzzle mobile">
+            <img src="logo.png" alt="Game 3 Thumbnail" class="game-thumbnail">
+            <div class="game-info">
+              <h3 class="game-title">Enchanted Puzzle 3</h3>
+              <p class="game-genre">Puzzle Adventure</p>
+              <p class="game-status">Released (2022)</p>
+              <div class="game-platforms">
+                <span class="platform-icon">iOS</span>
+                <span class="platform-icon">Android</span>
+              </div>
+              <a href="#" class="btn btn-outline btn-view-game-details" data-game-id="enchanted-puzzle-3">Get on Mobile</a>
+            </div>
+          </li>
+          <!-- Game Card 4 -->
+          <li class="game-card" data-categories="rpg pc">
+            <img src="logo.png" alt="Game 4 Thumbnail" class="game-thumbnail">
+            <div class="game-info">
+              <h3 class="game-title">Shadows of Xylon 4</h3>
+              <p class="game-genre">Dark Fantasy RPG</p>
+              <p class="game-status">Pre-Alpha</p>
+              <div class="game-platforms">
+                <span class="platform-icon">PC</span>
+              </div>
+              <a href="#" class="btn btn-outline btn-view-game-details" data-game-id="shadows-xylon-4">Follow Development</a>
+            </div>
+          </li>
+          <!-- Game Card 5 -->
+          <li class="game-card" data-categories="action adventure mobile">
+            <img src="logo.png" alt="Game 5 Thumbnail" class="game-thumbnail">
+            <div class="game-info">
+              <h3 class="game-title">Space Raiders 5</h3>
+              <p class="game-genre">Action Adventure</p>
+              <p class="game-status">Released (2020)</p>
+              <div class="game-platforms">
+                <span class="platform-icon">Mobile</span>
+              </div>
+              <a href="#" class="btn btn-outline btn-view-game-details" data-game-id="space-raiders-5">Learn More</a>
+            </div>
+          </li>
+          <!-- Game Card 6 -->
+          <li class="game-card" data-categories="strategy rpg pc">
+            <img src="logo.png" alt="Game 6 Thumbnail" class="game-thumbnail">
+            <div class="game-info">
+              <h3 class="game-title">Kingdom Tactics 6</h3>
+              <p class="game-genre">Strategy RPG</p>
+              <p class="game-status">In Development</p>
+              <div class="game-platforms">
+                <span class="platform-icon">PC</span>
+              </div>
+              <a href="#" class="btn btn-outline btn-view-game-details" data-game-id="kingdom-tactics-6">View Progress</a>
+            </div>
+          </li>
+          <!-- Game Card 7 -->
+          <li class="game-card" data-categories="adventure puzzle pc">
+            <img src="logo.png" alt="Game 7 Thumbnail" class="game-thumbnail">
+            <div class="game-info">
+              <h3 class="game-title">Mystic Island 7</h3>
+              <p class="game-genre">Puzzle Adventure</p>
+              <p class="game-status">Released (2023)</p>
+              <div class="game-platforms">
+                <span class="platform-icon">PC</span>
+              </div>
+              <a href="#" class="btn btn-outline btn-view-game-details" data-game-id="mystic-island-7">Learn More</a>
+            </div>
+          </li>
+          <!-- Game Card 8 -->
+          <li class="game-card" data-categories="rpg adventure mobile">
+            <img src="logo.png" alt="Game 8 Thumbnail" class="game-thumbnail">
+            <div class="game-info">
+              <h3 class="game-title">Legends Rise 8</h3>
+              <p class="game-genre">Adventure RPG</p>
+              <p class="game-status">Pre-Alpha</p>
+              <div class="game-platforms">
+                <span class="platform-icon">Mobile</span>
+              </div>
+              <a href="#" class="btn btn-outline btn-view-game-details" data-game-id="legends-rise-8">Follow Development</a>
+            </div>
+          </li>
+          <!-- Game Card 9 -->
+          <li class="game-card" data-categories="action strategy pc">
+            <img src="logo.png" alt="Game 9 Thumbnail" class="game-thumbnail">
+            <div class="game-info">
+              <h3 class="game-title">Battlefront Heroes 9</h3>
+              <p class="game-genre">Action Strategy</p>
+              <p class="game-status">Released (2019)</p>
+              <div class="game-platforms">
+                <span class="platform-icon">PC</span>
+              </div>
+              <a href="#" class="btn btn-outline btn-view-game-details" data-game-id="battlefront-heroes-9">Learn More</a>
+            </div>
+          </li>
+          <!-- Game Card 10 -->
+          <li class="game-card" data-categories="puzzle adventure mobile">
+            <img src="logo.png" alt="Game 10 Thumbnail" class="game-thumbnail">
+            <div class="game-info">
+              <h3 class="game-title">Puzzle Realm 10</h3>
+              <p class="game-genre">Puzzle Adventure</p>
+              <p class="game-status">Released (2021)</p>
+              <div class="game-platforms">
+                <span class="platform-icon">Mobile</span>
+              </div>
+              <a href="#" class="btn btn-outline btn-view-game-details" data-game-id="puzzle-realm-10">Get on Mobile</a>
+            </div>
+          </li>
+          <!-- Game Card 11 -->
+          <li class="game-card" data-categories="action rpg pc">
+            <img src="logo.png" alt="Game 11 Thumbnail" class="game-thumbnail">
+            <div class="game-info">
+              <h3 class="game-title">Galaxy Quest 11</h3>
+              <p class="game-genre">Action RPG</p>
+              <p class="game-status">In Development</p>
+              <div class="game-platforms">
+                <span class="platform-icon">PC</span>
+              </div>
+              <a href="#" class="btn btn-outline btn-view-game-details" data-game-id="galaxy-quest-11">View Progress</a>
+            </div>
+          </li>
+          <!-- Game Card 12 -->
+          <li class="game-card" data-categories="strategy pc">
+            <img src="logo.png" alt="Game 12 Thumbnail" class="game-thumbnail">
+            <div class="game-info">
+              <h3 class="game-title">Empire Builder 12</h3>
+              <p class="game-genre">Strategy</p>
+              <p class="game-status">Released (2022)</p>
+              <div class="game-platforms">
+                <span class="platform-icon">PC</span>
+              </div>
+              <a href="#" class="btn btn-outline btn-view-game-details" data-game-id="empire-builder-12">Learn More</a>
+            </div>
+          </li>
+          <!-- Game Card 13 -->
+          <li class="game-card" data-categories="adventure rpg mobile">
+            <img src="logo.png" alt="Game 13 Thumbnail" class="game-thumbnail">
+            <div class="game-info">
+              <h3 class="game-title">Hero's Journey 13</h3>
+              <p class="game-genre">Adventure RPG</p>
+              <p class="game-status">Released (2020)</p>
+              <div class="game-platforms">
+                <span class="platform-icon">Mobile</span>
+              </div>
+              <a href="#" class="btn btn-outline btn-view-game-details" data-game-id="heros-journey-13">Get on Mobile</a>
+            </div>
+          </li>
+          <!-- Game Card 14 -->
+          <li class="game-card" data-categories="puzzle pc">
+            <img src="logo.png" alt="Game 14 Thumbnail" class="game-thumbnail">
+            <div class="game-info">
+              <h3 class="game-title">Brain Teasers 14</h3>
+              <p class="game-genre">Puzzle</p>
+              <p class="game-status">In Development</p>
+              <div class="game-platforms">
+                <span class="platform-icon">PC</span>
+              </div>
+              <a href="#" class="btn btn-outline btn-view-game-details" data-game-id="brain-teasers-14">View Progress</a>
+            </div>
+          </li>
+          <!-- Game Card 15 -->
+          <li class="game-card" data-categories="action adventure pc">
+            <img src="logo.png" alt="Game 15 Thumbnail" class="game-thumbnail">
+            <div class="game-info">
+              <h3 class="game-title">Dragon Slayer 15</h3>
+              <p class="game-genre">Action Adventure</p>
+              <p class="game-status">Released (2018)</p>
+              <div class="game-platforms">
+                <span class="platform-icon">PC</span>
+              </div>
+              <a href="#" class="btn btn-outline btn-view-game-details" data-game-id="dragon-slayer-15">Learn More</a>
+            </div>
+          </li>
+          <!-- Game Card 16 -->
+          <li class="game-card" data-categories="strategy rpg pc">
+            <img src="logo.png" alt="Game 16 Thumbnail" class="game-thumbnail">
+            <div class="game-info">
+              <h3 class="game-title">Kingdom Conquest 16</h3>
+              <p class="game-genre">Strategy RPG</p>
+              <p class="game-status">In Development</p>
+              <div class="game-platforms">
+                <span class="platform-icon">PC</span>
+              </div>
+              <a href="#" class="btn btn-outline btn-view-game-details" data-game-id="kingdom-conquest-16">View Progress</a>
+            </div>
+          </li>
+          <!-- Game Card 17 -->
+          <li class="game-card" data-categories="adventure puzzle mobile">
+            <img src="logo.png" alt="Game 17 Thumbnail" class="game-thumbnail">
+            <div class="game-info">
+              <h3 class="game-title">Hidden Secrets 17</h3>
+              <p class="game-genre">Puzzle Adventure</p>
+              <p class="game-status">Released (2021)</p>
+              <div class="game-platforms">
+                <span class="platform-icon">Mobile</span>
+              </div>
+              <a href="#" class="btn btn-outline btn-view-game-details" data-game-id="hidden-secrets-17">Get on Mobile</a>
+            </div>
+          </li>
+          <!-- Game Card 18 -->
+          <li class="game-card" data-categories="rpg pc">
+            <img src="logo.png" alt="Game 18 Thumbnail" class="game-thumbnail">
+            <div class="game-info">
+              <h3 class="game-title">Mystic Realms 18</h3>
+              <p class="game-genre">RPG</p>
+              <p class="game-status">Pre-Alpha</p>
+              <div class="game-platforms">
+                <span class="platform-icon">PC</span>
+              </div>
+              <a href="#" class="btn btn-outline btn-view-game-details" data-game-id="mystic-realms-18">Follow Development</a>
+            </div>
+          </li>
+          <!-- Game Card 19 -->
+          <li class="game-card" data-categories="action strategy pc">
+            <img src="logo.png" alt="Game 19 Thumbnail" class="game-thumbnail">
+            <div class="game-info">
+              <h3 class="game-title">Warzone Tactics 19</h3>
+              <p class="game-genre">Action Strategy</p>
+              <p class="game-status">Released (2019)</p>
+              <div class="game-platforms">
+                <span class="platform-icon">PC</span>
+              </div>
+              <a href="#" class="btn btn-outline btn-view-game-details" data-game-id="warzone-tactics-19">Learn More</a>
+            </div>
+          </li>
+          <!-- Game Card 20 -->
+          <li class="game-card" data-categories="puzzle adventure pc">
+            <img src="logo.png" alt="Game 20 Thumbnail" class="game-thumbnail">
+            <div class="game-info">
+              <h3 class="game-title">Labyrinth Explorer 20</h3>
+              <p class="game-genre">Puzzle Adventure</p>
+              <p class="game-status">Released (2022)</p>
+              <div class="game-platforms">
+                <span class="platform-icon">PC</span>
+              </div>
+              <a href="#" class="btn btn-outline btn-view-game-details" data-game-id="labyrinth-explorer-20">Learn More</a>
+            </div>
+          </li>
+          <!-- Game Card 21 -->
+          <li class="game-card" data-categories="action rpg mobile">
+            <img src="logo.png" alt="Game 21 Thumbnail" class="game-thumbnail">
+            <div class="game-info">
+              <h3 class="game-title">Heroic Saga 21</h3>
+              <p class="game-genre">Action RPG</p>
+              <p class="game-status">Released (2021)</p>
+              <div class="game-platforms">
+                <span class="platform-icon">Mobile</span>
+              </div>
+              <a href="#" class="btn btn-outline btn-view-game-details" data-game-id="heroic-saga-21">Get on Mobile</a>
+            </div>
+          </li>
+          <!-- Game Card 22 -->
+          <li class="game-card" data-categories="strategy pc">
+            <img src="logo.png" alt="Game 22 Thumbnail" class="game-thumbnail">
+            <div class="game-info">
+              <h3 class="game-title">Empire Wars 22</h3>
+              <p class="game-genre">Strategy</p>
+              <p class="game-status">In Development</p>
+              <div class="game-platforms">
+                <span class="platform-icon">PC</span>
+              </div>
+              <a href="#" class="btn btn-outline btn-view-game-details" data-game-id="empire-wars-22">View Progress</a>
+            </div>
+          </li>
+          <!-- Game Card 23 -->
+          <li class="game-card" data-categories="adventure puzzle mobile">
+            <img src="logo.png" alt="Game 23 Thumbnail" class="game-thumbnail">
+            <div class="game-info">
+              <h3 class="game-title">Quest for Secrets 23</h3>
+              <p class="game-genre">Puzzle Adventure</p>
+              <p class="game-status">Released (2020)</p>
+              <div class="game-platforms">
+                <span class="platform-icon">Mobile</span>
+              </div>
+              <a href="#" class="btn btn-outline btn-view-game-details" data-game-id="quest-for-secrets-23">Get on Mobile</a>
+            </div>
+          </li>
+          <!-- Game Card 24 -->
+          <li class="game-card" data-categories="rpg pc">
+            <img src="logo.png" alt="Game 24 Thumbnail" class="game-thumbnail">
+            <div class="game-info">
+              <h3 class="game-title">Chronicles 24</h3>
+              <p class="game-genre">RPG</p>
+              <p class="game-status">Pre-Alpha</p>
+              <div class="game-platforms">
+                <span class="platform-icon">PC</span>
+              </div>
+              <a href="#" class="btn btn-outline btn-view-game-details" data-game-id="chronicles-24">Follow Development</a>
+            </div>
+          </li>
+          <!-- Game Card 25 -->
+          <li class="game-card" data-categories="action adventure pc">
+            <img src="logo.png" alt="Game 25 Thumbnail" class="game-thumbnail">
+            <div class="game-info">
+              <h3 class="game-title">Quest Warriors 25</h3>
+              <p class="game-genre">Action Adventure</p>
+              <p class="game-status">Released (2019)</p>
+              <div class="game-platforms">
+                <span class="platform-icon">PC</span>
+              </div>
+              <a href="#" class="btn btn-outline btn-view-game-details" data-game-id="quest-warriors-25">Learn More</a>
+            </div>
+          </li>
+          <!-- Game Card 26 -->
+          <li class="game-card" data-categories="strategy rpg pc">
+            <img src="logo.png" alt="Game 26 Thumbnail" class="game-thumbnail">
+            <div class="game-info">
+              <h3 class="game-title">Battle Tactics 26</h3>
+              <p class="game-genre">Strategy RPG</p>
+              <p class="game-status">In Development</p>
+              <div class="game-platforms">
+                <span class="platform-icon">PC</span>
+              </div>
+              <a href="#" class="btn btn-outline btn-view-game-details" data-game-id="battle-tactics-26">View Progress</a>
+            </div>
+          </li>
+          <!-- Game Card 27 -->
+          <li class="game-card" data-categories="adventure puzzle mobile">
+            <img src="logo.png" alt="Game 27 Thumbnail" class="game-thumbnail">
+            <div class="game-info">
+              <h3 class="game-title">Mystery Island 27</h3>
+              <p class="game-genre">Puzzle Adventure</p>
+              <p class="game-status">Released (2022)</p>
+              <div class="game-platforms">
+                <span class="platform-icon">Mobile</span>
+              </div>
+              <a href="#" class="btn btn-outline btn-view-game-details" data-game-id="mystery-island-27">Get on Mobile</a>
+            </div>
+          </li>
+          <!-- Game Card 28 -->
+          <li class="game-card" data-categories="rpg pc">
+            <img src="logo.png" alt="Game 28 Thumbnail" class="game-thumbnail">
+            <div class="game-info">
+              <h3 class="game-title">Legends of Dawn 28</h3>
+              <p class="game-genre">RPG</p>
+              <p class="game-status">Pre-Alpha</p>
+              <div class="game-platforms">
+                <span class="platform-icon">PC</span>
+              </div>
+              <a href="#" class="btn btn-outline btn-view-game-details" data-game-id="legends-of-dawn-28">Follow Development</a>
+            </div>
+          </li>
+          <!-- Game Card 29 -->
+          <li class="game-card" data-categories="action strategy pc">
+            <img src="logo.png" alt="Game 29 Thumbnail" class="game-thumbnail">
+            <div class="game-info">
+              <h3 class="game-title">Frontline Assault 29</h3>
+              <p class="game-genre">Action Strategy</p>
+              <p class="game-status">Released (2020)</p>
+              <div class="game-platforms">
+                <span class="platform-icon">PC</span>
+              </div>
+              <a href="#" class="btn btn-outline btn-view-game-details" data-game-id="frontline-assault-29">Learn More</a>
+            </div>
+          </li>
+          <!-- Game Card 30 -->
+          <li class="game-card" data-categories="puzzle adventure pc">
+            <img src="logo.png" alt="Game 30 Thumbnail" class="game-thumbnail">
+            <div class="game-info">
+              <h3 class="game-title">Riddle Quest 30</h3>
+              <p class="game-genre">Puzzle Adventure</p>
+              <p class="game-status">Released (2021)</p>
+              <div class="game-platforms">
+                <span class="platform-icon">PC</span>
+              </div>
+              <a href="#" class="btn btn-outline btn-view-game-details" data-game-id="riddle-quest-30">Learn More</a>
+            </div>
+          </li>
+          <!-- Game Card 31 -->
+          <li class="game-card" data-categories="action rpg mobile">
+            <img src="logo.png" alt="Game 31 Thumbnail" class="game-thumbnail">
+            <div class="game-info">
+              <h3 class="game-title">Galaxy Warriors 31</h3>
+              <p class="game-genre">Action RPG</p>
+              <p class="game-status">In Development</p>
+              <div class="game-platforms">
+                <span class="platform-icon">Mobile</span>
+              </div>
+              <a href="#" class="btn btn-outline btn-view-game-details" data-game-id="galaxy-warriors-31">View Progress</a>
+            </div>
+          </li>
+          <!-- Game Card 32 -->
+          <li class="game-card" data-categories="strategy pc">
+            <img src="logo.png" alt="Game 32 Thumbnail" class="game-thumbnail">
+            <div class="game-info">
+              <h3 class="game-title">Conquest Realm 32</h3>
+              <p class="game-genre">Strategy</p>
+              <p class="game-status">Released (2019)</p>
+              <div class="game-platforms">
+                <span class="platform-icon">PC</span>
+              </div>
+              <a href="#" class="btn btn-outline btn-view-game-details" data-game-id="conquest-realm-32">Learn More</a>
+            </div>
+          </li>
+          <!-- Game Card 33 -->
+          <li class="game-card" data-categories="adventure puzzle mobile">
+            <img src="logo.png" alt="Game 33 Thumbnail" class="game-thumbnail">
+            <div class="game-info">
+              <h3 class="game-title">Hidden Treasures 33</h3>
+              <p class="game-genre">Puzzle Adventure</p>
+              <p class="game-status">Released (2022)</p>
+              <div class="game-platforms">
+                <span class="platform-icon">Mobile</span>
+              </div>
+              <a href="#" class="btn btn-outline btn-view-game-details" data-game-id="hidden-treasures-33">Get on Mobile</a>
+            </div>
+          </li>
+          <!-- Game Card 34 -->
+          <li class="game-card" data-categories="rpg pc">
+            <img src="logo.png" alt="Game 34 Thumbnail" class="game-thumbnail">
+            <div class="game-info">
+              <h3 class="game-title">Eternal Worlds 34</h3>
+              <p class="game-genre">RPG</p>
+              <p class="game-status">Pre-Alpha</p>
+              <div class="game-platforms">
+                <span class="platform-icon">PC</span>
+              </div>
+              <a href="#" class="btn btn-outline btn-view-game-details" data-game-id="eternal-worlds-34">Follow Development</a>
+            </div>
+          </li>
+          <!-- Game Card 35 -->
+          <li class="game-card" data-categories="action strategy pc">
+            <img src="logo.png" alt="Game 35 Thumbnail" class="game-thumbnail">
+            <div class="game-info">
+              <h3 class="game-title">Warfront Legends 35</h3>
+              <p class="game-genre">Action Strategy</p>
+              <p class="game-status">Released (2020)</p>
+              <div class="game-platforms">
+                <span class="platform-icon">PC</span>
+              </div>
+              <a href="#" class="btn btn-outline btn-view-game-details" data-game-id="warfront-legends-35">Learn More</a>
+            </div>
+          </li>
+          <!-- Game Card 36 -->
+          <li class="game-card" data-categories="puzzle adventure pc">
+            <img src="logo.png" alt="Game 36 Thumbnail" class="game-thumbnail">
+            <div class="game-info">
+              <h3 class="game-title">Mystery Maze 36</h3>
+              <p class="game-genre">Puzzle Adventure</p>
+              <p class="game-status">Released (2021)</p>
+              <div class="game-platforms">
+                <span class="platform-icon">PC</span>
+              </div>
+              <a href="#" class="btn btn-outline btn-view-game-details" data-game-id="mystery-maze-36">Learn More</a>
+            </div>
+          </li>
+          <!-- Game Card 37 -->
+          <li class="game-card" data-categories="action rpg mobile">
+            <img src="logo.png" alt="Game 37 Thumbnail" class="game-thumbnail">
+            <div class="game-info">
+              <h3 class="game-title">Galactic Odyssey 37</h3>
+              <p class="game-genre">Action RPG</p>
+              <p class="game-status">In Development</p>
+              <div class="game-platforms">
+                <span class="platform-icon">Mobile</span>
+              </div>
+              <a href="#" class="btn btn-outline btn-view-game-details" data-game-id="galactic-odyssey-37">View Progress</a>
+            </div>
+          </li>
+          <!-- Game Card 38 -->
+          <li class="game-card" data-categories="strategy pc">
+            <img src="logo.png" alt="Game 38 Thumbnail" class="game-thumbnail">
+            <div class="game-info">
+              <h3 class="game-title">Empire Legends 38</h3>
+              <p class="game-genre">Strategy</p>
+              <p class="game-status">Released (2019)</p>
+              <div class="game-platforms">
+                <span class="platform-icon">PC</span>
+              </div>
+              <a href="#" class="btn btn-outline btn-view-game-details" data-game-id="empire-legends-38">Learn More</a>
+            </div>
+          </li>
+          <!-- Game Card 39 -->
+          <li class="game-card" data-categories="adventure puzzle mobile">
+            <img src="logo.png" alt="Game 39 Thumbnail" class="game-thumbnail">
+            <div class="game-info">
+              <h3 class="game-title">Secret Valley 39</h3>
+              <p class="game-genre">Puzzle Adventure</p>
+              <p class="game-status">Released (2022)</p>
+              <div class="game-platforms">
+                <span class="platform-icon">Mobile</span>
+              </div>
+              <a href="#" class="btn btn-outline btn-view-game-details" data-game-id="secret-valley-39">Get on Mobile</a>
+            </div>
+          </li>
+          <!-- Game Card 40 -->
+          <li class="game-card" data-categories="rpg pc">
+            <img src="logo.png" alt="Game 40 Thumbnail" class="game-thumbnail">
+            <div class="game-info">
+              <h3 class="game-title">Mythic Realms 40</h3>
+              <p class="game-genre">RPG</p>
+              <p class="game-status">Pre-Alpha</p>
+              <div class="game-platforms">
+                <span class="platform-icon">PC</span>
+              </div>
+              <a href="#" class="btn btn-outline btn-view-game-details" data-game-id="mythic-realms-40">Follow Development</a>
+            </div>
+          </li>
+          <!-- Game Card 41 -->
+          <li class="game-card" data-categories="action strategy pc">
+            <img src="logo.png" alt="Game 41 Thumbnail" class="game-thumbnail">
+            <div class="game-info">
+              <h3 class="game-title">Battle Nexus 41</h3>
+              <p class="game-genre">Action Strategy</p>
+              <p class="game-status">Released (2020)</p>
+              <div class="game-platforms">
+                <span class="platform-icon">PC</span>
+              </div>
+              <a href="#" class="btn btn-outline btn-view-game-details" data-game-id="battle-nexus-41">Learn More</a>
+            </div>
+          </li>
+          <!-- Game Card 42 -->
+          <li class="game-card" data-categories="puzzle adventure pc">
+            <img src="logo.png" alt="Game 42 Thumbnail" class="game-thumbnail">
+            <div class="game-info">
+              <h3 class="game-title">Enigma Island 42</h3>
+              <p class="game-genre">Puzzle Adventure</p>
+              <p class="game-status">Released (2021)</p>
+              <div class="game-platforms">
+                <span class="platform-icon">PC</span>
+              </div>
+              <a href="#" class="btn btn-outline btn-view-game-details" data-game-id="enigma-island-42">Learn More</a>
+            </div>
+          </li>
+          <!-- Game Card 43 -->
+          <li class="game-card" data-categories="action rpg mobile">
+            <img src="logo.png" alt="Game 43 Thumbnail" class="game-thumbnail">
+            <div class="game-info">
+              <h3 class="game-title">Star Crusade 43</h3>
+              <p class="game-genre">Action RPG</p>
+              <p class="game-status">In Development</p>
+              <div class="game-platforms">
+                <span class="platform-icon">Mobile</span>
+              </div>
+              <a href="#" class="btn btn-outline btn-view-game-details" data-game-id="star-crusade-43">View Progress</a>
+            </div>
+          </li>
+          <!-- Game Card 44 -->
+          <li class="game-card" data-categories="strategy pc">
+            <img src="logo.png" alt="Game 44 Thumbnail" class="game-thumbnail">
+            <div class="game-info">
+              <h3 class="game-title">Tactical Edge 44</h3>
+              <p class="game-genre">Strategy</p>
+              <p class="game-status">Released (2019)</p>
+              <div class="game-platforms">
+                <span class="platform-icon">PC</span>
+              </div>
+              <a href="#" class="btn btn-outline btn-view-game-details" data-game-id="tactical-edge-44">Learn More</a>
+            </div>
+          </li>
+          <!-- Game Card 45 -->
+          <li class="game-card" data-categories="adventure puzzle mobile">
+            <img src="logo.png" alt="Game 45 Thumbnail" class="game-thumbnail">
+            <div class="game-info">
+              <h3 class="game-title">Lost Relics 45</h3>
+              <p class="game-genre">Puzzle Adventure</p>
+              <p class="game-status">Released (2022)</p>
+              <div class="game-platforms">
+                <span class="platform-icon">Mobile</span>
+              </div>
+              <a href="#" class="btn btn-outline btn-view-game-details" data-game-id="lost-relics-45">Get on Mobile</a>
+            </div>
+          </li>
+          <!-- Game Card 46 -->
+          <li class="game-card" data-categories="rpg pc">
+            <img src="logo.png" alt="Game 46 Thumbnail" class="game-thumbnail">
+            <div class="game-info">
+              <h3 class="game-title">Chronicle Saga 46</h3>
+              <p class="game-genre">RPG</p>
+              <p class="game-status">Pre-Alpha</p>
+              <div class="game-platforms">
+                <span class="platform-icon">PC</span>
+              </div>
+              <a href="#" class="btn btn-outline btn-view-game-details" data-game-id="chronicle-saga-46">Follow Development</a>
+            </div>
+          </li>
+          <!-- Game Card 47 -->
+          <li class="game-card" data-categories="action strategy pc">
+            <img src="logo.png" alt="Game 47 Thumbnail" class="game-thumbnail">
+            <div class="game-info">
+              <h3 class="game-title">War Legends 47</h3>
+              <p class="game-genre">Action Strategy</p>
+              <p class="game-status">Released (2020)</p>
+              <div class="game-platforms">
+                <span class="platform-icon">PC</span>
+              </div>
+              <a href="#" class="btn btn-outline btn-view-game-details" data-game-id="war-legends-47">Learn More</a>
+            </div>
+          </li>
+          <!-- Game Card 48 -->
+          <li class="game-card" data-categories="puzzle adventure pc">
+            <img src="logo.png" alt="Game 48 Thumbnail" class="game-thumbnail">
+            <div class="game-info">
+              <h3 class="game-title">Secret Path 48</h3>
+              <p class="game-genre">Puzzle Adventure</p>
+              <p class="game-status">Released (2021)</p>
+              <div class="game-platforms">
+                <span class="platform-icon">PC</span>
+              </div>
+              <a href="#" class="btn btn-outline btn-view-game-details" data-game-id="secret-path-48">Learn More</a>
+            </div>
+          </li>
+          <!-- Game Card 49 -->
+          <li class="game-card" data-categories="action rpg mobile">
+            <img src="logo.png" alt="Game 49 Thumbnail" class="game-thumbnail">
+            <div class="game-info">
+              <h3 class="game-title">Galaxy Warriors 49</h3>
+              <p class="game-genre">Action RPG</p>
+              <p class="game-status">In Development</p>
+              <div class="game-platforms">
+                <span class="platform-icon">Mobile</span>
+              </div>
+              <a href="#" class="btn btn-outline btn-view-game-details" data-game-id="galaxy-warriors-49">View Progress</a>
+            </div>
+          </li>
+          <!-- Game Card 50 -->
+          <li class="game-card" data-categories="strategy pc">
+            <img src="logo.png" alt="Game 50 Thumbnail" class="game-thumbnail">
+            <div class="game-info">
+              <h3 class="game-title">Empire Reborn 50</h3>
+              <p class="game-genre">Strategy</p>
+              <p class="game-status">Released (2019)</p>
+              <div class="game-platforms">
+                <span class="platform-icon">PC</span>
+              </div>
+              <a href="#" class="btn btn-outline btn-view-game-details" data-game-id="empire-reborn-50">Learn More</a>
+            </div>
+          </li>
+        </ul>
+        <div class="coming-soon-card">
+          <h3>More Adventures Coming Soon!</h3>
+          <p>Stay tuned for exciting new titles from SSLR Games.</p>
+          <a href="#news" class="btn btn-primary">Get Updates</a>
+        </div>
+      </div>
+    </section>
+    <!-- Games Section End -->
+
+    <!-- Team Section Start -->
+    <section id="team" class="team-section common-section">
+      <div class="container section-header">
+        <h2 class="section-title">Our Team</h2>
+        <p class="section-subtitle">The passionate minds behind SSLR Games.</p>
+      </div>
+      <div class="container team-content">
+        <div class="team-grid">
+          <!-- Placeholder team members using logo.png as avatar -->
+          <div class="team-member">
+            <img src="logo.png" alt="Team Member 1" class="team-avatar">
+            <h3 class="team-name">Alice Rahman</h3>
+            <p class="team-role">Lead Game Designer</p>
+            <p class="team-bio">Crafts compelling narratives and engaging gameplay systems.</p>
+          </div>
+          <div class="team-member">
+            <img src="logo.png" alt="Team Member 2" class="team-avatar">
+            <h3 class="team-name">Bilal Hossain</h3>
+            <p class="team-role">Senior Unity Developer</p>
+            <p class="team-bio">Specializes in C# and game architecture optimization.</p>
+          </div>
+          <div class="team-member">
+            <img src="logo.png" alt="Team Member 3" class="team-avatar">
+            <h3 class="team-name">Chitra Sultana</h3>
+            <p class="team-role">3D Character Artist</p>
+            <p class="team-bio">Creates stunning character models, textures, and rigs.</p>
+          </div>
+          <div class="team-member">
+            <img src="logo.png" alt="Team Member 4" class="team-avatar">
+            <h3 class="team-name">David Karim</h3>
+            <p class="team-role">AI Programmer</p>
+            <p class="team-bio">Designs intelligent AI systems and dynamic behaviors.</p>
+          </div>
+          <div class="team-member">
+            <img src="logo.png" alt="Team Member 5" class="team-avatar">
+            <h3 class="team-name">Elina Begum</h3>
+            <p class="team-role">UI/UX Designer</p>
+            <p class="team-bio">Ensures intuitive interfaces and seamless user experiences.</p>
+          </div>
+          <div class="team-member">
+            <img src="logo.png" alt="Team Member 6" class="team-avatar">
+            <h3 class="team-name">Farid Ahmed</h3>
+            <p class="team-role">Backend Engineer</p>
+            <p class="team-bio">Builds robust server infrastructure and APIs.</p>
+          </div>
+          <div class="team-member">
+            <img src="logo.png" alt="Team Member 7" class="team-avatar">
+            <h3 class="team-name">Gulshan Khan</h3>
+            <p class="team-role">Sound Designer</p>
+            <p class="team-bio">Creates immersive soundscapes and audio effects.</p>
+          </div>
+          <div class="team-member">
+            <img src="logo.png" alt="Team Member 8" class="team-avatar">
+            <h3 class="team-name">Hina Akhtar</h3>
+            <p class="team-role">Community Manager</p>
+            <p class="team-bio">Engages with players and fosters a vibrant community.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Team Section End -->
+
+    <!-- Careers Section Start -->
+    <section id="careers" class="careers-section common-section">
+      <div class="container section-header">
+        <h2 class="section-title">Join the SSLR Games Family</h2>
+        <p class="section-subtitle">Be part of a passionate team shaping the future of gaming.</p>
+      </div>
+      <div class="container careers-content">
+        <p>At SSLR Games, we believe great games are built by great people. We foster a collaborative, creative, and supportive environment where talent thrives. If you're passionate about games and eager to make an impact, we'd love to hear from you.</p>
+        <div class="job-listings">
+          <h3>Current Openings</h3>
+          <ul class="job-list">
+            <li class="job-card">
+              <h4 class="job-title">Senior Game Developer (Unity/C#)</h4>
+              <span class="job-location">Duarshona, Rangpur</span>
+              <p>Experienced Unity developer with a strong grasp of C# and game architecture.</p>
+              <div><span class="job-type">Full-time</span> | <span class="job-department">Engineering</span></div>
+              <a href="#" class="btn btn-outline btn-apply" data-job-id="senior-dev">Apply Now</a>
+            </li>
+            <li class="job-card">
+              <h4 class="job-title">3D Character Artist</h4>
+              <span class="job-location">Duarshona, Rangpur</span>
+              <p>Passionate 3D artist with expertise in character modeling, texturing, and rigging for games.</p>
+              <div><span class="job-type">Full-time</span> | <span class="job-department">Art</span></div>
+              <a href="#" class="btn btn-outline btn-apply" data-job-id="3d-artist">Apply Now</a>
+            </li>
+            <li class="job-card">
+              <h4 class="job-title">Game Designer (Narrative Focus)</h4>
+              <span class="job-location">Duarshona, Rangpur</span>
+              <p>Creative game designer with a knack for compelling storytelling and system design.</p>
+              <div><span class="job-type">Full-time</span> | <span class="job-department">Design</span></div>
+              <a href="#" class="btn btn-outline btn-apply" data-job-id="game-designer">Apply Now</a>
+            </li>
+          </ul>
+          <p>Don't see a role that fits? We're always looking for exceptional talent! <a href="mailto:bdha20095@gmail.com">Send Us Your Resume</a></p>
+        </div>
+      </div>
+    </section>
+    <!-- Careers Section End -->
+
+    <!-- News & Blog Section Start -->
+    <section id="news" class="news-section common-section">
+      <div class="container section-header">
+        <h2 class="section-title">Latest News & Updates</h2>
+        <p class="section-subtitle">Stay informed about our progress, game releases, and studio happenings.</p>
+      </div>
+      <div class="container news-content">
+        <ul class="news-grid">
+          <!-- Placeholder news posts using logo.png as thumbnail -->
+          <li class="news-card">
+            <img src="logo.png" alt="News 1 Thumbnail" class="news-thumbnail">
+            <div class="news-info">
+              <span class="news-category">Event</span>
+              <h3 class="news-title">SSLR Games Showcases at Global Expo 2025</h3>
+              <p class="news-excerpt">We participated in Global Expo 2025, presenting Celestial Echoes to industry leaders and gamers alike.</p>
+              <time datetime="2025-06-05" class="news-date">June 5, 2025</time>
+              <a href="#" class="btn btn-link">Read More →</a>
+            </div>
+          </li>
+          <li class="news-card">
+            <img src="logo.png" alt="News 2 Thumbnail" class="news-thumbnail">
+            <div class="news-info">
+              <span class="news-category">Update</span>
+              <h3 class="news-title">Major Update Released for Celestial Echoes</h3>
+              <p class="news-excerpt">New missions, characters, and revamped combat system now live in Celestial Echoes.</p>
+              <time datetime="2025-05-28" class="news-date">May 28, 2025</time>
+              <a href="#" class="btn btn-link">Read More →</a>
+            </div>
+          </li>
+          <li class="news-card">
+            <img src="logo.png" alt="News 3 Thumbnail" class="news-thumbnail">
+            <div class="news-info">
+              <span class="news-category">Dev Blog</span>
+              <h3 class="news-title">Crafting Intelligent AI for Tactical Frontier</h3>
+              <p class="news-excerpt">Our lead AI programmer shares insights into challenges and triumphs of dynamic AI opponents.</p>
+              <time datetime="2025-05-20" class="news-date">May 20, 2025</time>
+              <a href="#" class="btn btn-link">Read More →</a>
+            </div>
+          </li>
+          <li class="news-card">
+            <img src="logo.png" alt="News 4 Thumbnail" class="news-thumbnail">
+            <div class="news-info">
+              <span class="news-category">Announcement</span>
+              <h3 class="news-title">New Project Announcement: Shadows of Xylon</h3>
+              <p class="news-excerpt">We are thrilled to announce our next dark fantasy RPG, Shadows of Xylon. Stay tuned for details!</p>
+              <time datetime="2025-04-15" class="news-date">April 15, 2025</time>
+              <a href="#" class="btn btn-link">Read More →</a>
+            </div>
+          </li>
+          <li class="news-card">
+            <img src="logo.png" alt="News 5 Thumbnail" class="news-thumbnail">
+            <div class="news-info">
+              <span class="news-category">Community</span>
+              <h3 class="news-title">Community Spotlight: Top Fan Art</h3>
+              <p class="news-excerpt">Celebrating the best fan art submissions from our community this month.</p>
+              <time datetime="2025-04-01" class="news-date">April 1, 2025</time>
+              <a href="#" class="btn btn-link">Read More →</a>
+            </div>
+          </li>
+        </ul>
+        <a href="/news-archive" class="btn btn-primary">View All News & Blog Posts</a>
+      </div>
+    </section>
+    <!-- News & Blog Section End -->
+
+    <!-- FAQ Section Start -->
+    <section id="faq" class="faq-section common-section">
+      <div class="container section-header">
+        <h2 class="section-title">Frequently Asked Questions</h2>
+        <p class="section-subtitle">Answers to common queries.</p>
+      </div>
+      <div class="container faq-content">
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">How can I report a bug?</button>
+          <div class="faq-answer hidden">
+            <p>Please use our support page (link) to report bugs. Provide details like steps to reproduce, screenshots, and system info.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">How do I apply for a job?</button>
+          <div class="faq-answer hidden">
+            <p>Go to the Careers section above and click 'Apply Now' on the desired position, fill out the form, and submit your resume.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">Can I contribute to game development?</button>
+          <div class="faq-answer hidden">
+            <p>We occasionally look for open source contributions or community mods. Join our Discord to stay updated about modding tools and community projects.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">Where can I find game documentation?</button>
+          <div class="faq-answer hidden">
+            <p>Check the Support or Resources section on our website for official documentation, guides, and FAQs for each game.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">How do I subscribe to the newsletter?</button>
+          <div class="faq-answer hidden">
+            <p>Use the newsletter signup form in the footer or CTA section: enter your email and click Subscribe.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">What platforms do you support?</button>
+          <div class="faq-answer hidden">
+            <p>We develop for PC, Mobile (iOS & Android), and consoles. Check each game’s page for platform specifics.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- FAQ Section End -->
+
+    <!-- CTA / Newsletter Section Start -->
+    <section class="cta-section common-section">
+      <div class="container cta-content">
+        <h2 class="cta-title">Join the SSLR Games Community!</h2>
+        <p class="cta-subtitle">Connect with fellow gamers, get exclusive updates, and shape the future of our games.</p>
+        <div class="cta-actions">
+          <a href="https://t.me/sslrgames" target="_blank" rel="noopener noreferrer" class="btn btn-cta telegram">Join Telegram</a>
+          <a href="https://x.com/sslrgames" target="_blank" rel="noopener noreferrer" class="btn btn-cta x-twitter">Follow us on X</a>
+          <a href="https://discord.gg/sslrgamescommunity" target="_blank" rel="noopener noreferrer" class="btn btn-cta discord">Join Discord</a>
+        </div>
+        <form class="newsletter-form" aria-label="Newsletter signup">
+          <label for="newsletter-email" class="sr-only">Enter your email address</label>
+          <input type="email" id="newsletter-email" name="newsletter-email" placeholder="Enter your email address" required>
+          <button type="submit" class="btn btn-primary">Subscribe</button>
+        </form>
+      </div>
+    </section>
+    <!-- CTA / Newsletter Section End -->
+
+    <!-- Contact Section Start -->
+    <section id="contact" class="contact-section common-section">
+      <div class="container section-header">
+        <h2 class="section-title">Get in Touch</h2>
+        <p class="section-subtitle">We'd love to hear from you.</p>
+      </div>
+      <div class="container contact-content">
+        <div class="contact-info">
+          <h3>General Inquiries & Business Partnerships</h3>
+          <p>For general inquiries or business-related discussions:</p>
+          <a href="#" class="contact-email email-obfuscated" data-email-part1="bdha20095" data-email-part2="gmail.com">
+            <i class="fas fa-envelope" aria-hidden="true"></i> Reveal Email
+          </a>
+          <p class="location-text">
+            <i class="fas fa-map-marker-alt" aria-hidden="true"></i> Location: Duarshona, Rangpur, Bangladesh
+          </p>
+          <p class="disclaimer">Please note: This email is for business inquiries only. For game support, please visit our dedicated support page.</p>
+        </div>
+        <div class="contact-form-wrapper">
+          <h3>Send Us a Message</h3>
+          <form class="contact-form">
+            <div class="form-group">
+              <label for="name">Your Name:</label>
+              <input type="text" id="name" name="name" required aria-label="Your Name">
+            </div>
+            <div class="form-group">
+              <label for="email">Your Email:</label>
+              <input type="email" id="email" name="email" required aria-label="Your Email Address">
+            </div>
+            <div class="form-group">
+              <label for="subject">Subject:</label>
+              <input type="text" id="subject" name="subject" required aria-label="Subject of your message">
+            </div>
+            <div class="form-group">
+              <label for="message">Your Message:</label>
+              <textarea id="message" name="message" rows="6" required aria-label="Your Message"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary btn-submit">Send Message</button>
+            <div class="form-status-message" aria-live="polite"></div>
+          </form>
+        </div>
+      </div>
+    </section>
+    <!-- Contact Section End -->
+
+  </main>
+  <!-- Main Content End -->
+
+  <!-- Footer Start -->
+  <footer class="main-footer">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <img src="logo.png" alt="SSLR Games Logo" class="footer-logo">
+        <p class="footer-slogan">Crafting Immersive Worlds.</p>
+        <div class="social-links">
+          <a href="https://x.com/sslrgames" aria-label="Follow SSLR Games on X"><i class="fab fa-x-twitter" aria-hidden="true"></i></a>
+          <a href="https://t.me/sslrgames" aria-label="Join SSLR Games on Telegram"><i class="fab fa-telegram-plane" aria-hidden="true"></i></a>
+          <a href="https://discord.gg/sslrgamescommunity" aria-label="Join SSLR Games Discord"><i class="fab fa-discord" aria-hidden="true"></i></a>
+        </div>
+      </div>
+      <nav class="footer-nav" aria-label="Footer Navigation">
+        <div class="nav-column">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="#about">About Us</a></li>
+            <li><a href="#careers">Careers</a></li>
+            <li><a href="#news">Newsroom</a></li>
+            <li><a href="#contact">Contact Us</a></li>
+            <li><a href="#">Press Kit</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">Terms of Service</a></li>
+          </ul>
+        </div>
+        <div class="nav-column">
+          <h4>Our Games</h4>
+          <ul>
+            <li><a href="#games">All Games</a></li>
+            <li><a href="#universe">Universes</a></li>
+            <li><a href="#">PC Games</a></li>
+            <li><a href="#">Mobile Games</a></li>
+            <li><a href="#">Upcoming Projects</a></li>
+          </ul>
+        </div>
+        <div class="nav-column">
+          <h4>Resources</h4>
+          <ul>
+            <li><a href="#">Support</a></li>
+            <li><a href="#">Community Guidelines</a></li>
+            <li><a href="#">Developer Blog</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">Terms of Service</a></li>
+          </ul>
+        </div>
+      </nav>
+      <div class="footer-contact-address">
+        <h4>Headquarters</h4>
+        <address>
+          SSLR Games HQ<br>
+          Duarshona, Rangpur<br>
+          Bangladesh
+        </address>
+        <p>Email: <span class="email-obfuscated" data-email-part1="bdha20095" data-email-part2="gmail.com">Reveal Email</span></p>
+        <div class="map-placeholder" aria-hidden="true">
+          <!-- Map placeholder; integrate map iframe if available -->
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; <span id="current-year"></span> SSLR Games. All rights reserved.</p>
+      <p class="acknowledgement">Made with passion in Bangladesh.</p>
+    </div>
+  </footer>
+  <!-- Footer End -->
+
+  <!-- Modals Start -->
+  <!-- Game Details Modal -->
+  <div id="game-details-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="game-modal-title" aria-hidden="true">
+    <div class="modal-content">
+      <button class="close-button" aria-label="Close game details modal">&times;</button>
+      <h2 id="game-modal-title">Game Title Placeholder</h2>
+      <div class="modal-body">
+        <p class="modal-game-description">Loading game details...</p>
+        <div class="game-media">
+          <img src="logo.png" alt="Game Screenshot" class="modal-game-img">
+          <!-- If there were a video: <video controls src="" class="modal-game-video"></video> -->
+        </div>
+        <div class="modal-game-features">
+          <h3>Key Features</h3>
+          <ul>
+            <li>Feature 1 placeholder</li>
+            <li>Feature 2 placeholder</li>
+            <li>Feature 3 placeholder</li>
+          </ul>
+        </div>
+        <div class="modal-game-platforms">
+          <h3>Available On</h3>
+          <ul>
+            <li>PC</li>
+            <li>Mobile</li>
+          </ul>
+        </div>
+        <a href="#" class="btn btn-primary modal-buy-link" target="_blank" rel="noopener noreferrer">Buy Now / Download</a>
+      </div>
+    </div>
+  </div>
+  <!-- Job Apply Modal -->
+  <div id="job-apply-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="job-modal-title" aria-hidden="true">
+    <div class="modal-content">
+      <button class="close-button" aria-label="Close job application modal">&times;</button>
+      <h2 id="job-modal-title">Apply for: Job Title Placeholder</h2>
+      <div class="modal-body">
+        <form class="job-application-form">
+          <div class="form-group">
+            <label for="applicant-name">Full Name:</label>
+            <input type="text" id="applicant-name" required>
+          </div>
+          <div class="form-group">
+            <label for="applicant-email">Email:</label>
+            <input type="email" id="applicant-email" required>
+          </div>
+          <div class="form-group">
+            <label for="applicant-phone">Phone (Optional):</label>
+            <input type="tel" id="applicant-phone">
+          </div>
+          <div class="form-group">
+            <label for="applicant-linkedin">LinkedIn Profile (Optional):</label>
+            <input type="url" id="applicant-linkedin">
+          </div>
+          <div class="form-group">
+            <label for="applicant-resume">Upload Resume (PDF, DOCX):</label>
+            <input type="file" id="applicant-resume" accept=".pdf,.doc,.docx" required>
+          </div>
+          <div class="form-group">
+            <label for="applicant-cover-letter">Cover Letter (Optional):</label>
+            <textarea id="applicant-cover-letter" rows="5"></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary">Submit Application</button>
+          <div class="form-status-message" aria-live="polite"></div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <!-- Modals End -->
+
+  <!-- Utility Scripts for FAQ toggling -->
+  <script>
+    // FAQ toggle functionality
+    document.addEventListener('DOMContentLoaded', function() {
+      const faqItems = document.querySelectorAll('.faq-item');
+      faqItems.forEach(item => {
+        const questionBtn = item.querySelector('.faq-question');
+        const answerDiv = item.querySelector('.faq-answer');
+        questionBtn.addEventListener('click', function() {
+          const expanded = this.getAttribute('aria-expanded') === 'true';
+          this.setAttribute('aria-expanded', expanded ? 'false' : 'true');
+          if (expanded) {
+            answerDiv.classList.add('hidden');
+          } else {
+            answerDiv.classList.remove('hidden');
+          }
+        });
+      });
+    });
+  </script>
 </body>
 </html>
