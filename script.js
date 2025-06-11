@@ -1,284 +1,183 @@
-/**
- * SSLR Games - script.js (Advanced Version)
- * This script powers all dynamic functionality for the SSLR Games website.
- * Features:
- * - Multi-layered, interactive Three.js particle background.
- * - Particle repulsion based on mouse position.
- * - Gyroscope-based interaction for mobile devices.
- * - Custom animated cursor.
- * - Hero title text scramble effect.
- * - Staggered scroll animations for elements.
- * - Standard UI interactions (header, menu, etc.).
- */
+document.addEventListener('DOMContentLoaded', function () {
+  // Navigation toggle for mobile
+  const navToggle = document.querySelector('.nav-toggle');
+  const mainNav = document.getElementById('main-nav');
+  navToggle.addEventListener('click', function () {
+    const expanded = navToggle.getAttribute('aria-expanded') === 'true' || false;
+    navToggle.setAttribute('aria-expanded', !expanded);
+    mainNav.classList.toggle('open');
+  });
 
-document.addEventListener('DOMContentLoaded', () => {
+  // Smooth scroll and active nav link
+  const navLinks = document.querySelectorAll('.nav-item');
+  navLinks.forEach(link => {
+    link.addEventListener('click', function (e) {
+      e.preventDefault();
+      const targetId = this.getAttribute('href').substring(1);
+      const targetEl = document.getElementById(targetId);
+      if (targetEl) {
+        targetEl.scrollIntoView({ behavior: 'smooth' });
+      }
+      navLinks.forEach(l => l.classList.remove('active'));
+      this.classList.add('active');
+      if (mainNav.classList.contains('open')) {
+        mainNav.classList.remove('open');
+        navToggle.setAttribute('aria-expanded', 'false');
+      }
+    });
+  });
 
-    // --- 1. THREE.JS ADVANCED 3D BACKGROUND ---
-    let scene, camera, renderer, particles, secondaryParticles, raycaster, mouse;
-    let mouseX = 0, mouseY = 0;
-    const canvas = document.getElementById('bg-canvas');
-    const windowHalfX = window.innerWidth / 2;
-    const windowHalfY = window.innerHeight / 2;
+  // Reveal email addresses
+  const emailEls = document.querySelectorAll('.email-obfuscated');
+  emailEls.forEach(el => {
+    el.addEventListener('click', function (e) {
+      e.preventDefault();
+      const part1 = this.dataset.emailPart1;
+      const part2 = this.dataset.emailPart2;
+      const email = part1 + '@' + part2;
+      this.textContent = email;
+      this.href = 'mailto:' + email;
+      this.classList.remove('email-obfuscated');
+    });
+  });
 
-    function initThreeJS() {
-        scene = new THREE.Scene();
-        camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 10000);
-        camera.position.z = 800;
+  // Set current year in footer
+  const yearEl = document.getElementById('current-year');
+  if (yearEl) {
+    yearEl.textContent = new Date().getFullYear();
+  }
 
-        renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.setClearColor(0x000000, 0);
+  // IntersectionObserver for animate-on-scroll
+  const observerOptions = {
+    root: null,
+    rootMargin: '0px',
+    threshold: 0.1
+  };
+  const animateElems = document.querySelectorAll('.animate-on-scroll');
+  const observer = new IntersectionObserver((entries, obs) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        obs.unobserve(entry.target);
+      }
+    });
+  }, observerOptions);
+  animateElems.forEach(el => observer.observe(el));
 
-        // Raycaster for mouse interaction
-        raycaster = new THREE.Raycaster();
-        mouse = new THREE.Vector2();
-        
-        // --- Particle System 1 (Primary) ---
-        const particleCount = 6000;
-        const positions = [];
-        const colors = [];
-        const sizes = [];
-        const color = new THREE.Color();
-
-        for (let i = 0; i < particleCount; i++) {
-            positions.push((Math.random() * 2 - 1) * 1500); // x
-            positions.push((Math.random() * 2 - 1) * 1500); // y
-            positions.push((Math.random() * 2 - 1) * 1500); // z
-
-            const randomColor = Math.random() > 0.6 ? 0x22d3ee : 0xa855f7; // Cyan or Purple
-            color.setHex(randomColor);
-            colors.push(color.r, color.g, color.b);
-
-            sizes.push(Math.random() * 4 + 1);
+  // Game filters functionality
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const gameCards = document.querySelectorAll('.game-card');
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', function () {
+      filterBtns.forEach(b => b.classList.remove('active'));
+      this.classList.add('active');
+      const filter = this.dataset.filter;
+      gameCards.forEach(card => {
+        const categories = card.dataset.categories ? card.dataset.categories.split(' ') : [];
+        if (filter === 'all' || categories.includes(filter)) {
+          card.style.display = '';
+        } else {
+          card.style.display = 'none';
         }
+      });
+    });
+  });
 
-        const geometry = new THREE.BufferGeometry();
-        geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
-        geometry.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
-        geometry.setAttribute('size', new THREE.Float32BufferAttribute(sizes, 1));
-        
-        // Custom shader material for more control
-        const particleMaterial = new THREE.ShaderMaterial({
-            uniforms: {
-                pointTexture: { value: new THREE.TextureLoader().load(`https://placehold.co/32x32/ffffff/ffffff?text=.`) }
-            },
-            vertexShader: `
-                attribute float size;
-                attribute vec3 color;
-                varying vec3 vColor;
-                void main() {
-                    vColor = color;
-                    vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
-                    gl_PointSize = size * (300.0 / -mvPosition.z);
-                    gl_Position = projectionMatrix * mvPosition;
-                }
-            `,
-            fragmentShader: `
-                varying vec3 vColor;
-                uniform sampler2D pointTexture;
-                void main() {
-                    gl_FragColor = vec4(vColor, 1.0) * texture2D(pointTexture, gl_PointCoord);
-                }
-            `,
-            blending: THREE.AdditiveBlending,
-            depthTest: false,
-            transparent: true
-        });
+  // Newsletter form submission (example handler)
+  const newsletterForm = document.querySelector('.newsletter-form');
+  if (newsletterForm) {
+    newsletterForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      const emailInput = this.querySelector('input[type="email"]');
+      if (emailInput && emailInput.value) {
+        // Placeholder: integrate with actual subscription API
+        alert('Thank you for subscribing with ' + emailInput.value + '!');
+        emailInput.value = '';
+      }
+    });
+  }
 
+  // Contact form submission (example handler)
+  const contactForm = document.querySelector('.contact-form');
+  if (contactForm) {
+    contactForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      // Placeholder: integrate with actual backend
+      const statusMsg = this.querySelector('.form-status-message');
+      statusMsg.textContent = 'Thank you! Your message has been sent.';
+      this.reset();
+    });
+  }
 
-        particles = new THREE.Points(geometry, particleMaterial);
-        scene.add(particles);
-
-        // --- Particle System 2 (Secondary, smaller, faster) ---
-        const secondaryGeometry = new THREE.BufferGeometry();
-        const secondaryPositions = [];
-        for (let i = 0; i < 2000; i++) {
-            secondaryPositions.push((Math.random() * 2 - 1) * 2000);
-            secondaryPositions.push((Math.random() * 2 - 1) * 2000);
-            secondaryPositions.push((Math.random() * 2 - 1) * 2000);
+  // Modal functionality
+  function setupModal(modalId, triggerSelector, titleSelector, contentLoader) {
+    const modal = document.getElementById(modalId);
+    if (!modal) return;
+    const closeBtn = modal.querySelector('.close-button');
+    // Open triggers
+    document.querySelectorAll(triggerSelector).forEach(trigger => {
+      trigger.addEventListener('click', function (e) {
+        e.preventDefault();
+        // Set title/content if loader provided
+        if (titleSelector) {
+          const titleText = this.closest(triggerSelector.includes('data-game-id') ? '.game-card' : '')
+            ? this.closest('.game-card')?.querySelector(titleSelector)?.textContent
+            : null;
+          if (titleText) {
+            modal.querySelector(titleSelector)?.textContent && (modal.querySelector(titleSelector).textContent = titleText);
+          }
         }
-        secondaryGeometry.setAttribute('position', new THREE.Float32BufferAttribute(secondaryPositions, 3));
-        const secondaryMaterial = new THREE.PointsMaterial({
-            color: 0x555555,
-            size: 0.8,
-            transparent: true,
-            opacity: 0.5,
-            blending: THREE.AdditiveBlending
-        });
-        secondaryParticles = new THREE.Points(secondaryGeometry, secondaryMaterial);
-        scene.add(secondaryParticles);
-
-
-        // Event Listeners
-        window.addEventListener('resize', onWindowResize, false);
-        document.addEventListener('mousemove', onDocumentMouseMove, false);
-        window.addEventListener('deviceorientation', onDeviceOrientation, true); // For mobile
+        if (contentLoader) {
+          contentLoader(modal, this);
+        }
+        modal.setAttribute('aria-hidden', 'false');
+        modal.style.display = 'block';
+      });
+    });
+    // Close button
+    if (closeBtn) {
+      closeBtn.addEventListener('click', function () {
+        modal.setAttribute('aria-hidden', 'true');
+        modal.style.display = 'none';
+      });
     }
-
-    function onWindowResize() {
-        camera.aspect = window.innerWidth / window.innerHeight;
-        camera.updateProjectionMatrix();
-        renderer.setSize(window.innerWidth, window.innerHeight);
-    }
-
-    function onDocumentMouseMove(event) {
-        mouseX = event.clientX - windowHalfX;
-        mouseY = event.clientY - windowHalfY;
-        mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-        mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
-    }
-    
-    function onDeviceOrientation(event) {
-        // Gyroscope controls
-        if (event.gamma !== null && event.beta !== null) {
-            mouseX = (event.gamma / 90) * windowHalfX; // Left-to-right tilt
-            mouseY = (event.beta / 180) * windowHalfY; // Front-to-back tilt
-        }
-    }
-
-    function animate() {
-        requestAnimationFrame(animate);
-        render();
-    }
-    
-    const clock = new THREE.Clock();
-
-    function render() {
-        const delta = clock.getDelta();
-        const time = clock.getElapsedTime();
-
-        // Animate particles
-        particles.rotation.x += delta * 0.02;
-        particles.rotation.y += delta * 0.03;
-        secondaryParticles.rotation.y -= delta * 0.05;
-        
-        // Pulsing effect
-        const sizes = particles.geometry.attributes.size.array;
-        for (let i = 0; i < sizes.length; i++) {
-            sizes[i] = 2.5 + 1.5 * Math.sin(time + i);
-        }
-        particles.geometry.attributes.size.needsUpdate = true;
-
-
-        // Parallax camera movement
-        camera.position.x += (mouseX - camera.position.x) * 0.05 * delta * 60;
-        camera.position.y += (-mouseY - camera.position.y) * 0.05 * delta * 60;
-        camera.lookAt(scene.position);
-
-        renderer.render(scene, camera);
-    }
-
-    // --- 2. TEXT SCRAMBLE EFFECT ---
-    class TextScramble {
-        constructor(el) {
-            this.el = el;
-            this.chars = '!<>-_\\/[]{}—=+*^?#________';
-            this.update = this.update.bind(this);
-        }
-        setText(newText) {
-            const oldText = this.el.innerText;
-            const length = Math.max(oldText.length, newText.length);
-            const promise = new Promise((resolve) => this.resolve = resolve);
-            this.queue = [];
-            for (let i = 0; i < length; i++) {
-                const from = oldText[i] || '';
-                const to = newText[i] || '';
-                const start = Math.floor(Math.random() * 40);
-                const end = start + Math.floor(Math.random() * 40);
-                this.queue.push({ from, to, start, end });
-            }
-            cancelAnimationFrame(this.frameRequest);
-            this.frame = 0;
-            this.update();
-            return promise;
-        }
-        update() {
-            let output = '';
-            let complete = 0;
-            for (let i = 0, n = this.queue.length; i < n; i++) {
-                let { from, to, start, end, char } = this.queue[i];
-                if (this.frame >= end) {
-                    complete++;
-                    output += to;
-                } else if (this.frame >= start) {
-                    if (!char || Math.random() < 0.28) {
-                        char = this.randomChar();
-                        this.queue[i].char = char;
-                    }
-                    output += `<span class="text-gray-500">${char}</span>`;
-                } else {
-                    output += from;
-                }
-            }
-            this.el.innerHTML = output;
-            if (complete === this.queue.length) {
-                this.resolve();
-            } else {
-                this.frameRequest = requestAnimationFrame(this.update);
-                this.frame++;
-            }
-        }
-        randomChar() {
-            return this.chars[Math.floor(Math.random() * this.chars.length)];
-        }
-    }
-    const heroTitle = document.querySelector('#hero h1 .bg-clip-text');
-    const fx = new TextScramble(heroTitle);
+    // Close on outside click
+    modal.addEventListener('click', function (e) {
+      if (e.target === modal) {
+        modal.setAttribute('aria-hidden', 'true');
+        modal.style.display = 'none';
+      }
+    });
+  }
+  // Game Details Modal
+  setupModal('game-details-modal', '.btn-view-game-details', '#game-modal-title', (modal, trigger) => {
+    const gameId = trigger.dataset.gameId;
+    // Placeholder: Load real data via fetch if API available
+    modal.querySelector('.modal-game-description').textContent = 'Loading details for ' + gameId + '...';
+    // Example: after loading
     setTimeout(() => {
-        fx.setText('SSLR Games');
-    }, 1000);
+      modal.querySelector('.modal-game-description').textContent = 'Detailed description for ' + gameId + '. (Replace with real data)';
+      // Platforms and features could be populated here
+    }, 500);
+  });
+  // Job Apply Modal
+  setupModal('job-apply-modal', '.btn-apply', '#job-modal-title', (modal, trigger) => {
+    const jobTitle = trigger.closest('.job-card')?.querySelector('.job-title')?.textContent;
+    if (jobTitle) {
+      modal.querySelector('#job-modal-title').textContent = 'Apply for: ' + jobTitle;
+    }
+  });
 
-    // --- 3. HEADER SCROLL EFFECT ---
-    const header = document.querySelector('header');
-    window.addEventListener('scroll', () => {
-        header.classList.toggle('scrolled', window.scrollY > 50);
+  // Handle modal form submissions
+  const jobForm = document.querySelector('#job-apply-modal form.job-application-form');
+  if (jobForm) {
+    jobForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      const statusMsg = this.querySelector('.form-status-message');
+      // Placeholder: integrate with backend
+      statusMsg.textContent = 'Application submitted!';
+      this.reset();
     });
+  }
 
-    // --- 4. STAGGERED FADE-IN ON SCROLL ---
-    const animatedSections = document.querySelectorAll('.container');
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const elementsToAnimate = entry.target.querySelectorAll('.transform');
-                elementsToAnimate.forEach((el, index) => {
-                    el.style.transitionDelay = `${index * 100}ms`;
-                    el.classList.add('visible');
-                });
-                observer.unobserve(entry.target);
-            }
-        });
-    }, { threshold: 0.1 });
-    animatedSections.forEach(section => observer.observe(section));
-    
-    // Add transform class to game cards for animation
-    document.querySelectorAll('#games .grid > div').forEach(card => card.classList.add('transform', 'fade-in-section'));
-
-
-    // --- 5. MOBILE MENU TOGGLE ---
-    const mobileMenuButton = document.getElementById('mobile-menu-button');
-    const mobileMenu = document.getElementById('mobile-menu');
-    mobileMenuButton.addEventListener('click', e => {
-        e.stopPropagation();
-        mobileMenu.classList.toggle('hidden');
-    });
-    mobileMenu.querySelectorAll('a').forEach(link => {
-        link.addEventListener('click', () => mobileMenu.classList.add('hidden'));
-    });
-
-    // --- 6. EMAIL REVEAL FUNCTION ---
-    const revealButton = document.getElementById('reveal-email');
-    const emailDisplay = document.getElementById('email-display');
-    revealButton.addEventListener('click', () => {
-        const encodedEmail = 'YmRoYTIwMDk1QGdtYWlsLmNvbQ==';
-        emailDisplay.textContent = atob(encodedEmail);
-        emailDisplay.style.display = 'block';
-        revealButton.style.display = 'none';
-    });
-
-    // --- 7. DYNAMIC FOOTER YEAR ---
-    document.getElementById('year').textContent = new Date().getFullYear();
-
-    // --- INITIALIZE EVERYTHING ---
-    initThreeJS();
-    animate();
 });
