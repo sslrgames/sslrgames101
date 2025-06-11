@@ -1,132 +1,116 @@
-// script.js - Full Working JavaScript for SSLR Games
+// script.js - Full Working JavaScript for the provided HTML & CSS
 
 // Wait for DOM content loaded
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', function() {
   // =========================
-  // Navigation Toggle for Mobile
+  // Header Scroll Effect
   // =========================
-  const navToggle = document.querySelector('.nav-toggle');
-  const mainNav = document.getElementById('main-nav');
-  if (navToggle && mainNav) {
-    navToggle.addEventListener('click', function () {
-      const expanded = this.getAttribute('aria-expanded') === 'true';
-      this.setAttribute('aria-expanded', expanded ? 'false' : 'true');
-      mainNav.classList.toggle('open');
-    });
+  const header = document.querySelector('header');
+  function onScroll() {
+    if (window.scrollY > 50) {
+      header.classList.add('scrolled');
+    } else {
+      header.classList.remove('scrolled');
+    }
   }
+  window.addEventListener('scroll', onScroll);
+  onScroll(); // initialize on load
 
   // =========================
-  // Smooth Scroll and Active Nav Link
+  // Smooth Scroll for nav links with data-scroll-to
   // =========================
-  const navLinks = document.querySelectorAll('.nav-item[href^="#"]');
+  const navLinks = document.querySelectorAll('a[data-scroll-to]');
   navLinks.forEach(link => {
-    link.addEventListener('click', function (e) {
-      const href = this.getAttribute('href');
-      if (href.startsWith('#')) {
-        e.preventDefault();
-        const targetId = href.slice(1);
-        const targetEl = document.getElementById(targetId);
-        if (targetEl) {
-          targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-        // Update active classes
-        navLinks.forEach(l => l.classList.remove('active'));
-        this.classList.add('active');
-        // Close nav on mobile if open
-        if (mainNav && mainNav.classList.contains('open')) {
-          mainNav.classList.remove('open');
-          if (navToggle) navToggle.setAttribute('aria-expanded', 'false');
-        }
+    link.addEventListener('click', function(e) {
+      e.preventDefault();
+      const targetId = this.getAttribute('data-scroll-to');
+      const targetEl = document.getElementById(targetId);
+      if (targetEl) {
+        targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+      // Close mobile menu if open
+      const mobileMenu = document.getElementById('mobile-menu');
+      if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
+        mobileMenu.classList.add('hidden');
       }
     });
   });
 
-  // Optional: Update active nav link on scroll
-  // You can implement IntersectionObserver on sections to update active nav-item
-  const sections = document.querySelectorAll('main section[id]');
-  const sectionObserverOptions = { root: null, rootMargin: '0px', threshold: 0.3 };
-  const sectionObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const id = entry.target.getAttribute('id');
-        const activeLink = document.querySelector(`.nav-item[href="#${id}"]`);
-        if (activeLink) {
-          navLinks.forEach(l => l.classList.remove('active'));
-          activeLink.classList.add('active');
-        }
+  // =========================
+  // Mobile Menu Toggle
+  // =========================
+  const navToggle = document.querySelector('.nav-toggle');
+  const mainNav = document.querySelector('nav.main-nav');
+  if (navToggle && mainNav) {
+    navToggle.addEventListener('click', function() {
+      // Toggle a class to show/hide
+      mainNav.classList.toggle('open');
+      // For CSS #mobile-menu logic, if using, toggle hidden
+      const mobileMenu = document.getElementById('mobile-menu');
+      if (mobileMenu) {
+        mobileMenu.classList.toggle('hidden');
       }
     });
-  }, sectionObserverOptions);
-  sections.forEach(sec => sectionObserver.observe(sec));
+  }
 
   // =========================
-  // Reveal Email Addresses
+  // Fade-in Sections on Scroll
   // =========================
-  const emailEls = document.querySelectorAll('.email-obfuscated');
-  emailEls.forEach(el => {
-    el.addEventListener('click', function (e) {
+  const fadeSections = document.querySelectorAll('.fade-in-section');
+  if ('IntersectionObserver' in window) {
+    const fadeObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    fadeSections.forEach(sec => fadeObserver.observe(sec));
+  } else {
+    // Fallback: reveal all
+    fadeSections.forEach(sec => sec.classList.add('visible'));
+  }
+
+  // =========================
+  // Email Reveal Handler
+  // =========================
+  // For elements with class email-obfuscated and data-email-part1/part2
+  document.querySelectorAll('.email-obfuscated').forEach(el => {
+    el.addEventListener('click', function(e) {
       e.preventDefault();
       const part1 = this.dataset.emailPart1;
       const part2 = this.dataset.emailPart2;
       if (part1 && part2) {
-        const email = `${part1}@${part2}`;
+        const email = part1 + '@' + part2;
         this.textContent = email;
         this.href = 'mailto:' + email;
         this.classList.remove('email-obfuscated');
       }
     });
   });
-
-  // =========================
-  // Set Current Year in Footer
-  // =========================
-  const yearEl = document.getElementById('current-year');
-  if (yearEl) {
-    yearEl.textContent = new Date().getFullYear();
-  }
-
-  // =========================
-  // IntersectionObserver for Animate On Scroll
-  // =========================
-  const animateElems = document.querySelectorAll('.animate-on-scroll');
-  const observerOptions = { root: null, rootMargin: '0px', threshold: 0.1 };
-  const animateObserver = new IntersectionObserver((entries, obs) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-        obs.unobserve(entry.target);
+  // Also support #reveal-email id
+  const revealEmailBtn = document.getElementById('reveal-email');
+  if (revealEmailBtn) {
+    revealEmailBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      // assume data-email-part1/2
+      const part1 = this.dataset.emailPart1;
+      const part2 = this.dataset.emailPart2;
+      if (part1 && part2) {
+        const email = part1 + '@' + part2;
+        this.textContent = email;
+        this.href = 'mailto:' + email;
       }
     });
-  }, observerOptions);
-  animateElems.forEach(el => animateObserver.observe(el));
-
-  // =========================
-  // Game Filters Functionality
-  // =========================
-  const filterBtns = document.querySelectorAll('.filter-btn');
-  const gameCards = document.querySelectorAll('.game-card');
-  filterBtns.forEach(btn => {
-    btn.addEventListener('click', function () {
-      filterBtns.forEach(b => b.classList.remove('active'));
-      this.classList.add('active');
-      const filter = this.dataset.filter;
-      gameCards.forEach(card => {
-        const categories = card.dataset.categories ? card.dataset.categories.split(' ') : [];
-        if (filter === 'all' || categories.includes(filter)) {
-          card.style.display = '';
-        } else {
-          card.style.display = 'none';
-        }
-      });
-    });
-  });
+  }
 
   // =========================
   // Newsletter Form Submission (Placeholder)
   // =========================
   const newsletterForm = document.querySelector('.newsletter-form');
   if (newsletterForm) {
-    newsletterForm.addEventListener('submit', function (e) {
+    newsletterForm.addEventListener('submit', function(e) {
       e.preventDefault();
       const emailInput = this.querySelector('input[type="email"]');
       if (emailInput && emailInput.value) {
@@ -141,7 +125,7 @@ document.addEventListener('DOMContentLoaded', function () {
   // =========================
   const contactForm = document.querySelector('.contact-form');
   if (contactForm) {
-    contactForm.addEventListener('submit', function (e) {
+    contactForm.addEventListener('submit', function(e) {
       e.preventDefault();
       const statusMsg = this.querySelector('.form-status-message');
       if (statusMsg) statusMsg.textContent = 'Thank you! Your message has been sent.';
@@ -150,31 +134,45 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   // =========================
-  // Modal Functionality
+  // Custom Cursor Dot
+  // =========================
+  // Create a cursor dot element
+  const cursorDot = document.createElement('div');
+  cursorDot.style.width = '12px';
+  cursorDot.style.height = '12px';
+  cursorDot.style.borderRadius = '50%';
+  cursorDot.style.position = 'fixed';
+  cursorDot.style.pointerEvents = 'none';
+  cursorDot.style.backgroundColor = 'var(--cyan, #22d3ee)';
+  cursorDot.style.transform = 'translate(-50%, -50%)';
+  cursorDot.style.zIndex = '9999';
+  document.body.appendChild(cursorDot);
+  document.addEventListener('mousemove', function(e) {
+    cursorDot.style.top = e.clientY + 'px';
+    cursorDot.style.left = e.clientX + 'px';
+  });
+
+  // =========================
+  // Modal Functionality (for provided modals)
   // =========================
   function setupModal(modalId, triggerSelector, titleSelector, contentLoader) {
     const modal = document.getElementById(modalId);
     if (!modal) return;
     const closeBtn = modal.querySelector('.close-button');
-    // Open triggers
     document.querySelectorAll(triggerSelector).forEach(trigger => {
-      trigger.addEventListener('click', function (e) {
+      trigger.addEventListener('click', function(e) {
         e.preventDefault();
-        // Set title if selector provided
         if (titleSelector) {
           const titleEl = modal.querySelector(titleSelector);
           if (titleEl) {
-            let titleText = '';
-            // For game details: data-game-id
+            let text = '';
             if (trigger.dataset.gameId) {
-              // Optionally extract more info
-              titleText = trigger.closest('.game-card')?.querySelector('.game-title')?.textContent || trigger.dataset.gameId;
+              text = trigger.closest('.game-card')?.querySelector('.game-title')?.textContent || trigger.dataset.gameId;
             }
-            // For job apply: job title element
             if (trigger.dataset.jobId) {
-              titleText = trigger.closest('.job-card')?.querySelector('.job-title')?.textContent || titleText;
+              text = trigger.closest('.job-card')?.querySelector('.job-title')?.textContent || text;
             }
-            if (titleText) titleEl.textContent = titleText.startsWith('Apply for') ? titleText : titleText;
+            if (text) titleEl.textContent = text;
           }
         }
         if (typeof contentLoader === 'function') {
@@ -182,46 +180,38 @@ document.addEventListener('DOMContentLoaded', function () {
         }
         modal.setAttribute('aria-hidden', 'false');
         modal.style.display = 'flex';
-        // Focus trap could be added here
       });
     });
-    // Close button
     if (closeBtn) {
-      closeBtn.addEventListener('click', function () {
+      closeBtn.addEventListener('click', function() {
         modal.setAttribute('aria-hidden', 'true');
         modal.style.display = 'none';
       });
     }
-    // Close on outside click
-    modal.addEventListener('click', function (e) {
+    modal.addEventListener('click', function(e) {
       if (e.target === modal) {
         modal.setAttribute('aria-hidden', 'true');
         modal.style.display = 'none';
       }
     });
-    // Close on ESC key
-    document.addEventListener('keydown', function (e) {
+    document.addEventListener('keydown', function(e) {
       if (e.key === 'Escape' && modal.getAttribute('aria-hidden') === 'false') {
         modal.setAttribute('aria-hidden', 'true');
         modal.style.display = 'none';
       }
     });
   }
-
-  // Game Details Modal
+  // Initialize modals if present
   setupModal('game-details-modal', '.btn-view-game-details', '#game-modal-title', (modal, trigger) => {
     const descEl = modal.querySelector('.modal-game-description');
     if (descEl) {
       const gameId = trigger.dataset.gameId;
       descEl.textContent = 'Loading details for ' + gameId + '...';
-      // Simulate loading or fetch actual data
       setTimeout(() => {
         descEl.textContent = 'Detailed description for ' + gameId + '. (Replace with real data)';
       }, 500);
     }
   });
-
-  // Job Apply Modal
   setupModal('job-apply-modal', '.btn-apply', '#job-modal-title', (modal, trigger) => {
     const titleEl = modal.querySelector('#job-modal-title');
     if (titleEl) {
@@ -230,39 +220,18 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 
-  // Handle job application form submission
-  const jobForm = document.querySelector('#job-apply-modal form.job-application-form');
-  if (jobForm) {
-    jobForm.addEventListener('submit', function (e) {
-      e.preventDefault();
-      const statusMsg = this.querySelector('.form-status-message');
-      if (statusMsg) statusMsg.textContent = 'Application submitted!';
-      this.reset();
-    });
-  }
-
   // =========================
-  // FAQ Toggle Functionality
+  // FAQ Toggle
   // =========================
-  const faqItems = document.querySelectorAll('.faq-item');
-  faqItems.forEach(item => {
-    const questionBtn = item.querySelector('.faq-question');
-    const answerDiv = item.querySelector('.faq-answer');
-    if (questionBtn && answerDiv) {
-      questionBtn.addEventListener('click', function () {
+  document.querySelectorAll('.faq-item').forEach(item => {
+    const btn = item.querySelector('.faq-question');
+    const ans = item.querySelector('.faq-answer');
+    if (btn && ans) {
+      btn.addEventListener('click', function() {
         const expanded = this.getAttribute('aria-expanded') === 'true';
         this.setAttribute('aria-expanded', expanded ? 'false' : 'true');
-        if (expanded) {
-          answerDiv.classList.add('hidden');
-        } else {
-          answerDiv.classList.remove('hidden');
-        }
+        ans.classList.toggle('hidden');
       });
     }
   });
-
-  // =========================
-  // Additional Helpers if Needed
-  // =========================
-  // You can add more code here for sliders, carousels, 3D scenes, etc.
 });
