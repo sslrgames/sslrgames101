@@ -2,35 +2,31 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>SSLR Games Space Journey</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SSLR Games - Space Simulation</title>
   <link rel="stylesheet" href="styles.css">
-  <!-- Three.js library -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <link rel="icon" href="icon.png">
+  <script src="https://cdn.jsdelivr.net/npm/three@0.152.2/build/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.152.2/examples/js/controls/PointerLockControls.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.152.2/examples/js/loaders/GLTFLoader.js"></script>
 </head>
 <body>
-  <!-- Top fixed bar with logo, title, language toggle, and location -->
   <div id="topbar">
-    <img src="logo.png" alt="Logo" id="logo">
-    <span id="title">SSLR Games</span>
-    <button id="langToggle">EN↔BN</button>
-    <span id="location">Location: Darshana, Rangpur, Bangladesh</span>
+    <img src="logo.png" alt="SSLR Games Logo" id="logo">
+    <div id="title">SSLR Games</div>
+    <button id="langBtn">EN / বাং</button>
+    <div id="location">Darshana, Rangpur, Bangladesh / দারশনা, রংপুর, বাংলাদেশ</div>
   </div>
 
-  <!-- Loading overlay -->
-  <div id="loading">Launching...</div>
-
-  <!-- Three.js canvas in middle -->
+  <div id="loading">Launching Space Journey...</div>
   <canvas id="webgl"></canvas>
 
-  <!-- Bottom fixed bar with contact info -->
   <div id="bottombar">
-    Contact: bdha20099@gmail.com &bull; X.com/sslrgames<br>
-    © 2025 SSLR Games. All rights reserved.
+    Contact: bdha20099@gmail.com | <a href="https://x.com/sslrgames" target="_blank">X.com/sslrgames</a><br>
+    &copy; 2025 SSLR Games. All rights reserved.
   </div>
 
-  <!-- Background audio (placeholder source) -->
-  <audio id="spaceAudio" src="space_ambient.mp3" loop autoplay></audio>
-
+  <audio id="bgm" src="space_ambient.mp3" loop autoplay></audio>
   <script src="script.js"></script>
 </body>
 </html>
