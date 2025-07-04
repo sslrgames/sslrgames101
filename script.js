@@ -1,237 +1,53 @@
-// script.js - Full Working JavaScript for the provided HTML & CSS
+// Language toggle
+let isBangla = false;
 
-// Wait for DOM content loaded
-document.addEventListener('DOMContentLoaded', function() {
-  // =========================
-  // Header Scroll Effect
-  // =========================
-  const header = document.querySelector('header');
-  function onScroll() {
-    if (window.scrollY > 50) {
-      header.classList.add('scrolled');
-    } else {
-      header.classList.remove('scrolled');
-    }
-  }
-  window.addEventListener('scroll', onScroll);
-  onScroll(); // initialize on load
+function toggleLanguage() {
+  isBangla = !isBangla;
+  document.getElementById("welcome-text").textContent = isBangla
+    ? "এসএসএলআর গেমসে স্বাগতম"
+    : "Welcome to SSLR Games";
+  document.getElementById("location").textContent = isBangla
+    ? "অবস্থান: দূরসোনা, রংপুর, বাংলাদেশ"
+    : "Location: Durshona, Rangpur, Bangladesh";
+}
 
-  // =========================
-  // Smooth Scroll for nav links with data-scroll-to
-  // =========================
-  const navLinks = document.querySelectorAll('a[data-scroll-to]');
-  navLinks.forEach(link => {
-    link.addEventListener('click', function(e) {
-      e.preventDefault();
-      const targetId = this.getAttribute('data-scroll-to');
-      const targetEl = document.getElementById(targetId);
-      if (targetEl) {
-        targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-      // Close mobile menu if open
-      const mobileMenu = document.getElementById('mobile-menu');
-      if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
-        mobileMenu.classList.add('hidden');
-      }
-    });
+// Dynamic background
+const canvas = document.getElementById("bg-canvas");
+const ctx = canvas.getContext("2d");
+
+let width = (canvas.width = window.innerWidth);
+let height = (canvas.height = window.innerHeight);
+let particles = [];
+
+for (let i = 0; i < 80; i++) {
+  particles.push({
+    x: Math.random() * width,
+    y: Math.random() * height,
+    r: Math.random() * 2 + 1,
+    dx: Math.random() - 0.5,
+    dy: Math.random() - 0.5
   });
+}
 
-  // =========================
-  // Mobile Menu Toggle
-  // =========================
-  const navToggle = document.querySelector('.nav-toggle');
-  const mainNav = document.querySelector('nav.main-nav');
-  if (navToggle && mainNav) {
-    navToggle.addEventListener('click', function() {
-      // Toggle a class to show/hide
-      mainNav.classList.toggle('open');
-      // For CSS #mobile-menu logic, if using, toggle hidden
-      const mobileMenu = document.getElementById('mobile-menu');
-      if (mobileMenu) {
-        mobileMenu.classList.toggle('hidden');
-      }
-    });
-  }
+function draw() {
+  ctx.clearRect(0, 0, width, height);
+  ctx.fillStyle = "white";
+  particles.forEach(p => {
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+    ctx.fill();
+    p.x += p.dx;
+    p.y += p.dy;
 
-  // =========================
-  // Fade-in Sections on Scroll
-  // =========================
-  const fadeSections = document.querySelectorAll('.fade-in-section');
-  if ('IntersectionObserver' in window) {
-    const fadeObserver = new IntersectionObserver((entries, observer) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.1 });
-    fadeSections.forEach(sec => fadeObserver.observe(sec));
-  } else {
-    // Fallback: reveal all
-    fadeSections.forEach(sec => sec.classList.add('visible'));
-  }
-
-  // =========================
-  // Email Reveal Handler
-  // =========================
-  // For elements with class email-obfuscated and data-email-part1/part2
-  document.querySelectorAll('.email-obfuscated').forEach(el => {
-    el.addEventListener('click', function(e) {
-      e.preventDefault();
-      const part1 = this.dataset.emailPart1;
-      const part2 = this.dataset.emailPart2;
-      if (part1 && part2) {
-        const email = part1 + '@' + part2;
-        this.textContent = email;
-        this.href = 'mailto:' + email;
-        this.classList.remove('email-obfuscated');
-      }
-    });
+    if (p.x < 0 || p.x > width) p.dx *= -1;
+    if (p.y < 0 || p.y > height) p.dy *= -1;
   });
-  // Also support #reveal-email id
-  const revealEmailBtn = document.getElementById('reveal-email');
-  if (revealEmailBtn) {
-    revealEmailBtn.addEventListener('click', function(e) {
-      e.preventDefault();
-      // assume data-email-part1/2
-      const part1 = this.dataset.emailPart1;
-      const part2 = this.dataset.emailPart2;
-      if (part1 && part2) {
-        const email = part1 + '@' + part2;
-        this.textContent = email;
-        this.href = 'mailto:' + email;
-      }
-    });
-  }
+  requestAnimationFrame(draw);
+}
 
-  // =========================
-  // Newsletter Form Submission (Placeholder)
-  // =========================
-  const newsletterForm = document.querySelector('.newsletter-form');
-  if (newsletterForm) {
-    newsletterForm.addEventListener('submit', function(e) {
-      e.preventDefault();
-      const emailInput = this.querySelector('input[type="email"]');
-      if (emailInput && emailInput.value) {
-        alert('Thank you for subscribing with ' + emailInput.value + '!');
-        emailInput.value = '';
-      }
-    });
-  }
+draw();
 
-  // =========================
-  // Contact Form Submission (Placeholder)
-  // =========================
-  const contactForm = document.querySelector('.contact-form');
-  if (contactForm) {
-    contactForm.addEventListener('submit', function(e) {
-      e.preventDefault();
-      const statusMsg = this.querySelector('.form-status-message');
-      if (statusMsg) statusMsg.textContent = 'Thank you! Your message has been sent.';
-      this.reset();
-    });
-  }
-
-  // =========================
-  // Custom Cursor Dot
-  // =========================
-  // Create a cursor dot element
-  const cursorDot = document.createElement('div');
-  cursorDot.style.width = '12px';
-  cursorDot.style.height = '12px';
-  cursorDot.style.borderRadius = '50%';
-  cursorDot.style.position = 'fixed';
-  cursorDot.style.pointerEvents = 'none';
-  cursorDot.style.backgroundColor = 'var(--cyan, #22d3ee)';
-  cursorDot.style.transform = 'translate(-50%, -50%)';
-  cursorDot.style.zIndex = '9999';
-  document.body.appendChild(cursorDot);
-  document.addEventListener('mousemove', function(e) {
-    cursorDot.style.top = e.clientY + 'px';
-    cursorDot.style.left = e.clientX + 'px';
-  });
-
-  // =========================
-  // Modal Functionality (for provided modals)
-  // =========================
-  function setupModal(modalId, triggerSelector, titleSelector, contentLoader) {
-    const modal = document.getElementById(modalId);
-    if (!modal) return;
-    const closeBtn = modal.querySelector('.close-button');
-    document.querySelectorAll(triggerSelector).forEach(trigger => {
-      trigger.addEventListener('click', function(e) {
-        e.preventDefault();
-        if (titleSelector) {
-          const titleEl = modal.querySelector(titleSelector);
-          if (titleEl) {
-            let text = '';
-            if (trigger.dataset.gameId) {
-              text = trigger.closest('.game-card')?.querySelector('.game-title')?.textContent || trigger.dataset.gameId;
-            }
-            if (trigger.dataset.jobId) {
-              text = trigger.closest('.job-card')?.querySelector('.job-title')?.textContent || text;
-            }
-            if (text) titleEl.textContent = text;
-          }
-        }
-        if (typeof contentLoader === 'function') {
-          contentLoader(modal, trigger);
-        }
-        modal.setAttribute('aria-hidden', 'false');
-        modal.style.display = 'flex';
-      });
-    });
-    if (closeBtn) {
-      closeBtn.addEventListener('click', function() {
-        modal.setAttribute('aria-hidden', 'true');
-        modal.style.display = 'none';
-      });
-    }
-    modal.addEventListener('click', function(e) {
-      if (e.target === modal) {
-        modal.setAttribute('aria-hidden', 'true');
-        modal.style.display = 'none';
-      }
-    });
-    document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape' && modal.getAttribute('aria-hidden') === 'false') {
-        modal.setAttribute('aria-hidden', 'true');
-        modal.style.display = 'none';
-      }
-    });
-  }
-  // Initialize modals if present
-  setupModal('game-details-modal', '.btn-view-game-details', '#game-modal-title', (modal, trigger) => {
-    const descEl = modal.querySelector('.modal-game-description');
-    if (descEl) {
-      const gameId = trigger.dataset.gameId;
-      descEl.textContent = 'Loading details for ' + gameId + '...';
-      setTimeout(() => {
-        descEl.textContent = 'Detailed description for ' + gameId + '. (Replace with real data)';
-      }, 500);
-    }
-  });
-  setupModal('job-apply-modal', '.btn-apply', '#job-modal-title', (modal, trigger) => {
-    const titleEl = modal.querySelector('#job-modal-title');
-    if (titleEl) {
-      const jobTitle = trigger.closest('.job-card')?.querySelector('.job-title')?.textContent;
-      if (jobTitle) titleEl.textContent = 'Apply for: ' + jobTitle;
-    }
-  });
-
-  // =========================
-  // FAQ Toggle
-  // =========================
-  document.querySelectorAll('.faq-item').forEach(item => {
-    const btn = item.querySelector('.faq-question');
-    const ans = item.querySelector('.faq-answer');
-    if (btn && ans) {
-      btn.addEventListener('click', function() {
-        const expanded = this.getAttribute('aria-expanded') === 'true';
-        this.setAttribute('aria-expanded', expanded ? 'false' : 'true');
-        ans.classList.toggle('hidden');
-      });
-    }
-  });
+window.addEventListener("resize", () => {
+  width = canvas.width = window.innerWidth;
+  height = canvas.height = window.innerHeight;
 });
