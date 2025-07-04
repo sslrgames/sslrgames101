@@ -2,23 +2,31 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>SSLR Games</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="icon.png">
   <link rel="stylesheet" href="styles.css">
-  <link rel="icon" type="image/png" href="icon.png">
 </head>
 <body>
-  <div id="lang-toggle">
-    <button onclick="toggleLanguage()">বাংলা / English</button>
-  </div>
+  <canvas id="bgCanvas"></canvas>
 
-  <div class="container">
-    <img src="logo.png" alt="SSLR Games Logo" class="logo">
-    <h1 id="welcome-text">Welcome to SSLR Games</h1>
-    <p id="location">Location: Durshona, Rangpur, Bangladesh</p>
-  </div>
+  <header>
+    <img src="logo.png" alt="SSLR Games Logo">
+    <button id="toggle-lang">বাংলা</button>
+  </header>
 
-  <canvas id="bg-canvas"></canvas>
+  <main>
+    <section id="hero">
+      <h1 id="welcome-msg">Welcome to SSLR Games!</h1>
+      <p id="location-text">Location: Darshana, Rangpur, Bangladesh</p>
+    </section>
+    <section id="contact">
+      <p>Email: <a href="mailto:bdha20099@gmail.com">bdha20099@gmail.com</a></p>
+      <p>X: <a href="https://X.com/sslrgames" target="_blank">sslrgames</a></p>
+    </section>
+  </main>
+
+  <footer>© 2025 SSLR Games. All rights reserved.</footer>
 
   <script src="script.js"></script>
 </body>
