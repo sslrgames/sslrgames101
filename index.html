@@ -1,33 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>SSLR Games</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" href="icon.png">
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SSLR Games - Welcome</title>
+    <link rel="icon" href="icon.png" type="image/png">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
 </head>
 <body>
-  <canvas id="bgCanvas"></canvas>
 
-  <header>
-    <img src="logo.png" alt="SSLR Games Logo">
-    <button id="toggle-lang">বাংলা</button>
-  </header>
+    <!-- The 3D background will be rendered here -->
+    <canvas id="bg-canvas"></canvas>
 
-  <main>
-    <section id="hero">
-      <h1 id="welcome-msg">Welcome to SSLR Games!</h1>
-      <p id="location-text">Location: Darshana, Rangpur, Bangladesh</p>
-    </section>
-    <section id="contact">
-      <p>Email: <a href="mailto:bdha20099@gmail.com">bdha20099@gmail.com</a></p>
-      <p>X: <a href="https://X.com/sslrgames" target="_blank">sslrgames</a></p>
-    </section>
-  </main>
+    <!-- Top Header UI -->
+    <header class="ui-container">
+        <div class="logo-container">
+            <img src="logo.png" alt="SSLR Games Logo" class="logo" onerror="this.style.display='none'">
+            <h1>SSLR Games</h1>
+        </div>
+        <div class="language-switcher">
+            <button id="lang-en" class="lang-btn active" aria-label="Switch to English">EN</button>
+            <button id="lang-bn" class="lang-btn" aria-label="Switch to Bengali">BN</button>
+        </div>
+    </header>
 
-  <footer>© 2025 SSLR Games. All rights reserved.</footer>
+    <!-- Main Welcome Message -->
+    <main class="welcome-container">
+        <h2 id="welcome-text">Welcome</h2>
+        <p id="subtitle-text">The journey begins.</p>
+    </main>
 
-  <script src="script.js"></script>
+    <!-- Bottom Footer UI -->
+    <footer class="ui-container">
+        <div id="contact-info">
+            Contact: bdha20099@gmail.com
+        </div>
+        <div id="location-info">
+            Darshana, Rangpur Division, Bangladesh
+        </div>
+        <div id="copyright-info">
+            © 2025 SSLR Games. All rights reserved.
+        </div>
+    </footer>
+
+    <!-- Three.js library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    
+    <!-- Post-processing for effects like the black hole -->
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/EffectComposer.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/RenderPass.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/ShaderPass.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/CopyShader.js"></script>
+
+    <!-- Custom JavaScript for the 3D scene -->
+    <script src="script.js"></script>
+
 </body>
 </html>
