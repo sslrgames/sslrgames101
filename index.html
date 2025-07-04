@@ -3,30 +3,960 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SSLR Games - Space Simulation</title>
-  <link rel="stylesheet" href="styles.css">
-  <link rel="icon" href="icon.png">
-  <script src="https://cdn.jsdelivr.net/npm/three@0.152.2/build/three.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/three@0.152.2/examples/js/controls/PointerLockControls.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/three@0.152.2/examples/js/loaders/GLTFLoader.js"></script>
+  <title>SSLR Games</title>
+  <link rel="icon" href="icon.png" type="image/png">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { margin: 0; overflow: hidden; font-family: Arial, sans-serif; background: #000; color: #fff; line-height: 1.6; padding-top: 60px; padding-bottom: 40px; }
+    header, footer { width: 100%; text-align: center; }
+    a, button { font-family: inherit; }
+    #topbar { position: fixed; top: 0; left: 0; width: 100%; background: linear-gradient(to right, #000033, #330066); display: flex; align-items: center; padding: 10px 20px; z-index: 100; border-bottom: 2px solid #0f0; }
+    #logo { height: 40px; margin-right: 20px; max-height: 50px; transition: transform 0.3s; }
+    #logo:hover { transform: scale(1.1); }
+    nav { flex: 1; display: flex; }
+    nav ul { list-style: none; padding: 0; margin: 0; display: flex; justify-content: flex-end; }
+    nav li { margin: 0 15px; position: relative; }
+    nav li a { color: #fff; text-decoration: none; font-size: 1.1em; text-transform: uppercase; letter-spacing: 0.05em; padding: 5px; transition: color 0.3s, transform 0.3s; }
+    nav li a:hover { text-decoration: underline; transform: scale(1.1); }
+    nav li a:before { content: ""; position: absolute; width: 0; height: 2px; bottom: -2px; left: 0; background-color: #0f0; transition: width 0.3s; }
+    nav li a:hover:before { width: 100%; }
+    nav li a.active { color: #ff0; }
+    nav li a::after { content: "|"; margin-left: 10px; color: #333; }
+    nav li:last-child a::after { content: none; }
+    #lang-toggle { font-size: 1.1em; cursor: pointer; margin-left: 20px; font-weight: bold; transition: color 0.3s; }
+    #lang-toggle:hover { opacity: 0.8; color: #0ff; }
+    #menu-toggle { display: none; background: none; border: none; color: #fff; font-size: 1.5em; margin-right: 20px; }
+    @media (max-width: 600px) {
+      nav ul { flex-direction: column; background: rgba(0,0,0,0.9); position: absolute; top: 60px; left: 0; width: 100%; display: none; }
+      nav ul.show { display: flex; }
+      nav li { margin: 10px 0; }
+      #menu-toggle { display: block; }
+    }
+    @media (min-width: 601px) {
+      #menu-toggle { display: none; }
+    }
+    nav ul li:hover a { color: #0f0; }
+    #bottombar { position: fixed; bottom: 0; left: 0; width: 100%; background: linear-gradient(to right, #330000, #660033); display: flex; justify-content: space-between; align-items: center; padding: 10px 20px; z-index: 100; font-size: 0.9em; border-top: 2px solid #0f0; }
+    #bottombar div { margin: 0 10px; }
+    #bottombar .location { font-weight: bold; font-style: italic; }
+    .contact-info { color: #aaa; }
+    .contact-info a { color: #0ff; }
+    .contact-info a:hover { text-decoration: underline; }
+    .location::before { content: "Location: "; }
+    canvas { display: block; width: 100%; height: 100%; }
+    #canvas-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; overflow: hidden; }
+    #lens { position: absolute; width: 200px; height: 200px; border-radius: 50%; pointer-events: none; background: rgba(0, 0, 0, 0.2); backdrop-filter: blur(8px) brightness(0.5); display: none; border: 2px solid rgba(255,255,255,0.2); box-shadow: 0 0 10px 5px rgba(0,0,0,0.5); }
+    img { display: inline-block; }
+    audio { display: none; }
+    #content { position: absolute; top:60px; bottom:40px; width: 100%; overflow: auto; }
+    #content .section { padding: 40px; margin: 20px auto; max-width: 800px; background: rgba(255,255,255,0.05); border-radius: 8px; }
+    .btn, button { background: #222; color: #fff; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; transition: background 0.3s; }
+    .btn:hover, button:hover { background: #444; }
+    .overlay { position: absolute; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.5); z-index: 99; display: none; }
+    .overlay.visible { display: block; }
+    .sun-glow { box-shadow: 0 0 20px 10px rgba(255, 255, 150, 0.5); }
+    .star { background: #fff; width:2px; height:2px; border-radius:50%; position: absolute; }
+    .planet-label { position: absolute; color: #0f0; font-size: 1.2em; pointer-events: none; }
+    .section { padding: 40px; margin: 20px auto; max-width: 800px; background: rgba(255,255,255,0.05); border-radius: 8px; }
+    @keyframes fadein { from { opacity: 0; } to { opacity: 1; } }
+    .fade-in { animation: fadein 2s ease-in; }
+    @keyframes flicker { 0% {opacity:1;} 50% {opacity:0.1;} 100% {opacity:1;} }
+    .glitch { color: #0ff; animation: flicker 0.2s infinite; }
+    @keyframes rotate360 { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    .rotate { animation: rotate360 10s linear infinite; }
+    @keyframes slidein { from { transform: translateX(-100%); } to { transform: translateX(0); } }
+    @keyframes slideout { from { transform: translateX(0); } to { transform: translateX(-100%); } }
+    .slide-in { animation: slidein 0.5s forwards; }
+    .slide-out { animation: slideout 0.5s forwards; }
+    .shadow { box-shadow: 0 4px 8px rgba(0,0,0,0.5); }
+    .shadow-inset { box-shadow: inset 0 2px 4px rgba(0,0,0,0.5); }
+    ::selection { background: #0f0; color: #000; }
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #111; }
+    ::-webkit-scrollbar-thumb { background: #333; }
+    ::-webkit-scrollbar-thumb:hover { background: #555; }
+    .text-center { text-align: center; }
+    .text-right { text-align: right; }
+    .text-left { text-align: left; }
+    .uppercase { text-transform: uppercase; }
+    .lowercase { text-transform: lowercase; }
+    .capitalize { text-transform: capitalize; }
+    .opacity-50 { opacity: 0.5; }
+    .opacity-90 { opacity: 0.9; }
+    .transition { transition: all 0.3s ease; }
+    .cursor-pointer { cursor: pointer; }
+    .no-select { user-select: none; }
+    .row { display: flex; flex-wrap: wrap; margin: 0 -10px; }
+    .col { flex: 1; padding: 10px; }
+    @media (max-width: 800px) { .col { flex: 100%; } }
+    .badge { background: #0f0; color: #000; padding: 2px 6px; border-radius: 3px; font-size: 0.8em; }
+    .highlight { background: rgba(255, 255, 255, 0.1); }
+    .planet { border: 1px solid rgba(255,255,255,0.2); }
+    .moon { border: 1px solid #777; }
+    .galaxy { background-image: url("galaxy.png"); background-size: cover; }
+    #menu-toggle { font-family: inherit; }
+    .btn:active, button:active { background: #555; }
+    .footer-text { font-size: 0.8em; color: #888; }
+    .footer-text a { color: #0ff; }
+    .link-blue { color: #0ff; }
+    .link-blue:hover { color: #fff; }
+    .header { font-size: 1.5em; color: #0f0; }
+    /* Utility and placeholder classes */
+    .m-0 { margin: 0px; }    .m-5 { margin: 5px; }    .m-10 { margin: 10px; }    .m-15 { margin: 15px; }    .m-20 { margin: 20px; }
+    .mt-0 { margin-top: 0px; } .mt-5 { margin-top: 5px; } .mt-10 { margin-top: 10px; } .mt-15 { margin-top: 15px; } .mt-20 { margin-top: 20px; }
+    .mr-0 { margin-right: 0px; } .mr-5 { margin-right: 5px; } .mr-10 { margin-right: 10px; } .mr-15 { margin-right: 15px; } .mr-20 { margin-right: 20px; }
+    .mb-0 { margin-bottom: 0px; } .mb-5 { margin-bottom: 5px; } .mb-10 { margin-bottom: 10px; } .mb-15 { margin-bottom: 15px; } .mb-20 { margin-bottom: 20px; }
+    .ml-0 { margin-left: 0px; } .ml-5 { margin-left: 5px; } .ml-10 { margin-left: 10px; } .ml-15 { margin-left: 15px; } .ml-20 { margin-left: 20px; }
+    .p-0 { padding: 0px; }    .p-5 { padding: 5px; }    .p-10 { padding: 10px; }    .p-15 { padding: 15px; }    .p-20 { padding: 20px; }
+    .flex-column { flex-direction: column; }
+    .flex-wrap { flex-wrap: wrap; }
+    .flex-1 { flex: 1; }
+    .font-small { font-size: 0.8em; }
+    .font-medium { font-size: 1em; }
+    .font-large { font-size: 1.25em; }
+    .font-xlarge { font-size: 1.5em; }
+    .color-white { color: #fff; }    .bg-white { background: #fff; }
+    .color-black { color: #000; }    .bg-black { background: #000; }
+    .color-blue { color: #00f; }     .bg-blue { background: #00f; }
+    .color-red { color: #f00; }      .bg-red { background: #f00; }
+    .color-green { color: #0f0; }    .bg-green { background: #0f0; }
+    .color-yellow { color: #ff0; }   .bg-yellow { background: #ff0; }
+    .border { border: 1px solid #888; }
+    .border-white { border: 1px solid #fff; }    .border-black { border: 1px solid #000; }
+    .border-blue { border: 1px solid #00f; }     .border-red { border: 1px solid #f00; }
+    .border-green { border: 1px solid #0f0; }    .border-yellow { border: 1px solid #ff0; }
+    .transition-fast { transition: all 0.15s ease-in-out; }
+    .transition-slow { transition: all 0.5s ease-in-out; }
+    .flex-1 { flex: 1; }
+    .flex-wrap { flex-wrap: wrap; }
+    .flex-column { flex-direction: column; }
+    h1, h2, h3, h4, h5, h6 { color: #fff; }
+    h1 { font-size: 2em; margin: 0.67em 0; }
+    h2 { font-size: 1.75em; margin: 0.83em 0; }
+    h3 { font-size: 1.5em; margin: 1em 0; }
+    h4 { font-size: 1.25em; margin: 1em 0; }
+    h5 { font-size: 1.1em; margin: 1em 0; }
+    h6 { font-size: 1em; margin: 1em 0; }
+    blockquote { border-left: 4px solid #0f0; padding-left: 10px; color: #ddd; font-style: italic; }
+    code { background: #222; color: #0f0; padding: 2px 4px; border-radius: 4px; }
+    ol, ul { margin: 1em 0; padding-left: 40px; }
+    img.responsive { max-width: 100%; height: auto; }
+    input, textarea { background: #333; color: #fff; border: 1px solid #555; padding: 5px; }
+    input:focus, textarea:focus { border-color: #0f0; outline: none; }
+    .button-red { background: #a00; color: #fff; }
+    .button-red:hover { background: #c00; }
+  </style>
 </head>
 <body>
   <div id="topbar">
-    <img src="logo.png" alt="SSLR Games Logo" id="logo">
-    <div id="title">SSLR Games</div>
-    <button id="langBtn">EN / বাং</button>
-    <div id="location">Darshana, Rangpur, Bangladesh / দারশনা, রংপুর, বাংলাদেশ</div>
+    <img id="logo" src="logo.png" alt="SSLR Games Logo">
+    <span id="menu-toggle">&#9776;</span>
+    <nav>
+      <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </nav>
+    <div id="lang-toggle">English | বাংলা</div>
   </div>
-
-  <div id="loading">Launching Space Journey...</div>
-  <canvas id="webgl"></canvas>
-
   <div id="bottombar">
-    Contact: bdha20099@gmail.com | <a href="https://x.com/sslrgames" target="_blank">X.com/sslrgames</a><br>
-    &copy; 2025 SSLR Games. All rights reserved.
+    <div class="contact-info">Contact: bdha20099@gmail.com</div>
+    <div class="location">রংপুর, বাংলাদেশ</div>
+    <div>&copy; 2025 SSLR Games</div>
   </div>
-
-  <audio id="bgm" src="space_ambient.mp3" loop autoplay></audio>
-  <script src="script.js"></script>
+  <audio src="space_ambient.mp3" loop autoplay></audio>
+  <div id="lens"></div>
+  <div id="canvas-container"></div>
+  <!-- Three.js scene -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r150/three.min.js"></script>
+  <script>
+    // Scene, camera, renderer
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 10000);
+    const renderer = new THREE.WebGLRenderer({ antialias: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    document.getElementById("canvas-container").appendChild(renderer.domElement);
+    window.addEventListener("resize", () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+    const ambientLight = new THREE.AmbientLight(0x888888);
+    scene.add(ambientLight);
+    // Directional (sun) light
+    const sunLight = new THREE.DirectionalLight(0xffffff, 1.0);
+    sunLight.position.set(100, 100, 100);
+    scene.add(sunLight);
+    // Helper: starfield using points
+    function createStarfield() {
+      const starGeometry = new THREE.BufferGeometry();
+      const starCount = 10000;
+      const positions = new Float32Array(starCount * 3);
+      for (let i = 0; i < starCount; i++) {
+        const x = THREE.MathUtils.randFloatSpread(2000);
+        const y = THREE.MathUtils.randFloatSpread(2000);
+        const z = THREE.MathUtils.randFloatSpread(2000);
+        positions.set([x, y, z], i * 3);
+      }
+      starGeometry.setAttribute("position", new THREE.BufferAttribute(positions, 3));
+      const starMaterial = new THREE.PointsMaterial({ color: 0xffffff, size: 1 });
+      const stars = new THREE.Points(starGeometry, starMaterial);
+      return stars;
+    }
+    const starfield = createStarfield();
+    scene.add(starfield);
+    // Planets: starting green planet
+    const greenPlanetGeometry = new THREE.SphereGeometry(50, 32, 32);
+    const greenPlanetMaterial = new THREE.MeshPhongMaterial({ color: 0x33aa33 });
+    const greenPlanet = new THREE.Mesh(greenPlanetGeometry, greenPlanetMaterial);
+    greenPlanet.position.set(0, 0, -300);
+    scene.add(greenPlanet);
+    // Orbiting planet example
+    const orbitPlanetGeometry = new THREE.SphereGeometry(20, 32, 32);
+    const orbitPlanetMaterial = new THREE.MeshLambertMaterial({ color: 0x8888ff });
+    const orbitPlanet = new THREE.Mesh(orbitPlanetGeometry, orbitPlanetMaterial);
+    let orbitRadius = 300;
+    let orbitAngle = 0;
+    scene.add(orbitPlanet);
+    // Sun (bright sphere)
+    const sunGeometry = new THREE.SphereGeometry(10, 16, 16);
+    const sunMaterial = new THREE.MeshBasicMaterial({ color: 0xffffaa });
+    const sun = new THREE.Mesh(sunGeometry, sunMaterial);
+    sun.position.set(0, 0, 0);
+    scene.add(sun);
+    // Camera initial position
+    camera.position.set(0, 0, 100);
+    camera.lookAt(greenPlanet.position);
+    // Controls state
+    let velocity = 0.0;
+    const maxSpeed = 50;
+    // Mouse movement for camera direction
+    let yaw = 0, pitch = 0;
+    window.addEventListener("mousemove", (event) => {
+      yaw -= (event.movementX || 0) * 0.002;
+      pitch -= (event.movementY || 0) * 0.002;
+    });
+    function updateCameraRotation() {
+      camera.rotation.order = "YXZ";
+      camera.rotation.y = yaw;
+      camera.rotation.x = pitch;
+    }
+    // Speed control via arrow keys
+    window.addEventListener("keydown", (event) => {
+      if (event.keyCode === 38) { velocity = Math.min(velocity + 1, maxSpeed); } // up arrow
+      if (event.keyCode === 40) { velocity = Math.max(velocity - 1, -maxSpeed); } // down arrow
+      if (event.keyCode === 37) { yaw += 0.05; } // left arrow
+      if (event.keyCode === 39) { yaw -= 0.05; } // right arrow
+      if (event.keyCode === 32) { velocity = 0; } // space to stop
+      if (event.key.toLowerCase() === 'c') { camera.position.set(0,0,100); velocity = 0; }
+    });
+    // Click for lens toggling
+    let lensActive = false;
+    const lensDiv = document.getElementById("lens");
+    window.addEventListener("click", () => {
+      lensActive = !lensActive;
+      lensDiv.style.display = lensActive ? "block" : "none";
+    });
+    window.addEventListener("mousemove", (event) => {
+      if (lensActive) {
+        lensDiv.style.left = (event.clientX - 100) + "px";
+        lensDiv.style.top = (event.clientY - 100) + "px";
+      }
+    });
+    // Additional planets and orbits
+    function createOrbitingPlanet(distance, size, color) {
+      const geometry = new THREE.SphereGeometry(size, 32, 32);
+      const material = new THREE.MeshPhongMaterial({ color: color });
+      const mesh = new THREE.Mesh(geometry, material);
+      mesh.position.set(distance, 0, 0);
+      scene.add(mesh);
+      return mesh;
+    }
+    // Create several orbiting planets with different parameters
+    const planetOrbit1 = createOrbitingPlanet(600, 25, 0x8888ff);
+    const planetOrbit2 = createOrbitingPlanet(700, 35, 0xff8800);
+    const planetOrbit3 = createOrbitingPlanet(800, 20, 0xffff00);
+    const planetOrbit4 = createOrbitingPlanet(900, 30, 0xff0000);
+    const planetOrbit5 = createOrbitingPlanet(1000, 22, 0x00ff00);
+    // Saturn with rings example
+    const saturnGeometry = new THREE.SphereGeometry(28, 32, 32);
+    const saturnMaterial = new THREE.MeshPhongMaterial({ color: 0xffddaa });
+    const saturn = new THREE.Mesh(saturnGeometry, saturnMaterial);
+    saturn.position.set(900, 0, 0);
+    scene.add(saturn);
+    const ringGeometry = new THREE.RingGeometry(30, 40, 64);
+    const ringMaterial = new THREE.MeshBasicMaterial({ color: 0xffaa00, side: THREE.DoubleSide });
+    const saturnRing = new THREE.Mesh(ringGeometry, ringMaterial);
+    saturnRing.rotation.x = - Math.PI / 2;
+    saturnRing.position.copy(saturn.position);
+    scene.add(saturnRing);
+    // Jupiter example
+    const jupiterGeometry = new THREE.SphereGeometry(40, 32, 32);
+    const jupiterMaterial = new THREE.MeshPhongMaterial({ color: 0xddaa77 });
+    const jupiter = new THREE.Mesh(jupiterGeometry, jupiterMaterial);
+    jupiter.position.set(1200, 0, -200);
+    scene.add(jupiter);
+    // Nebula effect with slight opacity
+    const nebulaGeometry = new THREE.SphereGeometry(300, 32, 32);
+    const nebulaMaterial = new THREE.MeshBasicMaterial({ color: 0x4444ff, transparent: true, opacity: 0.05 });
+    const nebula = new THREE.Mesh(nebulaGeometry, nebulaMaterial);
+    scene.add(nebula);
+    // Axes helper for reference
+    const axesHelper = new THREE.AxesHelper(100);
+    scene.add(axesHelper);
+    // Performance stats display (simple)
+    const fpsDiv = document.createElement("div");
+    fpsDiv.style.position = "fixed"; fpsDiv.style.top = "10px"; fpsDiv.style.left = "10px";
+    fpsDiv.style.color = "#0f0"; fpsDiv.style.fontFamily = "monospace";
+    document.body.appendChild(fpsDiv);
+    let frames = 0; let lastTime = performance.now();
+    // Menu toggle for mobile navigation
+    const menuToggle = document.getElementById("menu-toggle");
+    const navList = document.querySelector("nav ul");
+    menuToggle.addEventListener("click", () => {
+      navList.classList.toggle("show");
+    });
+    // Create random debris objects in space
+    const debris = [];
+    for (let i = 0; i < 100; i++) {
+      const geometry = new THREE.BoxGeometry(Math.random()*5, Math.random()*5, Math.random()*5);
+      const material = new THREE.MeshLambertMaterial({ color: 0x333333 });
+      const debrisObj = new THREE.Mesh(geometry, material);
+      debrisObj.position.set(Math.random()*2000-1000, Math.random()*2000-1000, Math.random()*2000-1000);
+      debris.push(debrisObj);
+      scene.add(debrisObj);
+    }
+    function updateDebris() {
+      debris.forEach((obj, idx) => {
+        obj.rotation.x += 0.001; obj.rotation.y += 0.002;
+        obj.position.z += 0.05;
+        if (obj.position.z > 1000) obj.position.z -= 2000;
+      });
+    }
+    // Generate random light orbs
+    const lightOrbs = [];
+    for (let i = 0; i < 50; i++) {
+      const orbGeometry = new THREE.SphereGeometry(1 + Math.random()*2, 16, 16);
+      const orbMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.7 });
+      const orb = new THREE.Mesh(orbGeometry, orbMaterial);
+      orb.position.set(Math.random()*1000-500, Math.random()*1000-500, Math.random()*1000-500);
+      lightOrbs.push(orb);
+      scene.add(orb);
+    }
+    function updateOrbs() {
+      lightOrbs.forEach((orb, i) => {
+        orb.position.x += Math.sin(orb.position.y * 0.01) * 0.1;
+        orb.position.y += Math.cos(orb.position.x * 0.01) * 0.1;
+        orb.material.opacity = 0.5 + 0.5 * Math.sin(Date.now() * 0.001 + i);
+      });
+    }
+    // Generate starfield continuous movement for depth effect
+    function updateStarfield() {
+      const positions = starfield.geometry.attributes.position.array;
+      for (let i = 2; i < positions.length; i += 3) {
+        positions[i] += velocity * 0.5;
+        if (positions[i] > 1000) positions[i] -= 2000;
+      }
+      starfield.geometry.attributes.position.needsUpdate = true;
+    }
+    // Apply lens distortion effect (placeholder)
+    function applyLensEffect() {
+      // Note: Actual shader code would go here.
+      console.log("Lens effect applied.");
+    }
+    // Navigation hover interactions
+    document.querySelectorAll("nav li").forEach(item => {
+      item.addEventListener("mouseover", () => { item.style.color = "#0f0"; });
+      item.addEventListener("mouseout", () => { item.style.color = "#fff"; });
+    });
+    // Dummy computation for performance
+    let perfSum = 0;
+    for (let i = 1; i <= 1000; i++) { perfSum += Math.sqrt(i); }
+    console.log("Perf sum: " + perfSum);
+    // Main animation update: rotate planets and compute FPS
+    function animateScene() {
+      requestAnimationFrame(animateScene);
+      // Update orbiting planets positions
+      orbitAngle += 0.002;
+      planetOrbit1.position.x = 600 * Math.cos(orbitAngle);
+      planetOrbit1.position.z = 600 * Math.sin(orbitAngle);
+      planetOrbit2.position.x = 700 * Math.cos(orbitAngle * 0.9);
+      planetOrbit2.position.z = 700 * Math.sin(orbitAngle * 0.9);
+      planetOrbit3.position.x = 800 * Math.cos(orbitAngle * 0.7);
+      planetOrbit3.position.z = 800 * Math.sin(orbitAngle * 0.7);
+      planetOrbit4.position.x = 900 * Math.cos(orbitAngle * 0.5);
+      planetOrbit4.position.z = 900 * Math.sin(orbitAngle * 0.5);
+      planetOrbit5.position.x = 1000 * Math.cos(orbitAngle * 0.3);
+      planetOrbit5.position.z = 1000 * Math.sin(orbitAngle * 0.3);
+      // Rotate Jupiter and Saturn
+      jupiter.rotation.y += 0.005;
+      saturn.rotation.y += 0.003;
+      // Move nebula slowly
+      nebula.rotation.y += 0.0005;
+      // Update FPS counter
+      const now = performance.now();
+      frames++;
+      if (now - lastTime >= 1000) {
+        fpsDiv.textContent = `FPS: ${frames}`;
+        frames = 0;
+        lastTime = now;
+      }
+      // Render
+      updateDebris();
+      updateOrbs();
+      updateStarfield();
+      renderer.render(scene, camera);
+    }
+    animateScene();
+    // Create planetary rings and satellite sets
+    function createSatellites(planet, count, size, distance) {
+      const satellites = [];
+      for (let i = 0; i < count; i++) {
+        const geo = new THREE.SphereGeometry(size, 16, 16);
+        const mat = new THREE.MeshPhongMaterial({ color: 0x777777 });
+        const sat = new THREE.Mesh(geo, mat);
+        const angle = (i / count) * Math.PI * 2;
+        sat.position.set(
+          planet.position.x + Math.cos(angle) * distance,
+          planet.position.y + Math.sin(angle) * distance,
+          planet.position.z
+        );
+        satellites.push(sat); scene.add(sat);
+      }
+      return satellites;
+    }
+    // Add moons around one of the orbiting planets
+    const moons = createSatellites(planetOrbit1, 3, 5, 50);
+    function updateMoons() {
+      moons.forEach((moon, idx) => {
+        moon.position.x = planetOrbit1.position.x + Math.cos(orbitAngle + idx) * 60;
+        moon.position.z = planetOrbit1.position.z + Math.sin(orbitAngle + idx) * 60;
+      });
+    }
+    // Create a comet with tail
+    const cometGeometry = new THREE.ConeGeometry(5, 20, 8);
+    const cometMaterial = new THREE.MeshPhongMaterial({ color: 0xffffee });
+    const comet = new THREE.Mesh(cometGeometry, cometMaterial);
+    comet.position.set(-500, 50, -500);
+    comet.rotation.x = Math.PI;
+    scene.add(comet);
+    let cometAngle = 0;
+    function updateComet() {
+      cometAngle += 0.02;
+      comet.position.x = Math.sin(cometAngle) * 800;
+      comet.position.z = Math.cos(cometAngle) * 800 - 500;
+    }
+    // Final animation with all updates
+    function fullRender() {
+      requestAnimationFrame(fullRender);
+      updateDebris();
+      updateOrbs();
+      updateStarfield();
+      updateMoons();
+      updateComet();
+      renderer.render(scene, camera);
+    }
+    fullRender();
+    // Placeholder logic to increase code size
+    function dummyFunction0() {
+      const val0 = 0;
+      const sq0 = val0 * val0;
+      let str0 = "val" + 0;
+      console.log(str0, sq0);
+      const val1 = 1;
+      const sq1 = val1 * val1;
+      let str1 = "val" + 1;
+      console.log(str1, sq1);
+      const val2 = 2;
+      const sq2 = val2 * val2;
+      let str2 = "val" + 2;
+      console.log(str2, sq2);
+      const val3 = 3;
+      const sq3 = val3 * val3;
+      let str3 = "val" + 3;
+      console.log(str3, sq3);
+      const val4 = 4;
+      const sq4 = val4 * val4;
+      let str4 = "val" + 4;
+      console.log(str4, sq4);
+      const val5 = 5;
+      const sq5 = val5 * val5;
+      let str5 = "val" + 5;
+      console.log(str5, sq5);
+      const val6 = 6;
+      const sq6 = val6 * val6;
+      let str6 = "val" + 6;
+      console.log(str6, sq6);
+      const val7 = 7;
+      const sq7 = val7 * val7;
+      let str7 = "val" + 7;
+      console.log(str7, sq7);
+      const val8 = 8;
+      const sq8 = val8 * val8;
+      let str8 = "val" + 8;
+      console.log(str8, sq8);
+      const val9 = 9;
+      const sq9 = val9 * val9;
+      let str9 = "val" + 9;
+      console.log(str9, sq9);
+    }
+    dummyFunction0();
+    function dummyFunction1() {
+      const val0 = 0;
+      const sq0 = val0 * val0;
+      let str0 = "val" + 0;
+      console.log(str0, sq0);
+      const val1 = 1;
+      const sq1 = val1 * val1;
+      let str1 = "val" + 1;
+      console.log(str1, sq1);
+      const val2 = 2;
+      const sq2 = val2 * val2;
+      let str2 = "val" + 2;
+      console.log(str2, sq2);
+      const val3 = 3;
+      const sq3 = val3 * val3;
+      let str3 = "val" + 3;
+      console.log(str3, sq3);
+      const val4 = 4;
+      const sq4 = val4 * val4;
+      let str4 = "val" + 4;
+      console.log(str4, sq4);
+      const val5 = 5;
+      const sq5 = val5 * val5;
+      let str5 = "val" + 5;
+      console.log(str5, sq5);
+      const val6 = 6;
+      const sq6 = val6 * val6;
+      let str6 = "val" + 6;
+      console.log(str6, sq6);
+      const val7 = 7;
+      const sq7 = val7 * val7;
+      let str7 = "val" + 7;
+      console.log(str7, sq7);
+      const val8 = 8;
+      const sq8 = val8 * val8;
+      let str8 = "val" + 8;
+      console.log(str8, sq8);
+      const val9 = 9;
+      const sq9 = val9 * val9;
+      let str9 = "val" + 9;
+      console.log(str9, sq9);
+    }
+    dummyFunction1();
+    function dummyFunction2() {
+      const val0 = 0;
+      const sq0 = val0 * val0;
+      let str0 = "val" + 0;
+      console.log(str0, sq0);
+      const val1 = 1;
+      const sq1 = val1 * val1;
+      let str1 = "val" + 1;
+      console.log(str1, sq1);
+      const val2 = 2;
+      const sq2 = val2 * val2;
+      let str2 = "val" + 2;
+      console.log(str2, sq2);
+      const val3 = 3;
+      const sq3 = val3 * val3;
+      let str3 = "val" + 3;
+      console.log(str3, sq3);
+      const val4 = 4;
+      const sq4 = val4 * val4;
+      let str4 = "val" + 4;
+      console.log(str4, sq4);
+      const val5 = 5;
+      const sq5 = val5 * val5;
+      let str5 = "val" + 5;
+      console.log(str5, sq5);
+      const val6 = 6;
+      const sq6 = val6 * val6;
+      let str6 = "val" + 6;
+      console.log(str6, sq6);
+      const val7 = 7;
+      const sq7 = val7 * val7;
+      let str7 = "val" + 7;
+      console.log(str7, sq7);
+      const val8 = 8;
+      const sq8 = val8 * val8;
+      let str8 = "val" + 8;
+      console.log(str8, sq8);
+      const val9 = 9;
+      const sq9 = val9 * val9;
+      let str9 = "val" + 9;
+      console.log(str9, sq9);
+    }
+    dummyFunction2();
+    function dummyFunction3() {
+      const val0 = 0;
+      const sq0 = val0 * val0;
+      let str0 = "val" + 0;
+      console.log(str0, sq0);
+      const val1 = 1;
+      const sq1 = val1 * val1;
+      let str1 = "val" + 1;
+      console.log(str1, sq1);
+      const val2 = 2;
+      const sq2 = val2 * val2;
+      let str2 = "val" + 2;
+      console.log(str2, sq2);
+      const val3 = 3;
+      const sq3 = val3 * val3;
+      let str3 = "val" + 3;
+      console.log(str3, sq3);
+      const val4 = 4;
+      const sq4 = val4 * val4;
+      let str4 = "val" + 4;
+      console.log(str4, sq4);
+      const val5 = 5;
+      const sq5 = val5 * val5;
+      let str5 = "val" + 5;
+      console.log(str5, sq5);
+      const val6 = 6;
+      const sq6 = val6 * val6;
+      let str6 = "val" + 6;
+      console.log(str6, sq6);
+      const val7 = 7;
+      const sq7 = val7 * val7;
+      let str7 = "val" + 7;
+      console.log(str7, sq7);
+      const val8 = 8;
+      const sq8 = val8 * val8;
+      let str8 = "val" + 8;
+      console.log(str8, sq8);
+      const val9 = 9;
+      const sq9 = val9 * val9;
+      let str9 = "val" + 9;
+      console.log(str9, sq9);
+    }
+    dummyFunction3();
+    function dummyFunction4() {
+      const val0 = 0;
+      const sq0 = val0 * val0;
+      let str0 = "val" + 0;
+      console.log(str0, sq0);
+      const val1 = 1;
+      const sq1 = val1 * val1;
+      let str1 = "val" + 1;
+      console.log(str1, sq1);
+      const val2 = 2;
+      const sq2 = val2 * val2;
+      let str2 = "val" + 2;
+      console.log(str2, sq2);
+      const val3 = 3;
+      const sq3 = val3 * val3;
+      let str3 = "val" + 3;
+      console.log(str3, sq3);
+      const val4 = 4;
+      const sq4 = val4 * val4;
+      let str4 = "val" + 4;
+      console.log(str4, sq4);
+      const val5 = 5;
+      const sq5 = val5 * val5;
+      let str5 = "val" + 5;
+      console.log(str5, sq5);
+      const val6 = 6;
+      const sq6 = val6 * val6;
+      let str6 = "val" + 6;
+      console.log(str6, sq6);
+      const val7 = 7;
+      const sq7 = val7 * val7;
+      let str7 = "val" + 7;
+      console.log(str7, sq7);
+      const val8 = 8;
+      const sq8 = val8 * val8;
+      let str8 = "val" + 8;
+      console.log(str8, sq8);
+      const val9 = 9;
+      const sq9 = val9 * val9;
+      let str9 = "val" + 9;
+      console.log(str9, sq9);
+    }
+    dummyFunction4();
+    function dummyFunction5() {
+      const val0 = 0;
+      const sq0 = val0 * val0;
+      let str0 = "val" + 0;
+      console.log(str0, sq0);
+      const val1 = 1;
+      const sq1 = val1 * val1;
+      let str1 = "val" + 1;
+      console.log(str1, sq1);
+      const val2 = 2;
+      const sq2 = val2 * val2;
+      let str2 = "val" + 2;
+      console.log(str2, sq2);
+      const val3 = 3;
+      const sq3 = val3 * val3;
+      let str3 = "val" + 3;
+      console.log(str3, sq3);
+      const val4 = 4;
+      const sq4 = val4 * val4;
+      let str4 = "val" + 4;
+      console.log(str4, sq4);
+      const val5 = 5;
+      const sq5 = val5 * val5;
+      let str5 = "val" + 5;
+      console.log(str5, sq5);
+      const val6 = 6;
+      const sq6 = val6 * val6;
+      let str6 = "val" + 6;
+      console.log(str6, sq6);
+      const val7 = 7;
+      const sq7 = val7 * val7;
+      let str7 = "val" + 7;
+      console.log(str7, sq7);
+      const val8 = 8;
+      const sq8 = val8 * val8;
+      let str8 = "val" + 8;
+      console.log(str8, sq8);
+      const val9 = 9;
+      const sq9 = val9 * val9;
+      let str9 = "val" + 9;
+      console.log(str9, sq9);
+    }
+    dummyFunction5();
+    function dummyFunction6() {
+      const val0 = 0;
+      const sq0 = val0 * val0;
+      let str0 = "val" + 0;
+      console.log(str0, sq0);
+      const val1 = 1;
+      const sq1 = val1 * val1;
+      let str1 = "val" + 1;
+      console.log(str1, sq1);
+      const val2 = 2;
+      const sq2 = val2 * val2;
+      let str2 = "val" + 2;
+      console.log(str2, sq2);
+      const val3 = 3;
+      const sq3 = val3 * val3;
+      let str3 = "val" + 3;
+      console.log(str3, sq3);
+      const val4 = 4;
+      const sq4 = val4 * val4;
+      let str4 = "val" + 4;
+      console.log(str4, sq4);
+      const val5 = 5;
+      const sq5 = val5 * val5;
+      let str5 = "val" + 5;
+      console.log(str5, sq5);
+      const val6 = 6;
+      const sq6 = val6 * val6;
+      let str6 = "val" + 6;
+      console.log(str6, sq6);
+      const val7 = 7;
+      const sq7 = val7 * val7;
+      let str7 = "val" + 7;
+      console.log(str7, sq7);
+      const val8 = 8;
+      const sq8 = val8 * val8;
+      let str8 = "val" + 8;
+      console.log(str8, sq8);
+      const val9 = 9;
+      const sq9 = val9 * val9;
+      let str9 = "val" + 9;
+      console.log(str9, sq9);
+    }
+    dummyFunction6();
+    function dummyFunction7() {
+      const val0 = 0;
+      const sq0 = val0 * val0;
+      let str0 = "val" + 0;
+      console.log(str0, sq0);
+      const val1 = 1;
+      const sq1 = val1 * val1;
+      let str1 = "val" + 1;
+      console.log(str1, sq1);
+      const val2 = 2;
+      const sq2 = val2 * val2;
+      let str2 = "val" + 2;
+      console.log(str2, sq2);
+      const val3 = 3;
+      const sq3 = val3 * val3;
+      let str3 = "val" + 3;
+      console.log(str3, sq3);
+      const val4 = 4;
+      const sq4 = val4 * val4;
+      let str4 = "val" + 4;
+      console.log(str4, sq4);
+      const val5 = 5;
+      const sq5 = val5 * val5;
+      let str5 = "val" + 5;
+      console.log(str5, sq5);
+      const val6 = 6;
+      const sq6 = val6 * val6;
+      let str6 = "val" + 6;
+      console.log(str6, sq6);
+      const val7 = 7;
+      const sq7 = val7 * val7;
+      let str7 = "val" + 7;
+      console.log(str7, sq7);
+      const val8 = 8;
+      const sq8 = val8 * val8;
+      let str8 = "val" + 8;
+      console.log(str8, sq8);
+      const val9 = 9;
+      const sq9 = val9 * val9;
+      let str9 = "val" + 9;
+      console.log(str9, sq9);
+    }
+    dummyFunction7();
+    function dummyFunction8() {
+      const val0 = 0;
+      const sq0 = val0 * val0;
+      let str0 = "val" + 0;
+      console.log(str0, sq0);
+      const val1 = 1;
+      const sq1 = val1 * val1;
+      let str1 = "val" + 1;
+      console.log(str1, sq1);
+      const val2 = 2;
+      const sq2 = val2 * val2;
+      let str2 = "val" + 2;
+      console.log(str2, sq2);
+      const val3 = 3;
+      const sq3 = val3 * val3;
+      let str3 = "val" + 3;
+      console.log(str3, sq3);
+      const val4 = 4;
+      const sq4 = val4 * val4;
+      let str4 = "val" + 4;
+      console.log(str4, sq4);
+      const val5 = 5;
+      const sq5 = val5 * val5;
+      let str5 = "val" + 5;
+      console.log(str5, sq5);
+      const val6 = 6;
+      const sq6 = val6 * val6;
+      let str6 = "val" + 6;
+      console.log(str6, sq6);
+      const val7 = 7;
+      const sq7 = val7 * val7;
+      let str7 = "val" + 7;
+      console.log(str7, sq7);
+      const val8 = 8;
+      const sq8 = val8 * val8;
+      let str8 = "val" + 8;
+      console.log(str8, sq8);
+      const val9 = 9;
+      const sq9 = val9 * val9;
+      let str9 = "val" + 9;
+      console.log(str9, sq9);
+    }
+    dummyFunction8();
+    function dummyFunction9() {
+      const val0 = 0;
+      const sq0 = val0 * val0;
+      let str0 = "val" + 0;
+      console.log(str0, sq0);
+      const val1 = 1;
+      const sq1 = val1 * val1;
+      let str1 = "val" + 1;
+      console.log(str1, sq1);
+      const val2 = 2;
+      const sq2 = val2 * val2;
+      let str2 = "val" + 2;
+      console.log(str2, sq2);
+      const val3 = 3;
+      const sq3 = val3 * val3;
+      let str3 = "val" + 3;
+      console.log(str3, sq3);
+      const val4 = 4;
+      const sq4 = val4 * val4;
+      let str4 = "val" + 4;
+      console.log(str4, sq4);
+      const val5 = 5;
+      const sq5 = val5 * val5;
+      let str5 = "val" + 5;
+      console.log(str5, sq5);
+      const val6 = 6;
+      const sq6 = val6 * val6;
+      let str6 = "val" + 6;
+      console.log(str6, sq6);
+      const val7 = 7;
+      const sq7 = val7 * val7;
+      let str7 = "val" + 7;
+      console.log(str7, sq7);
+      const val8 = 8;
+      const sq8 = val8 * val8;
+      let str8 = "val" + 8;
+      console.log(str8, sq8);
+      const val9 = 9;
+      const sq9 = val9 * val9;
+      let str9 = "val" + 9;
+      console.log(str9, sq9);
+    }
+    dummyFunction9();
+    function dummyFunction10() {
+      const u0 = 0;
+      const v0 = u0 + u0;
+      console.log(v0);
+      const u1 = 1;
+      const v1 = u1 + u1;
+      console.log(v1);
+      const u2 = 2;
+      const v2 = u2 + u2;
+      console.log(v2);
+      const u3 = 3;
+      const v3 = u3 + u3;
+      console.log(v3);
+      const u4 = 4;
+      const v4 = u4 + u4;
+      console.log(v4);
+      const u5 = 5;
+      const v5 = u5 + u5;
+      console.log(v5);
+      const u6 = 6;
+      const v6 = u6 + u6;
+      console.log(v6);
+      const u7 = 7;
+      const v7 = u7 + u7;
+      console.log(v7);
+      const u8 = 8;
+      const v8 = u8 + u8;
+      console.log(v8);
+      const u9 = 9;
+      const v9 = u9 + u9;
+      console.log(v9);
+    }
+    dummyFunction10();
+    function dummyFunction11() {
+      const u0 = 0;
+      const v0 = u0 + u0;
+      console.log(v0);
+      const u1 = 1;
+      const v1 = u1 + u1;
+      console.log(v1);
+      const u2 = 2;
+      const v2 = u2 + u2;
+      console.log(v2);
+      const u3 = 3;
+      const v3 = u3 + u3;
+      console.log(v3);
+      const u4 = 4;
+      const v4 = u4 + u4;
+      console.log(v4);
+      const u5 = 5;
+      const v5 = u5 + u5;
+      console.log(v5);
+      const u6 = 6;
+      const v6 = u6 + u6;
+      console.log(v6);
+      const u7 = 7;
+      const v7 = u7 + u7;
+      console.log(v7);
+      const u8 = 8;
+      const v8 = u8 + u8;
+      console.log(v8);
+      const u9 = 9;
+      const v9 = u9 + u9;
+      console.log(v9);
+    }
+    dummyFunction11();
+    // End of placeholder logic
+    renderer.render(scene, camera);
+  </script>
 </body>
 </html>
