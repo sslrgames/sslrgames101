@@ -1,62 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SSLR Games - Welcome</title>
-    <link rel="icon" href="icon.png" type="image/png">
-    <link rel="stylesheet" href="styles.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <title>SSLR Games Space Journey</title>
+  <link rel="stylesheet" href="styles.css">
+  <!-- Three.js library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
 <body>
+  <!-- Top fixed bar with logo, title, language toggle, and location -->
+  <div id="topbar">
+    <img src="logo.png" alt="Logo" id="logo">
+    <span id="title">SSLR Games</span>
+    <button id="langToggle">EN↔BN</button>
+    <span id="location">Location: Darshana, Rangpur, Bangladesh</span>
+  </div>
 
-    <!-- The 3D background will be rendered here -->
-    <canvas id="bg-canvas"></canvas>
+  <!-- Loading overlay -->
+  <div id="loading">Launching...</div>
 
-    <!-- Top Header UI -->
-    <header class="ui-container">
-        <div class="logo-container">
-            <img src="logo.png" alt="SSLR Games Logo" class="logo" onerror="this.style.display='none'">
-            <h1>SSLR Games</h1>
-        </div>
-        <div class="language-switcher">
-            <button id="lang-en" class="lang-btn active" aria-label="Switch to English">EN</button>
-            <button id="lang-bn" class="lang-btn" aria-label="Switch to Bengali">BN</button>
-        </div>
-    </header>
+  <!-- Three.js canvas in middle -->
+  <canvas id="webgl"></canvas>
 
-    <!-- Main Welcome Message -->
-    <main class="welcome-container">
-        <h2 id="welcome-text">Welcome</h2>
-        <p id="subtitle-text">The journey begins.</p>
-    </main>
+  <!-- Bottom fixed bar with contact info -->
+  <div id="bottombar">
+    Contact: bdha20099@gmail.com &bull; X.com/sslrgames<br>
+    © 2025 SSLR Games. All rights reserved.
+  </div>
 
-    <!-- Bottom Footer UI -->
-    <footer class="ui-container">
-        <div id="contact-info">
-            Contact: bdha20099@gmail.com
-        </div>
-        <div id="location-info">
-            Darshana, Rangpur Division, Bangladesh
-        </div>
-        <div id="copyright-info">
-            © 2025 SSLR Games. All rights reserved.
-        </div>
-    </footer>
+  <!-- Background audio (placeholder source) -->
+  <audio id="spaceAudio" src="space_ambient.mp3" loop autoplay></audio>
 
-    <!-- Three.js library -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    
-    <!-- Post-processing for effects like the black hole -->
-    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/EffectComposer.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/RenderPass.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/ShaderPass.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/CopyShader.js"></script>
-
-    <!-- Custom JavaScript for the 3D scene -->
-    <script src="script.js"></script>
-
+  <script src="script.js"></script>
 </body>
 </html>
