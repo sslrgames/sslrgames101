@@ -1,103 +1,176 @@
-/* styles.css */
+/* General Styling & Resets */
+:root {
+    --primary-font: 'Orbitron', sans-serif;
+    --secondary-font: 'Roboto', sans-serif;
+    --text-color: rgba(255, 255, 255, 0.9);
+    --glow-color: #00d9ff;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
 body {
-  margin: 0;
-  padding: 0;
-  background: #000;
-  color: #fff;
-  font-family: sans-serif;
-  overflow-x: hidden;
+    font-family: var(--secondary-font);
+    color: var(--text-color);
+    background-color: #000000;
+    overflow: hidden; /* Prevents scrollbars from interfering with the 3D scene */
+    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewport="0 0 100 100" style="fill:white;"><circle cx="10" cy="10" r="3" /></svg>') 10 10, auto;
 }
 
-/* Full-screen canvas background */
-#bgCanvas {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: -1;
-  width: 100%;
-  height: 100%;
+/* Canvas for the 3D background */
+#bg-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1; /* Places the canvas behind all other content */
 }
 
-header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 20px;
-  background: rgba(0, 0, 0, 0.5);
-  box-sizing: border-box;
+/* Shared styles for Header and Footer */
+.ui-container {
+    position: fixed;
+    left: 0;
+    width: 100%;
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 10;
+    background: rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: 12px;
 }
 
-header img {
-  height: 40px;
+header.ui-container {
+    top: 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-#toggle-lang {
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid #fff;
-  padding: 8px 12px;
-  color: #fff;
-  cursor: pointer;
-  transition: background 0.3s;
-}
-#toggle-lang:hover {
-  background: rgba(255, 255, 255, 0.2);
+footer.ui-container {
+    bottom: 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: none;
+    flex-wrap: wrap; /* Allow items to wrap on smaller screens */
+    justify-content: center;
+    gap: 20px;
 }
 
-main {
-  padding-top: 60px; /* to avoid overlap with fixed header */
+/* Header Specifics */
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
 }
 
-#hero {
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
+.logo {
+    height: 40px;
+    width: 40px;
 }
 
-#hero h1 {
-  font-size: 3em;
-  margin: 0.5em 0;
-  text-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+h1 {
+    font-family: var(--primary-font);
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-shadow: 0 0 8px var(--glow-color);
 }
 
-#hero p {
-  font-size: 1.2em;
+/* Language Switcher */
+.language-switcher {
+    display: flex;
+    gap: 5px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 4px;
 }
 
-#contact {
-  text-align: center;
-  padding: 50px 20px;
+.lang-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-color);
+    padding: 6px 12px;
+    border-radius: 16px;
+    cursor: pointer;
+    font-family: var(--primary-font);
+    font-weight: 400;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-#contact p {
-  margin: 0.5em 0;
-  font-size: 1.1em;
+.lang-btn.active {
+    background-color: var(--glow-color);
+    color: #000;
 }
 
-footer {
-  text-align: center;
-  padding: 20px;
-  font-size: 0.9em;
-  border-top: 1px solid rgba(255,255,255,0.2);
+.lang-btn:not(.active):hover {
+    background-color: rgba(255, 255, 255, 0.2);
 }
 
-/* Flash effect: a white overlay fades out on click */
-@keyframes flashfade {
-  from { opacity: 0.5; }
-  to   { opacity: 0;   }
+/* Main Welcome Message */
+.welcome-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    pointer-events: none; /* Allows clicking through to the canvas */
 }
-.flash {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: white;
-  opacity: 0.5;
-  animation: flashfade 0.5s forwards;
+
+#welcome-text {
+    font-family: var(--primary-font);
+    font-size: 4rem;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-shadow: 0 0 15px rgba(255, 255, 255, 0.7);
+    animation: fadeIn 3s ease-in-out;
+}
+
+#subtitle-text {
+    font-size: 1.2rem;
+    font-weight: 300;
+    opacity: 0.8;
+    margin-top: 10px;
+    animation: fadeIn 3s ease-in-out 0.5s;
+    animation-fill-mode: backwards;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .ui-container {
+        padding: 10px 15px;
+        font-size: 10px;
+    }
+
+    h1 {
+        font-size: 18px;
+    }
+
+    .logo {
+        height: 30px;
+        width: 30px;
+    }
+
+    #welcome-text {
+        font-size: 2.5rem;
+    }
+
+    #subtitle-text {
+        font-size: 1rem;
+    }
+
+    footer.ui-container {
+        flex-direction: column;
+        gap: 8px;
+        padding-bottom: 15px;
+    }
 }
