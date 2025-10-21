@@ -1,97 +1,150 @@
-// script.js
+/* -------------------------------------------------------
+   SSLR Games — Cinematic Interactive Script
+   ------------------------------------------------------- */
 
-let scene, camera, renderer, clock;
-let planets = [], stars;
-let speed = 20;
-const maxSpeed = 200;
+"use strict";
 
-init();
+/* ---------- Fade & Reveal ---------- */
+document.addEventListener("DOMContentLoaded", () => {
+  const hero = document.querySelector(".hero-inner");
+  const logo = document.getElementById("logo");
+  const tagline = document.querySelector(".tagline");
+  const subline = document.querySelector(".subline");
+  const meta = document.querySelector(".meta");
+  const buttons = document.querySelectorAll(".actions a");
 
-function init() {
-  // Scene setup
-  scene = new THREE.Scene();
-  camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 20000);
-  camera.position.set(0, 0, 100);
+  // Fade sequence
+  setTimeout(() => hero.style.opacity = "1", 300);
+  setTimeout(() => logo.classList.add("visible"), 800);
+  setTimeout(() => tagline.style.opacity = "1", 1200);
+  setTimeout(() => subline.style.opacity = "1", 1500);
+  setTimeout(() => meta.style.opacity = "1", 1700);
+  setTimeout(() => buttons.forEach(b => b.style.opacity = "1"), 1900);
+});
 
-  renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('webgl'), antialias: true });
-  renderer.setSize(window.innerWidth, window.innerHeight);
-  document.getElementById('loading').style.display = 'block';
+/* ---------- Parallax Background ---------- */
+(() => {
+  const bg = document.getElementById("bg-image");
+  if (!bg) return;
 
-  clock = new THREE.Clock();
+  let mouseX = 0, mouseY = 0;
+  let currentX = 0, currentY = 0;
 
-  // Lights
-  const ambient = new THREE.AmbientLight(0x404040);
-  const directional = new THREE.DirectionalLight(0xffffff, 1.5);
-  directional.position.set(100, 100, -100);
-  scene.add(ambient, directional);
+  const smooth = 0.05; // damping
+  const updateParallax = () => {
+    const dx = mouseX - currentX;
+    const dy = mouseY - currentY;
+    currentX += dx * smooth;
+    currentY += dy * smooth;
+    bg.style.transform = `translate(${currentX * 0.05}px, ${currentY * 0.05}px) scale(1.1)`;
+    requestAnimationFrame(updateParallax);
+  };
+  updateParallax();
 
-  // Starfield
-  const starGeo = new THREE.BufferGeometry();
-  const starCount = 100000;
-  const starArray = new Float32Array(starCount * 3);
-  for (let i = 0; i < starCount * 3; i++) {
-    starArray[i] = (Math.random() - 0.5) * 20000;
-  }
-  starGeo.setAttribute('position', new THREE.BufferAttribute(starArray, 3));
-  const starMat = new THREE.PointsMaterial({ color: 0xffffff, size: 0.5 });
-  stars = new THREE.Points(starGeo, starMat);
-  scene.add(stars);
-
-  // Planets
-  const textureLoader = new THREE.TextureLoader();
-  const planetData = [
-    { url: 'https://threejs.org/examples/textures/planets/earth_atmos_2048.jpg', size: 20 },
-    { url: 'https://threejs.org/examples/textures/planets/jupiter.jpg', size: 40 },
-    { url: 'https://threejs.org/examples/textures/planets/mars_1k_color.jpg', size: 15 },
-    { url: 'https://threejs.org/examples/textures/planets/saturn.jpg', size: 35 },
-    { url: 'https://threejs.org/examples/textures/planets/uranus.jpg', size: 30 },
-    { url: 'https://threejs.org/examples/textures/planets/neptune.jpg', size: 30 },
-    { url: 'https://threejs.org/examples/textures/planets/mercury.jpg', size: 10 },
-    { url: 'https://threejs.org/examples/textures/planets/venus.jpg', size: 15 },
-  ];
-  
-  planetData.forEach((planet, i) => {
-    const mat = new THREE.MeshStandardMaterial({ map: textureLoader.load(planet.url) });
-    const geo = new THREE.SphereGeometry(planet.size, 64, 64);
-    const mesh = new THREE.Mesh(geo, mat);
-    mesh.position.z = -(i + 1) * 1000;
-    scene.add(mesh);
-    planets.push(mesh);
+  document.addEventListener("mousemove", (e) => {
+    const { innerWidth, innerHeight } = window;
+    mouseX = (e.clientX / innerWidth - 0.5) * 2;
+    mouseY = (e.clientY / innerHeight - 0.5) * 2;
   });
+})();
 
-  // Audio control
-  const bgm = document.getElementById('bgm');
-  bgm.volume = 0.1;
-  bgm.play();
+/* ---------- Particle System ---------- */
+(() => {
+  const canvas = document.getElementById("particle-canvas");
+  if (!canvas) return;
+  const ctx = canvas.getContext("2d");
+  let particles = [];
+  let width, height;
 
-  // Events
-  window.addEventListener('resize', onResize);
-  window.addEventListener('keydown', onKey);
+  function resize() {
+    width = canvas.width = window.innerWidth;
+    height = canvas.height = window.innerHeight;
+  }
+  window.addEventListener("resize", resize);
+  resize();
 
-  animate();
-  document.getElementById('loading').style.display = 'none';
-}
+  const numParticles = 90;
+  for (let i = 0; i < numParticles; i++) {
+    particles.push({
+      x: Math.random() * width,
+      y: Math.random() * height,
+      vx: (Math.random() - 0.5) * 0.3,
+      vy: (Math.random() - 0.5) * 0.3,
+      r: Math.random() * 2 + 0.5,
+      o: Math.random() * 0.5 + 0.3
+    });
+  }
 
-function onResize() {
-  camera.aspect = window.innerWidth / window.innerHeight;
-  camera.updateProjectionMatrix();
-  renderer.setSize(window.innerWidth, window.innerHeight);
-}
+  function draw() {
+    ctx.clearRect(0, 0, width, height);
+    ctx.fillStyle = "#00e5ff";
+    for (let p of particles) {
+      ctx.globalAlpha = p.o;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fill();
 
-function onKey(e) {
-  if (e.code === 'ArrowUp') speed = Math.min(maxSpeed, speed + 10);
-  if (e.code === 'ArrowDown') speed = Math.max(10, speed - 10);
-}
+      p.x += p.vx;
+      p.y += p.vy;
 
-function animate() {
-  requestAnimationFrame(animate);
-  const delta = clock.getDelta();
-  camera.position.z -= speed * delta;
+      // wrap around edges
+      if (p.x < 0) p.x = width;
+      if (p.x > width) p.x = 0;
+      if (p.y < 0) p.y = height;
+      if (p.y > height) p.y = 0;
+    }
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
 
-  // Slight auto rotation
-  camera.rotation.y += 0.0005;
+/* ---------- Language Toggle ---------- */
+(() => {
+  const btn = document.getElementById("lang-toggle");
+  const tagline = document.querySelector(".tagline");
+  const subline = document.querySelector(".subline");
+  if (!btn || !tagline) return;
 
-  planets.forEach(p => p.rotation.y += 0.001);
+  const text = {
+    en: {
+      tagline: "Simple Stories. Lasting Realities.",
+      coming: "Coming",
+      year: "2027",
+    },
+    bn: {
+      tagline: "সরল গল্প। স্থায়ী বাস্তবতা।",
+      coming: "আসছে",
+      year: "২০২৭",
+    }
+  };
 
-  renderer.render(scene, camera);
-}
+  let current = "en";
+
+  btn.addEventListener("click", () => {
+    current = current === "en" ? "bn" : "en";
+    btn.textContent = current === "en" ? "EN / বাংলা" : "বাংলা / EN";
+
+    tagline.textContent = text[current].tagline;
+    subline.innerHTML = `<strong>${text[current].coming}</strong> <span class="year">${text[current].year}</span>`;
+  });
+})();
+
+/* ---------- Smooth Hero Glow Pulse ---------- */
+(() => {
+  const hero = document.getElementById("hero");
+  if (!hero) return;
+
+  let glow = 0;
+  function animateGlow() {
+    glow += 0.02;
+    const gradient =
+      `radial-gradient(circle at 50% 50%, rgba(0,200,255,${0.1 + Math.sin(glow)*0.05}), transparent 80%)`;
+    hero.style.backgroundImage = gradient;
+    requestAnimationFrame(animateGlow);
+  }
+  animateGlow();
+})();
+
+/* ---------- Console Message ---------- */
+console.log("%cSSLR Games", "color:#00e5ff;font-size:18px;font-weight:bold;");
+console.log("Independent studio from Rangpur — Coming 2027");
