@@ -1,128 +1,46 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <meta name="description" content="SSLR Games — independent studio from Durshona, Rangpur, Bangladesh. Coming 2027." />
-  <meta name="theme-color" content="#0b0b10" />
-
-  <title>SSLR Games — Coming 2027</title>
-
-  <!-- Favicon / icon -->
-  <link rel="icon" type="image/png" href="icon.png">
-
-  <!-- Preload key images for faster paint -->
-  <link rel="preload" as="image" href="bg.png">
-  <link rel="preload" as="image" href="logo.png">
-
-  <!-- Stylesheet -->
-  <link rel="stylesheet" href="styles.css">
-
-  <!-- Social metadata (minimal) -->
-  <meta property="og:title" content="SSLR Games — Coming 2027" />
-  <meta property="og:description" content="An independent studio from Durshona, Rangpur — crafting creative, story-driven games." />
-  <meta property="og:image" content="logo.png" />
-  <meta property="og:type" content="website" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SSLR Games — Independent Studio from Rangpur</title>
+<link rel="icon" type="image/png" href="icon.png">
+<link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-  <!-- Background layer: base image + cinematic overlays -->
-  <div id="bg-layer" aria-hidden="true">
-    <img src="bg.png" alt="" id="bg-image" loading="eager">
-    <div class="bg-overlay gradient"></div>
-    <div class="bg-overlay vignette"></div>
-    <div class="bg-blur"></div>
-  </div>
+<!-- Particle Canvas -->
+<canvas id="particle-canvas"></canvas>
 
-  <!-- Foreground interactive content -->
-  <main id="hero" role="main" aria-labelledby="studio-title">
-    <header class="top-controls" aria-hidden="false">
-      <div class="brand-mini">
-        <img src="icon.png" alt="SSLR icon" width="28" height="28">
-      </div>
+<!-- Hero Section -->
+<section id="hero" class="hero">
+    <img src="bg.png" id="bg-image" alt="Background" class="bg">
+    <div class="hero-inner">
 
-      <nav class="mini-nav" aria-label="Studio quick links">
-        <button id="lang-toggle" class="btn-ghost" aria-pressed="false" title="Switch language">EN / বাংলা</button>
-        <a class="btn-link" href="#contact" id="contact-link">Contact</a>
-      </nav>
-    </header>
-
-    <section class="hero-inner" aria-labelledby="studio-title">
-      <!-- Logo and title -->
-      <div class="logo-wrap" role="img" aria-label="SSLR Games logo">
-        <img src="logo.png" alt="SSLR Games" id="logo" loading="eager">
-      </div>
-
-      <!-- Cinematic tagline + reveal -->
-      <div class="intro-copy">
-        <h1 id="studio-title" class="sr-only">SSLR Games</h1>
-
-        <p class="tagline" data-default="Simple Stories. Lasting Realities.">
-          Simple Stories. Lasting Realities.
-        </p>
-
-        <p class="subline" id="coming-line">
-          <strong>Coming</strong> <span class="year">2027</span>
-        </p>
-
-        <!-- Small info / location -->
-        <p class="meta">Durshona, Rangpur, Bangladesh — Independent studio</p>
-
-        <!-- Action row -->
-        <div class="actions">
-          <a class="btn-primary" href="#" id="follow-btn">Follow our journey</a>
-          <a class="btn-ghost" href="#" id="devlog-btn">Devlog</a>
+        <!-- LOGO with glow -->
+        <div class="logo-wrapper">
+            <img src="logo.png" alt="SSLR Games Logo" id="logo" class="logo">
+            <div class="logo-glow"></div>
         </div>
-      </div>
-    </section>
 
-    <!-- Decorative particle canvas (JS hook) -->
-    <canvas id="particle-canvas" aria-hidden="true"></canvas>
+        <!-- Taglines -->
+        <h1 class="tagline">Simple Stories. Lasting Realities.</h1>
+        <p class="subline"><strong>Coming</strong> <span class="year">2027</span></p>
+        <p class="meta">An independent game studio from Durshona, Rangpur, Bangladesh</p>
 
-    <footer id="contact" class="footer">
-      <small class="copyright">© <span id="year"></span> SSLR Games — All rights reserved.</small>
-    </footer>
-  </main>
+        <!-- Action Buttons -->
+        <div class="actions">
+            <a href="https://www.youtube.com/@SSLRGAMES" target="_blank" class="btn yt">YouTube</a>
+            <a href="https://x.com/SSLR_Games" target="_blank" class="btn x">X (Twitter)</a>
+            <a href="https://t.me/sslrgames" target="_blank" class="btn tg">Telegram</a>
+        </div>
 
-  <!-- Minimal noscript fallback -->
-  <noscript>
-    <style>
-      #bg-layer { display:block; }
-      #logo { opacity:1; transform:none; }
-      .intro-copy .tagline, .intro-copy .subline { opacity: 1; }
-    </style>
-    <div style="padding:2rem; text-align:center; background:#000; color:#fff;">
-      SSLR Games — Coming 2027. Please enable JavaScript for full experience.
+        <!-- Language Toggle -->
+        <button id="lang-toggle" class="lang-btn">EN / বাংলা</button>
     </div>
-  </noscript>
+</section>
 
-  <!-- Main script -->
-  <script src="script.js" defer></script>
-  <script>
-    // Small inline helpers (safe & minimal) — these are intentionally tiny and double-checked.
-    (function () {
-      // auto-fill copyright year
-      var y = new Date().getFullYear();
-      document.getElementById('year').textContent = y;
-
-      // language toggle accessible label update (script.js can expand)
-      var langToggle = document.getElementById('lang-toggle');
-      if (langToggle) {
-        langToggle.addEventListener('click', function () {
-          var pressed = this.getAttribute('aria-pressed') === 'true';
-          this.setAttribute('aria-pressed', !pressed);
-          // script.js should handle actual language switch; this keeps aria correct
-        }, {passive:true});
-      }
-
-      // Simple link safety (can be expanded)
-      var follow = document.getElementById('follow-btn');
-      if (follow) follow.addEventListener('click', function (e) {
-        e.preventDefault();
-        // hook: script.js -> open modal or scroll to newsletter
-        if (window.openFollowModal) window.openFollowModal();
-      });
-    })();
-  </script>
+<!-- Scripts -->
+<script src="script.js"></script>
 </body>
 </html>
