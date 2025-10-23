@@ -132,12 +132,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const text = {
     en: {
-      tagline: "Simple Stories. Lasting Realities.",
+      tagline: "Most of the time, a story creates a game — but only rarely does a game create a story.",
       coming: "Coming",
       year: "2027"
     },
     bn: {
-      tagline: "সরল গল্প। স্থায়ী বাস্তবতা।",
+      tagline: "বেশিরভাগ সময় একখানি গল্পই একটি গেমকে জন্ম দেয় — কিন্তু খুব কমই কোনো গেম গল্পকে জন্ম দেয়।",
       coming: "আসছে",
       year: "২০২৭"
     }
@@ -169,3 +169,4 @@ document.addEventListener("DOMContentLoaded", () => {
 /* ---------- Console Signature ---------- */
 console.log("%cSSLR Games", "color:#00e5ff;font-size:18px;font-weight:bold;");
 console.log("Independent Studio from Rangpur — Coming 2027");
+
